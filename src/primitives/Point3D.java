@@ -4,8 +4,7 @@ import java.util.Objects;
 
 /**
  * basic Point for RayTracing project in 3D
- *
- * @author Eliezer
+ * contains coordinates in 3 planes
  */
 public class Point3D {
     final Coordinate _x;
@@ -16,16 +15,23 @@ public class Point3D {
     public final static Point3D ZERO = new Point3D(0d, 0d, 0d);
 
     /**
-     * consructor for Point3D
+     * constructor for Point3D
      *
      * @param x coordinate for X axis
-     * @param y
-     * @param z
+     * @param y coordinate for Y axis
+     * @param z coordinate for Z axis
      */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
         this(x.coord, y.coord, z.coord);
     }
 
+    /**
+     * constructor for Point3D
+     *
+     * @param x double value for X axis
+     * @param y double value for Y axis
+     * @param z double value for Z axis
+     */
     public Point3D(double x, double y, double z) {
         _x = new Coordinate(x);
         _y = new Coordinate(y);
@@ -46,8 +52,9 @@ public class Point3D {
     }
 
     /**
-     * @param other
-     * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2
+     * calculates square of the distance of current point from a given point
+     * @param other - the point to calculate distance from
+     * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2 - according to distance formula
      */
     public double distanceSquared(Point3D other) {
         final double x1 = _x.coord;
@@ -66,13 +73,20 @@ public class Point3D {
     }
 
     /**
-     * @param point3D
-     * @return euclidean distance between 2  3D points
+     * calculates the distance of current point from a given point.
+     * uses the function of squared distance (DRY)
+     * @param point3D - the point to calculate distance from
+     * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2 - according to distance formula
      */
     public double distance(Point3D point3D) {
         return Math.sqrt(distanceSquared(point3D));
     }
 
+    /**
+     * calculates a vector to a given point
+     * @param pt2 - second point
+     * @return the subtraction between points
+     */
     public Vector subtract(Point3D pt2) {
         if (pt2.equals(this)) {
             throw new IllegalArgumentException("cannot create Vector to Point(0,0,0)");
@@ -85,10 +99,9 @@ public class Point3D {
     }
 
     /**
-     * TO DO
-     *
-     * @param vector
-     * @return
+     * adds a vector to current point and return its edge
+     * @param vector - to be added
+     * @return new vector end
      */
     public Point3D add(Vector vector) {
         return new Point3D(

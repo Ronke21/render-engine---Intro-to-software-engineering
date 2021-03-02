@@ -2,15 +2,28 @@ package geometries;
 
 import primitives.Ray;
 
+/**
+ * this class represents a Cylinder in the space - kind of long tube.
+ * has height = length of tube.
+ */
 public class Cylinder extends Tube {
 
     double height;
 
+    /**
+     * constructor for cylinder.
+     * @param axisRay - ray for base tube
+     * @param radius = radius of base tube
+     * @param height - length of cylinder
+     */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
         this.height = height;
     }
 
+    /**
+     * getter
+     */
     public double getHeight() {
         return height;
     }

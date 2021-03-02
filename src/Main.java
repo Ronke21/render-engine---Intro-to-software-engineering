@@ -5,7 +5,11 @@ import static primitives.Util.*;
 /**
  * Test program for the 1st stage
  *
- * @author Dan Zilberstein
+ * @author of class: Dan Zilberstein
+ *
+ * @author of exercise:
+ *          Amihay Hassan,  206291544,   amihassan2@gmail.com
+ *          Ron Keinan,     203735857,   ronke21@gmail.com
  */
 public final class Main {
 
