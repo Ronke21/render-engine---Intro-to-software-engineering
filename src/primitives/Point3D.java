@@ -13,7 +13,7 @@ public class Point3D {
     final Coordinate _z;
 
     // (0,0,0)
-    final static Point3D ZERO = new Point3D(0d, 0d, 0d);
+    public final static Point3D ZERO = new Point3D(0d, 0d, 0d);
 
     /**
      * consructor for Point3D
