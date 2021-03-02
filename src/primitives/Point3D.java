@@ -78,9 +78,9 @@ public class Point3D {
             throw new IllegalArgumentException("cannot create Vector to Point(0,0,0)");
         }
         return new Vector(new Point3D(
-                pt2._x.coord - _x.coord,
-                pt2._y.coord - _y.coord,
-                pt2._z.coord - _z.coord
+                _x.coord - pt2._x.coord,
+                _y.coord - pt2._y.coord,
+                _z.coord - pt2._z.coord
         ));
     }
 

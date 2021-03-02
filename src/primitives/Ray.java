@@ -22,7 +22,7 @@ public class Ray {
 
     @Override
     public String toString() {
-        return "Ray : " + p0 + " ," + dir._head;
+        return "Ray : (" + p0 + ") ,(" + dir._head + ")";
     }
 
     @Override
