@@ -23,22 +23,25 @@ public class Plane implements Geometry{
 
     /**
      *      * constructor for plane. receives 3 points.
-     * @param vertex - first point
-     * @param vertex1 - second point
-     * @param vertex2 - third point
+     * @param p1 - first point
+     * @param p2 - second point
+     * @param p3 - third point
      */
-    public Plane(Point3D vertex, Point3D vertex1, Point3D vertex2) {
-        _q0 = vertex;
-        _normal = null;
-    }
+    public Plane(Point3D p1, Point3D p2, Point3D p3) {
+        _q0 = p1;
 
-    public Vector getNormal() {
-        //tODO
-        return _normal;
+        Vector U = p2.subtract(p1);
+        Vector V = p3.subtract(p1);
+
+        Vector N = U.crossProduct(V);
+
+        N.normalize();
+
+        _normal = N;
     }
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        return _normal;
     }
 }

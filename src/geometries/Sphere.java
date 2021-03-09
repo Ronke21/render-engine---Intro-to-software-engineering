@@ -9,8 +9,8 @@ import primitives.Vector;
  */
 public class Sphere implements Geometry {
 
-    Point3D center;
-    double radius;
+    final Point3D _center;
+    final double _radius;
 
     /**
      * constructor.
@@ -18,31 +18,36 @@ public class Sphere implements Geometry {
      * @param radius - radius of sphere
      */
     public Sphere(Point3D center, double radius) {
-        this.center = center;
-        this.radius = radius;
+        _center = center;
+        _radius = radius;
     }
 
     /**
      * getter
      */
     public Point3D getCenter() {
-        return center;
+        return _center;
     }
 
     /**
      * getter
      */
     public double getRadius() {
-        return radius;
+        return _radius;
     }
 
     @Override
     public String toString() {
-        return "(" + center + ", " + radius + ")";
+        return "(" + _center + ", " + _radius + ")";
     }
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+
+        Vector N = point.subtract(_center);
+
+        N.normalize();
+
+        return N;
     }
 }

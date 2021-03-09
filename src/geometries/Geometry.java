@@ -9,8 +9,8 @@ import primitives.Vector;
 public interface Geometry {
     /**
      * function that receive a point in a body and return a normal in this point to the body
-     * @param point
-     * @return
+     * @param point point pointing in the direction of the normal
+     * @return normal vector to the Geometry
      */
     Vector getNormal(Point3D point);
 }

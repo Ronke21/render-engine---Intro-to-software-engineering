@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /**
  * basic Point for RayTracing project in 3D
  * contains coordinates in 3 planes
@@ -22,21 +20,26 @@ public class Point3D {
      * @param z coordinate for Z axis
      */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-        this(x.coord, y.coord, z.coord);
+//        this(x._coord, y._coord, z._coord);
+        //for performance improvement
+        _x = x;
+        _y = y;
+        _z = z;
     }
 
     /**
-     * constructor for Point3D
+     * primary constructor for Point3D
      *
      * @param x double value for X axis
      * @param y double value for Y axis
      * @param z double value for Z axis
      */
     public Point3D(double x, double y, double z) {
+//        this(new Coordinate(x),new Coordinate(y),new Coordinate(z));
         _x = new Coordinate(x);
         _y = new Coordinate(y);
         _z = new Coordinate(z);
-    }
+     }
 
     @Override
     public boolean equals(Object o) {
@@ -53,17 +56,18 @@ public class Point3D {
 
     /**
      * calculates square of the distance of current point from a given point
+     *
      * @param other - the point to calculate distance from
      * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2 - according to distance formula
      */
     public double distanceSquared(Point3D other) {
-        final double x1 = _x.coord;
-        final double y1 = _y.coord;
-        final double z1 = _z.coord;
+        final double x1 = _x._coord;
+        final double y1 = _y._coord;
+        final double z1 = _z._coord;
 
-        final double x2 = other._x.coord;
-        final double y2 = other._y.coord;
-        final double z2 = other._z.coord;
+        final double x2 = other._x._coord;
+        final double y2 = other._y._coord;
+        final double z2 = other._z._coord;
 
         final double dx = x2 - x1;
         final double dy = y2 - y1;
@@ -75,6 +79,7 @@ public class Point3D {
     /**
      * calculates the distance of current point from a given point.
      * uses the function of squared distance (DRY)
+     *
      * @param point3D - the point to calculate distance from
      * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2 - according to distance formula
      */
@@ -84,6 +89,7 @@ public class Point3D {
 
     /**
      * calculates a vector to a given point
+     *
      * @param pt2 - second point
      * @return the subtraction between points
      */
@@ -92,22 +98,23 @@ public class Point3D {
             throw new IllegalArgumentException("cannot create Vector to Point(0,0,0)");
         }
         return new Vector(new Point3D(
-                _x.coord - pt2._x.coord,
-                _y.coord - pt2._y.coord,
-                _z.coord - pt2._z.coord
+                _x._coord - pt2._x._coord,
+                _y._coord - pt2._y._coord,
+                _z._coord - pt2._z._coord
         ));
     }
 
     /**
      * adds a vector to current point and return its edge
+     *
      * @param vector - to be added
      * @return new vector end
      */
     public Point3D add(Vector vector) {
         return new Point3D(
-                _x.coord + vector._head._x.coord,
-                _y.coord + vector._head._y.coord,
-                _z.coord + vector._head._z.coord
+                _x._coord + vector._head._x._coord,
+                _y._coord + vector._head._y._coord,
+                _z._coord + vector._head._z._coord
         );
     }
 }

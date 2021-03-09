@@ -7,8 +7,8 @@ import java.util.Objects;
  * has a starting point p0 and a vector from it to the edge of ray.
  */
 public class Ray {
-    Point3D p0;
-    Vector dir;
+    final  Point3D _p0;
+    final  Vector _dir;
 
     /**
      * constructor for ray. receives starting point and vector and sets them. sets the vector normalized
@@ -16,27 +16,27 @@ public class Ray {
      * @param dir - direction vector
      */
     public Ray(Point3D p0, Vector dir) {
-        this.p0 = p0;
-        this.dir = dir.normalized();
+        _p0 = p0;
+        _dir = dir.normalized();
     }
 
     /**
      * getter
      */
     public Point3D getP0() {
-        return p0;
+        return _p0;
     }
 
     /**
      * getter
      */
     public Vector getDir() {
-        return dir;
+        return _dir;
     }
 
     @Override
     public String toString() {
-        return "Ray : (" + p0 + ") ,(" + dir._head + ")";
+        return "Ray : (" + _p0 + ") ,(" + _dir._head + ")";
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Ray {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
-        return Objects.equals(p0, ray.p0) && Objects.equals(dir, ray.dir);
+        return Objects.equals(_p0, ray._p0) && Objects.equals(_dir, ray._dir);
     }
 
 }
