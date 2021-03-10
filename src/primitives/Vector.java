@@ -185,7 +185,12 @@ public class Vector {
      * @return - a new normalized vector
      */
     public Vector normalized() {
-        return new Vector(normalize()._head);
+
+        Vector vec = new Vector(this._head);
+
+        vec.normalize();
+
+        return vec;
     }
 
     //getter
