@@ -91,19 +91,21 @@ class VectorTest {
 
     @Test
     void lengthSquared() {
-
         // ============ Equivalence Partitions Tests ==============
+        int length = 56;
+
         // Test that length squared is proper
-        assertEquals(56, v2.lengthSquared(), "ERROR: lengthSquared() wrong value");
+        assertEquals(length, v2.lengthSquared(), "ERROR: lengthSquared() wrong value");
 
     }
 
     @Test
     void length() {
-
         // ============ Equivalence Partitions Tests ==============
+        int length = 56;
+
         // Test that length is proper
-        assertEquals(56, v2.lengthSquared(), "ERROR: length() wrong value");
+        assertEquals(length, v2.lengthSquared(), "ERROR: length() wrong value");
 
     }
 
@@ -111,7 +113,8 @@ class VectorTest {
     void normalize() {
 
         // ============ Equivalence Partitions Tests ==============
-        Vector v3 = v1.scale(1/Math.sqrt(14));
+        double len = v1.length();
+        Vector v3 = v1.scale(1/len);
         v1.normalize();
 
         // Test that result of normalize is proper
@@ -123,7 +126,8 @@ class VectorTest {
     void normalized() {
 
         // ============ Equivalence Partitions Tests ==============
-        Vector v3 = v1.scale(1/Math.sqrt(14));
+        double len = v1.length();
+        Vector v3 = v1.scale(1/len);
 
         // Test that result of normalized is proper
         assertEquals(v3, v1.normalized(), "ERROR: normalized() wrong value");

@@ -2,23 +2,22 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SphereTest {
-
+class CylinderTest {
 
     @Test
     void getNormal() {
 
         // ============ Equivalence Partitions Tests ==============
-        Sphere sp = new Sphere(new Point3D(0,0,0), 1);
-        Vector N = sp.getNormal(new Point3D(2,2,2));
-        double sq = Math.sqrt(1/3d);
+        Ray ray = new Ray(new Point3D(0,1,0), new Vector(0,1,0));
+        Cylinder cl = new Cylinder(ray, 2, 100);
 
         // Test that result of getNormal is proper
-        assertEquals(N, new Vector(sq,sq,sq));
+        assertEquals(cl.getNormal(new Point3D(0,0,0)), new Vector(0,-1,0));
 
     }
 }
