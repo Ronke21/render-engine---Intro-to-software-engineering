@@ -5,8 +5,14 @@ import primitives.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for geometries.Tube class
+ */
 class TubeTest {
 
+    /**
+     * Test method for {@link geometries.Tube#getNormal(primitives.Point3D)}.
+     */
     @Test
     void getNormal() {
 

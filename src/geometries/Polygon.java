@@ -83,15 +83,18 @@ public class Polygon implements Geometry {
     }
 
     public List<Point3D> getVertices() {
+
         return vertices;
     }
 
     public Plane getPlane() {
+
         return plane;
     }
 
     @Override
     public String toString() {
+
         return "(vertices=" + vertices + ")" + ", plane=" + plane + ")";
     }
 

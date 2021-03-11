@@ -1,14 +1,18 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for geometries.Cylinder class
+ */
 class CylinderTest {
 
+    /**
+     * Test method for {@link geometries.Cylinder#getNormal(primitives.Point3D)}.
+     */
     @Test
     void getNormal() {
 
@@ -17,7 +21,7 @@ class CylinderTest {
         Cylinder cl = new Cylinder(ray, 2, 100);
 
         // Test that result of getNormal is proper
-        assertEquals(cl.getNormal(new Point3D(0,0,0)), new Vector(0,-1,0));
+        assertEquals(cl.getNormal(null), new Vector(0,1,0));
 
     }
 }

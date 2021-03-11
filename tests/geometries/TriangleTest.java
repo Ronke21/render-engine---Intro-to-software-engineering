@@ -6,8 +6,14 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for geometries.Triangle class
+ */
 class TriangleTest {
 
+    /**
+     * Test method for {@link geometries.Triangle#getNormal(primitives.Point3D)}.
+     */
     @Test
     void getNormal() {
 

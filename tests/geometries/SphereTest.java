@@ -6,9 +6,14 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for geometries.Sphere class
+ */
 class SphereTest {
 
-
+    /**
+     * Test method for {@link geometries.Sphere#getNormal(primitives.Point3D)}.
+     */
     @Test
     void getNormal() {
 

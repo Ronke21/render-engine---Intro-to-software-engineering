@@ -27,17 +27,22 @@ public class Cylinder extends Tube {
      * getter
      */
     public double getHeight() {
+
         return _height;
     }
 
     @Override
     public String toString() {
+
         return "(" + _axisRay + "," + _radius + "," + _height + ")";
     }
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        // if point is on bases:
+        return getAxisRay().getDir();
+
+
     }
 
 }
