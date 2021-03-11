@@ -9,11 +9,16 @@ import primitives.Vector;
  */
 public class Sphere implements Geometry {
 
+    /**
+     * @member _center - the center point of the sphere
+     * @member _radius - the radius of the sphere
+     */
     final Point3D _center;
     final double _radius;
 
     /**
      * constructor.
+     *
      * @param center - center of sphere
      * @param radius - radius of sphere
      */

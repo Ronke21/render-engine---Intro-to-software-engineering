@@ -139,7 +139,7 @@ public class Vector {
                 u3 * v1 - u1 * v3,
                 u1 * v2 - u2 * v1
         );
-        if (newhead.equals(ZERO)){
+        if (newhead.equals(ZERO)) {
             throw new IllegalArgumentException("cross product resulting Zero point head");
         }
         return new Vector(newhead);
