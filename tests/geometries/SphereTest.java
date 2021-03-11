@@ -25,5 +25,6 @@ class SphereTest {
         // Test that result of getNormal is proper
         assertEquals(N, new Vector(sq,sq,sq));
 
+        // meaningless change for commit
     }
 }
