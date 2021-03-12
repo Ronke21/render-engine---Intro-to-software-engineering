@@ -18,11 +18,15 @@ class TriangleTest {
     void getNormal() {
 
         // ============ Equivalence Partitions Tests ==============
-        Triangle testT = new Triangle(new Point3D(1,0,0), new Point3D(0,1,0),new Point3D(0,0,1));
-        double sq = Math.sqrt(1/3d);
+        Triangle testT = new Triangle(
+                new Point3D(1, 0, 0),
+                new Point3D(0, 1, 0),
+                new Point3D(0, 0, 1)
+        );
+        double sq = Math.sqrt(1 / 3d);
 
         // Test that result of getNormal is proper
-        assertEquals(testT.getNormal(new Point3D(1,0,0)), new Vector(sq,sq,sq));
+        assertEquals(testT.getNormal(new Point3D(1, 0, 0)), new Vector(sq, sq, sq));
 
     }
 }

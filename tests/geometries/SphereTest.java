@@ -18,13 +18,12 @@ class SphereTest {
     void getNormal() {
 
         // ============ Equivalence Partitions Tests ==============
-        Sphere sp = new Sphere(new Point3D(0,0,0), 1);
-        Vector N = sp.getNormal(new Point3D(2,2,2));
-        double sq = Math.sqrt(1/3d);
+        Sphere sp = new Sphere(new Point3D(0, 0, 0), 1);
+        double sq = Math.sqrt(1 / 3d);
+        Vector N = sp.getNormal(new Point3D(sq, sq, sq));
 
         // Test that result of getNormal is proper
-        assertEquals(N, new Vector(sq,sq,sq));
+        assertEquals(N, new Vector(sq, sq, sq));
 
-        // meaningless change for commit
     }
 }
