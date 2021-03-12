@@ -5,6 +5,11 @@ package primitives;
  * contains coordinates in 3 planes
  */
 public class Point3D {
+    /**
+     * @member _x - the coordinate on x pivot
+     * @member _y - the coordinate on y pivot
+     * @member _z - the coordinate on z pivot
+     */
     final Coordinate _x;
     final Coordinate _y;
     final Coordinate _z;

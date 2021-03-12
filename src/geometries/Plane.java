@@ -7,7 +7,10 @@ import primitives.Vector;
  * this class represents a plane in the space. contains a point in the plane and normal to the plane.
  */
 public class Plane implements Geometry{
-
+    /**
+     * @member _q0 - random point on plane
+     * @member _normal - normal to plane on q0
+     */
     final Point3D _q0;
     final Vector _normal;
 

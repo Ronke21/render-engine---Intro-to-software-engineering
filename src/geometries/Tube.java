@@ -9,6 +9,10 @@ import primitives.Vector;
  */
 public class Tube implements Geometry {
 
+    /**
+     * @member _axisRay - direction ray of tube
+     * @member _radius - the radius of the tube around the ray
+     */
     final Ray _axisRay;
     final double _radius;
 

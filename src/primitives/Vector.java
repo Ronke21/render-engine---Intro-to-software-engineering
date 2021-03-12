@@ -10,6 +10,9 @@ import static primitives.Point3D.ZERO;
  * from the (0,0,0) to its edge point - called here head
  */
 public class Vector {
+    /**
+     * @member _head - the point the vector points to from (0,0,0)
+     */
     Point3D _head;
 
     /**

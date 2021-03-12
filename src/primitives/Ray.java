@@ -7,6 +7,10 @@ import java.util.Objects;
  * has a starting point p0 and a vector from it to the edge of ray.
  */
 public class Ray {
+    /**
+     * @member _dir - the point the Ray points to from p0
+     * @member _p0 - starting point of Ray
+     */
     final  Point3D _p0;
     final  Vector _dir;
 

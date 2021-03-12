@@ -9,7 +9,9 @@ import primitives.Vector;
  * has height = length of tube.
  */
 public class Cylinder extends Tube {
-
+    /**
+     * @member _height - the length of the cylinder from base to base
+     */
     final double _height;
 
     /**
