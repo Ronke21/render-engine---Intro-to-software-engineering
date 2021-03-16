@@ -1,12 +1,15 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * this class represents a plane in the space. contains a point in the plane and normal to the plane.
  */
-public class Plane implements Geometry{
+public class Plane extends FlatGeometry implements Geometry{
     /**
      * @member _q0 - random point on plane
      * @member _normal - normal to plane on q0
@@ -52,5 +55,10 @@ public class Plane implements Geometry{
     public Vector getNormal(Point3D point) {
 
         return getNormal();
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

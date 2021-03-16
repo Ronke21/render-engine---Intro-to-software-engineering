@@ -12,7 +12,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends FlatGeometry implements Geometry {
     /**
      * List of polygon's vertices
      */
@@ -101,5 +101,10 @@ public class Polygon implements Geometry {
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal(null);
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

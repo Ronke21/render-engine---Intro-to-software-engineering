@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * this class represents a Cylinder in the space - kind of long tube.
  * has height = length of tube.
@@ -23,8 +25,13 @@ public class Cylinder extends Tube {
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
+        if (height<=0) {
+            throw new IllegalArgumentException("height can't be negative");
+        }
         _height = height;
     }
+
+
 
     /**
      * getter
@@ -73,6 +80,11 @@ public class Cylinder extends Tube {
         }
 
 
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return super.findIntersections(ray);
     }
 
 }

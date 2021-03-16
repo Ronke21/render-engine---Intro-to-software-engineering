@@ -4,6 +4,10 @@ import javax.naming.OperationNotSupportedException;
 import java.util.Objects;
 
 import static primitives.Point3D.ZERO;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
+import primitives.Util.*;
 
 /**
  * this class represents a vector in the 3d space,
@@ -173,11 +177,32 @@ public class Vector {
      * @return - this normalized vector
      */
     public Vector normalize() {
-        this._head = new Point3D(
-                _head._x._coord / length(),
-                _head._y._coord / length(),
-                _head._z._coord / length()
-        );
+//        double len = alignZero(1/length());
+//        if(isZero(len)){
+//        }
+//
+//
+//        this._head = new Point3D(
+//                _head._x._coord / length(),
+//                _head._y._coord / length(),
+//                _head._z._coord / length()
+//        );
+
+        double len = length();
+
+        double x = _head._x._coord;
+        double y = _head._y._coord;
+        double z = _head._z._coord;
+
+        Point3D temp = new Point3D(x/len, y/len, z/len);
+
+        if (ZERO.equals(temp)){
+            throw new ArithmeticException(("can not normalize vector 0"));
+
+        }
+
+        this._head=temp;
+
         return this;
     }
 
