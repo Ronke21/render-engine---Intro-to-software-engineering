@@ -9,6 +9,7 @@ import static primitives.Util.*;
  * @author Dan Zilberstein
  * @version 5780B updated according to new requirements
  */
+
 public final class Coordinate {
     /**
      * Coordinate value, intentionally "package-friendly" due to performance
@@ -36,8 +37,4 @@ public final class Coordinate {
         return isZero(_coord - other._coord);
     }
 
-    @Override
-    public String toString() {
-        return "" + _coord;
-    }
 }

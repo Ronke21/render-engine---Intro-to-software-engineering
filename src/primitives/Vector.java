@@ -1,6 +1,5 @@
 package primitives;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.Objects;
 
 import static primitives.Point3D.ZERO;
