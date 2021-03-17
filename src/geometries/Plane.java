@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * this class represents a plane in the space. contains a point in the plane and normal to the plane.
  */
-public class Plane extends FlatGeometry implements Geometry{
+public class Plane extends FlatGeometry implements Geometry {
     /**
      * @member _q0 - random point on plane
      * @member _normal - normal to plane on q0
@@ -19,7 +19,8 @@ public class Plane extends FlatGeometry implements Geometry{
 
     /**
      * constructor for plane.
-     * @param q0 - random point in the plane.
+     *
+     * @param q0     - random point in the plane.
      * @param normal - normal to plane in the q0 point.
      */
     public Plane(Point3D q0, Vector normal) {
@@ -28,7 +29,8 @@ public class Plane extends FlatGeometry implements Geometry{
     }
 
     /**
-     *      * constructor for plane. receives 3 points.
+     * * constructor for plane. receives 3 points.
+     *
      * @param p1 - first point
      * @param p2 - second point
      * @param p3 - third point

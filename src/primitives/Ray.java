@@ -11,12 +11,13 @@ public class Ray {
      * @member _dir - the point the Ray points to from p0
      * @member _p0 - starting point of Ray
      */
-    final  Point3D _p0;
-    final  Vector _dir;
+    final Point3D _p0;
+    final Vector _dir;
 
     /**
      * constructor for ray. receives starting point and vector and sets them. sets the vector normalized
-     * @param p0 - starting point
+     *
+     * @param p0  - starting point
      * @param dir - direction vector
      */
     public Ray(Point3D p0, Vector dir) {
@@ -36,6 +37,21 @@ public class Ray {
      */
     public Vector getDir() {
         return _dir;
+    }
+
+    /**
+     * function to get a point on the ray which its coordinates are scaled by a number (t)
+     *
+     * @param t (scaler on the direction)
+     * @return point on the ray which its coordinates are scaled by a number (t)
+     */
+    public Point3D getPoint(double t) {
+        if (t <= 0) {
+            throw new IllegalArgumentException("t must be bigger than 0");
+        }
+        Vector v = _dir;
+        Point3D p = _p0.add(v.scale(t)); // P = P0 + t * v
+        return p;
     }
 
     @Override

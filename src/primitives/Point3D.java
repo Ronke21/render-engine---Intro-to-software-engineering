@@ -44,7 +44,7 @@ public class Point3D {
         _x = new Coordinate(x);
         _y = new Coordinate(y);
         _z = new Coordinate(z);
-     }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -122,8 +122,28 @@ public class Point3D {
                 _z._coord + vector._head._z._coord
         );
     }
+
+    /**
+     * getters for x coordinate
+     * @return _x
+     */
+    public Coordinate getX() {
+        return _x;
+    }
+
+    /**
+     * getters for y coordinate
+     * @return _y
+     */
+    public Coordinate getY() {
+        return _y;
+    }
+
+    /**
+     * getters for z coordinate
+     * @return _z
+     */
+    public Coordinate getZ() {
+        return _z;
+    }
 }
-
-// meaningless change for commit
-
-

@@ -29,20 +29,20 @@ public class Geometries implements Intersectable {
      * implements as a linked list that allows to delete members if necessary.
      * after initializing, it adds shapes to the list, by using the add method.
      *
-     * @param intersectables - shapes to be added to the constructed instance
+     * @param geometries - shapes to be added to the constructed instance
      */
-    public Geometries(Intersectable... intersectables) {
+    public Geometries(Intersectable... geometries) {
         _intersectables = new LinkedList<>();
-        add(intersectables);
+        add(geometries);
     }
 
     /**
      * a method that receive one or more shape and adds to this list.
      *
-     * @param intersectables - shapes to be added to this instance
+     * @param geometries - shapes to be added to this instance
      */
-    public void add(Intersectable... intersectables) {
-        for (Intersectable item : intersectables) {
+    public void add(Intersectable... geometries) {
+        for (Intersectable item : geometries) {
             _intersectables.add(item);
         }
     }

@@ -26,4 +26,8 @@ class SphereTest {
         assertEquals(N, new Vector(sq, sq, sq));
 
     }
+
+    @Test
+    void findIntersections() {
+    }
 }

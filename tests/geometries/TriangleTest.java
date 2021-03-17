@@ -29,4 +29,8 @@ class TriangleTest {
         assertEquals(testT.getNormal(new Point3D(1, 0, 0)), new Vector(sq, sq, sq));
 
     }
+
+    @Test
+    void findIntersections() {
+    }
 }

@@ -16,8 +16,8 @@ public abstract class RadialGeometry {
      *
      * @param radius - radius of shape
      */
-    public  RadialGeometry(double radius) {
-        if (radius<=0) {
+    public RadialGeometry(double radius) {
+        if (radius <= 0) {
             throw new IllegalArgumentException("radius can't be negative");
         }
         _radius = radius;

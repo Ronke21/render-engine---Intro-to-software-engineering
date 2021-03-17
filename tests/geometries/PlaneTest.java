@@ -30,4 +30,8 @@ class PlaneTest {
 
     }
 
+    @Test
+    void findIntersections() {
+    }
+
 }
