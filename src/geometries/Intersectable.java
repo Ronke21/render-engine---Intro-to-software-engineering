@@ -6,7 +6,7 @@ import primitives.Ray;
 import java.util.List;
 
 /**
- * Interface for Composite Design Pattern The Composite Class - Geometries The
+ * Aמ Interface for Composite Design Pattern The Composite Class - Geometries The
  * Basic Classes - all the specific geometries
  */
 public interface Intersectable {
