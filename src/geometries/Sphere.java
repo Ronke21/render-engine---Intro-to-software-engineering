@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.*;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,38 +53,51 @@ public class Sphere extends RadialGeometry implements Geometry {
         return N;
     }
 
+    /**
+     * function to find all intersections between a given ray and the sphere
+     * @param ray ray that cross the geometry
+     * @return linked list contains all of the intersection points between the ray and the sphere
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+
+        // redefine all needed variables (copied from the presentation, same names)
         Point3D O = _center;
         Point3D p0 = ray.getP0();
         double r = _radius;
         Vector v = ray.getDir();
         Vector u = O.subtract(p0);
 
-        double t_m = v.dotProduct(u);
-        double d = Math.sqrt(u.lengthSquared() - (t_m * t_m));
-        double t_h = Math.sqrt(r * r - d * d);
+        double t_m = alignZero(v.dotProduct(u));
+        double d = alignZero(Math.sqrt(u.lengthSquared() - (t_m * t_m)));
+        double t_h = alignZero(Math.sqrt(r * r - d * d));
 
+        // if d is equal to or bigger than r, there will be no intersections at all
         if (d >= r) {
             return null;
         }
 
-        double t1 = t_m + t_h;
-        double t2 = t_m - t_h;
+        double t1 = alignZero(t_m + t_h);
+        double t2 = alignZero(t_m - t_h);
 
         List<Point3D> ans = new LinkedList<Point3D>();
 
+        // t must be positive
         if (t1 > 0) {
             ans.add(ray.getPoint(t1));
         }
-        if (t2 > 0) {
+
+        // must bt positive, and significantly different from t1
+        if (t2 > 0 && !isZero(t1 - t2)) {
             ans.add(ray.getPoint(t2));
         }
 
+        // if any intersections were found, return them
         if (ans.size() > 0) {
             return ans;
         }
 
+        // else, return null
         return null;
     }
 }

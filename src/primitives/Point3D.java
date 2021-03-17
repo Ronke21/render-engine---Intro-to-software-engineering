@@ -54,9 +54,14 @@ public class Point3D {
         return _x.equals(point3D._x) && _y.equals(point3D._y) && _z.equals(point3D._z);
     }
 
+//    @Override
+//    public String toString() {
+//        return "(" + _x + "," + _y + "," + _z + ")";
+//    }
+
     @Override
     public String toString() {
-        return "(" + _x + "," + _y + "," + _z + ")";
+        return "(" + getX() + ", " + getY() + ", " + getZ() + ")";
     }
 
     /**
@@ -124,26 +129,29 @@ public class Point3D {
     }
 
     /**
-     * getters for x coordinate
+     * getters for x coordinate double value
+     *
      * @return _x
      */
-    public Coordinate getX() {
-        return _x;
+    public double getX() {
+        return _x._coord;
     }
 
     /**
-     * getters for y coordinate
+     * getters for y coordinate double value
+     *
      * @return _y
      */
-    public Coordinate getY() {
-        return _y;
+    public double getY() {
+        return _y._coord;
     }
 
     /**
-     * getters for z coordinate
+     * getters for z coordinate double value
+     *
      * @return _z
      */
-    public Coordinate getZ() {
-        return _z;
+    public double getZ() {
+        return _z._coord;
     }
 }

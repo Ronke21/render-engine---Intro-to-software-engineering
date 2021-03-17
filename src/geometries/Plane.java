@@ -4,7 +4,10 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import static primitives.Util.*;
 
 /**
  * this class represents a plane in the space. contains a point in the plane and normal to the plane.
@@ -61,6 +64,19 @@ public class Plane extends FlatGeometry implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+        Point3D Q0 = _q0;
+        Vector N = _normal;
+
+        double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
+
+        if (t > 0) {
+            List<Point3D> ans = new LinkedList<Point3D>();
+            ans.add(ray.getPoint(t));
+            return ans;
+        }
+
         return null;
     }
 }
