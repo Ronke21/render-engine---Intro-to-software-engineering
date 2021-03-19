@@ -39,6 +39,7 @@ public class Plane extends FlatGeometry implements Geometry {
      * @param p3 - third point
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
+
         _q0 = p1;
 
         Vector U = p2.subtract(p1);

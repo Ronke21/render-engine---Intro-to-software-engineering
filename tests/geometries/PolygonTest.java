@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Testing Polygons
  *
@@ -101,5 +104,6 @@ public class PolygonTest {
 
     @Test
     void findIntersections() {
+
     }
 }

@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import primitives.*;
@@ -105,6 +106,57 @@ public class Polygon extends FlatGeometry implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
+
+        Point3D p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        List<Vector> vectors = new LinkedList<>();
+        List<Vector> normalVectors = new LinkedList<>();
+
+
+        for (Point3D pt : vertices) {
+            Vector Vi = pt.subtract(p0);
+            vectors.add(Vi);
+        }
+
+        int n = vectors.size() - 1;
+
+        for (int i = 0; i < n; i++) {
+
+            Vector Vi = vectors.get(i);
+            Vector Vii = vectors.get(i + 1);
+
+            Vector Ni = (Vi.crossProduct(Vii)).normalize();
+
+            normalVectors.add(Ni);
+        }
+
+        Vector Vn = vectors.get(n);
+        Vector V1 = vectors.get(0);
+
+        Vector Nn = (Vn.crossProduct(V1)).normalize();
+
+        normalVectors.add(Nn);
+
+        List<Double> Vns = new LinkedList<>();
+
+        for (Vector N : normalVectors) {
+            double Vni = alignZero(N.dotProduct(v));
+            // one Vni equals to zero is enough to determine that we have no intersection points
+            if (isZero(Vni)) {
+                return null;
+            } else Vns.add(Vni);
+        }
+
+        // check that all of the elements
+        if (!Vns.stream().allMatch(i -> i > 0)) {
+            return null;
+        }
+        if (!Vns.stream().allMatch(i -> i < 0)) {
+            return null;
+        } else {
+            Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
+            return plane.findIntersections(ray);
+        }
     }
 }
