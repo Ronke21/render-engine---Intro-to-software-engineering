@@ -116,7 +116,7 @@ class SphereTest {
         assertEquals(TC15results, List.of(TC15intersection), "Wrong intersection point");
 
         // TC16: Ray starts at the center (1 points)
-        p_on = new Point3D(1, 0, 0);
+        p_on = new Point3D(1, 0.5, 0);
         List<Point3D> TC16results = sphere.findIntersections(new Ray(p_on, new Vector(0, 1, 0)));
         assertEquals(1, TC16results.size(), "Wrong number of points");
 

@@ -149,10 +149,7 @@ public class Polygon extends FlatGeometry implements Geometry {
         }
 
         // check that all of the elements
-        if (!Vns.stream().allMatch(i -> i > 0)) {
-            return null;
-        }
-        if (!Vns.stream().allMatch(i -> i < 0)) {
+        if (!Vns.stream().allMatch(i -> i > 0) && !Vns.stream().allMatch(i -> i < 0)) {
             return null;
         } else {
             Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));

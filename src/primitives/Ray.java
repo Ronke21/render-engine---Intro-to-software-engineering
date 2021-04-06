@@ -49,8 +49,9 @@ public class Ray {
         if (t <= 0) {
             throw new IllegalArgumentException("t must be bigger than 0");
         }
-        Vector v = _dir;
-        Point3D p = _p0.add(v.scale(t)); // P = P0 + t * v
+
+        Vector V = _dir;
+        Point3D p = _p0.add(V.scale(t)); // P = P0 + Vt
         return p;
     }
 

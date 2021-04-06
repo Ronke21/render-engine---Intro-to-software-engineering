@@ -25,12 +25,11 @@ public class Cylinder extends Tube {
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
-        if (height<=0) {
+        if (height <= 0) {
             throw new IllegalArgumentException("height can't be negative");
         }
         _height = height;
     }
-
 
 
     /**

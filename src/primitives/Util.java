@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  *
@@ -67,6 +69,18 @@ public abstract class Util {
      */
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
+    }
+
+    /**
+     * calculate the Δ of a quadratic equation
+     *
+     * @param a - The coefficient of X^2
+     * @param b - The coefficient of X
+     * @param c - The coefficient of the free variable
+     * @return Δ
+     */
+    public static double Determinant(double a, double b, double c) {
+        return alignZero(b * b - 4 * a * c);
     }
 
 }
