@@ -74,26 +74,24 @@ public class Tube extends RadialGeometry implements Geometry {
         // , is dotProduct
         // () is scale
 
-        Vector Va = _axisRay.getDir();
-        Point3D Pa = _axisRay.getP0();
+        Vector Va = _axisRay.getDir(); // tube's vector
+        Point3D Pa = _axisRay.getP0(); // tube's ray starting point
 
         double r = getRadius();
-        Point3D P = ray.getP0();
-        Vector V = ray.getDir();
+        Point3D P = ray.getP0();        // ray's starting point
+        Vector V = ray.getDir();        // ray's vector
 
-        double VVa = alignZero(V.dotProduct(Va));
+        double VVa = alignZero(V.dotProduct(Va)); // dot product off the tube's ray and ray
 
         Vector V_VVaVa;
 
         // if the ray is orthogonal to the tube's ray
         if (VVa == 0) {
-            V_VVaVa = V;
+            V_VVaVa = V; // since VVaVa is 0
         } else {
-
             Vector VVaVa = Va.scale(VVa);
-
             try {
-                V_VVaVa = V.subtract(VVaVa);
+                V_VVaVa = V.subtract(VVaVa); // might be equal to (0,0,0)
             } catch (IllegalArgumentException ex) {
                 return null;
             }
@@ -101,18 +99,20 @@ public class Tube extends RadialGeometry implements Geometry {
 
         Vector DP;
         try {
-            DP = P.subtract(Pa);
+            DP = P.subtract(Pa);    // ΔP = P - Pa = (0, 0, 0) => P and Pa starts at the same point
         } catch (IllegalArgumentException ex) {
+            // if orthogonal, the intersection point will have distance r from P
             if (VVa == 0) {
                 return List.of(ray.getPoint(r));
             }
 
-            double num = alignZero(Math.sqrt(r * r / V_VVaVa.lengthSquared()));
+            // else, calculate the distance ray <-> intersection
+            double multiplier = alignZero(Math.sqrt(r * r / V_VVaVa.lengthSquared()));
 
-            if (num == 0) {
+            if (multiplier == 0) {
                 return null;
             } else {
-                return List.of(ray.getPoint(num));
+                return List.of(ray.getPoint(multiplier));
             }
         }
 
@@ -122,29 +122,33 @@ public class Tube extends RadialGeometry implements Geometry {
 
         double DPVa = alignZero(DP.dotProduct(Va));
         Vector DPVaVa;
-        Vector DP_PVaVa;
+        Vector DP_DPVaVa;
 
+        // if orthogonal, the intersection point will have distance r from P
         if (DPVa == 0) {
-            DP_PVaVa = DP;
+            DP_DPVaVa = DP;
         } else {
+            // the part of Va from Pa to the intersection with the ray
             DPVaVa = Va.scale(DPVa);
             try {
-                DP_PVaVa = DP.subtract(DPVaVa);
+                // the part of ray from P to the intersection with the tube's ray
+                DP_DPVaVa = DP.subtract(DPVaVa);
             } catch (IllegalArgumentException ex) {
-                double num = alignZero(Math.sqrt(r * r / A));
-                if (num == 0) {
+                // else, calculate the distance ray <-> intersection
+                double multiplier = alignZero(Math.sqrt(r * r / A));
+                if (multiplier == 0) {
                     return null;
                 } else {
-                    return List.of(ray.getPoint(num));
+                    return List.of(ray.getPoint(multiplier));
                 }
             }
         }
 
         // B = 2 * ((V - ((V * Va) * Va)) * (ΔP - (ΔP * Va) * Va))
-        double B = 2 * alignZero((V_VVaVa).dotProduct(DP_PVaVa));
+        double B = 2 * alignZero((V_VVaVa).dotProduct(DP_DPVaVa));
 
         // C = (ΔP - (ΔP * Va) * Va) ^ 2 - r ^ 2
-        double C = (DP_PVaVa.lengthSquared()) - (r * r);
+        double C = (DP_DPVaVa.lengthSquared()) - (r * r);
 
         double det = Determinant(A, B, C);
 
