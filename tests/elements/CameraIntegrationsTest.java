@@ -9,6 +9,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for different integrations with camera
+ */
 public class CameraIntegrationsTest {
 
     private void testPoint3DS(Geometry geo, Camera cam, int points) {
@@ -51,6 +54,9 @@ public class CameraIntegrationsTest {
             .setDistance(1)
             .setViewPlaneSize(3, 3);
 
+    /**
+     * Test method for spheres
+     */
     @Test
     void testSphereWithCam() {
 
@@ -86,7 +92,9 @@ public class CameraIntegrationsTest {
         // =================================================================================
     }
 
-
+    /**
+     * Test method for planes
+     */
     @Test
     void testPlaneWithCam() {
 
@@ -109,6 +117,9 @@ public class CameraIntegrationsTest {
         // =================================================================================
     }
 
+    /**
+     * Test method for triangles
+     */
     @Test
     void testTriangleWithCam() {
 

@@ -5,8 +5,14 @@ import primitives.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for renderer.ImageWriter class
+ */
 class ImageWriterTest {
 
+    /**
+     * Test method for {@link renderer.ImageWriter#writeToImage()}.
+     */
     @Test
     void testWriteToImage() {
         ImageWriter imageWriter = new ImageWriter("testblue", 800, 500);
@@ -17,8 +23,13 @@ class ImageWriterTest {
 
         }
         imageWriter.writeToImage();
+
+
     }
 
+    /**
+     * Test method for {@link renderer.ImageWriter#writeToImage()}.
+     */
     @Test
     void testWriteToImage2() {
         ImageWriter imageWriter = new ImageWriter("testblue2", 800, 500);
@@ -32,7 +43,7 @@ class ImageWriterTest {
                 else if (j % 50 == 0) {
                     imageWriter.writePixel(i, j, Color.BLACK);
                 } else {
-                    imageWriter.writePixel(i, j, Color.BLUE);
+                    imageWriter.writePixel(i, j, new Color(java.awt.Color.BLUE));
                 }
             }
         }
