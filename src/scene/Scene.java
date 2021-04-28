@@ -4,34 +4,54 @@ import elements.AmbientLight;
 import geometries.Geometries;
 import primitives.Color;
 
+// imports for the xml bonus
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+
+import java.io.File;
+
+
 /**
- *this class represents a scene in the real life - containing different geometries to be seen by camera
+ * this class represents a scene in the real life - containing different geometries to be seen by camera
  */
 public class Scene {
 
     /**
      * @member _name - the point the vector points to from (0,0,0)
      * @member background -  color of background in photo
-     * @member ambientlight -  the surrounding light in the room
+     * @member ambientLight -  the surrounding light in the room
      * @member geometries - the shapes in scene
      */
-    private final String _name;
+    public final String _name;
     public Color background = Color.BLACK;
-    public AmbientLight ambientlight= new AmbientLight(new Color(192, 192, 192),1.d); ;
+    public AmbientLight ambientLight = new AmbientLight(new Color(192, 192, 192), 1.d);
+    ;
     public Geometries geometries = null;
 
     /**
      * constructor
+     *
      * @param name - name of scene
      */
     public Scene(String name) {
         _name = name;
+        geometries = new Geometries();
     }
 
-    //chaining methods
+    public Scene XMLtoScene(String path) {
+        return null;
+    }
+
+//chaining methods
 
     /**
      * setter - chaining method style
+     *
      * @param background - color of background
      * @return this instance
      */
@@ -42,16 +62,18 @@ public class Scene {
 
     /**
      * setter - chaining method style
-     * @param ambientlight - the surroundong light in room
+     *
+     * @param ambientLight - the surroundong light in room
      * @return this instance
      */
-    public Scene setAmbientLight(AmbientLight ambientlight) {
-        this.ambientlight = ambientlight;
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
         return this;
     }
 
     /**
      * setter - chaining method style
+     *
      * @param geometries - shapes in photo
      * @return this instance
      */

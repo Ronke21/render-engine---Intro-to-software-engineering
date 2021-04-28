@@ -32,16 +32,12 @@ class ImageWriterTest {
      */
     @Test
     void testWriteToImage2() {
-        ImageWriter imageWriter = new ImageWriter("testblue2", 800, 500);
+        ImageWriter imageWriter = new ImageWriter("testblue3", 800, 500);
         for (int i = 0; i < 800; i++) {
             for (int j = 0; j < 500; j++) {
-                // 800/16 = 50
-                if (i % 50 == 0) {
-                    imageWriter.writePixel(i, j, Color.BLACK);
-                }
-                // 500/10 = 50
-                else if (j % 50 == 0) {
-                    imageWriter.writePixel(i, j, Color.BLACK);
+                // 800/16 = 50 and 500/10 = 50
+                if (i % 50 == 0 || j % 50 == 0) {
+                    imageWriter.writePixel(i, j, new Color(255,0,0));
                 } else {
                     imageWriter.writePixel(i, j, new Color(java.awt.Color.BLUE));
                 }

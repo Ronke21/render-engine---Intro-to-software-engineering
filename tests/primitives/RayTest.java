@@ -20,29 +20,32 @@ class RayTest {
 
         Ray ray = new Ray(Point3D.ZERO, new Vector(0, 0, 1));
 
-
-
-
         // ============ Equivalence Partitions Tests ==============
-        //TC01 -
+        // TC01 - the closest point is in the middle of the list
 
-        List<Point3D> list = new LinkedList<Point3D>();
-        list.add(new Point3D(-1000, 90, 100));
-        list.add(new Point3D(50, 48, 1000));
-        list.add(new Point3D(0,5,1));
-        list.add(new Point3D(-20, 60, 50));
-        list.add(new Point3D(0, 0, -90));
+        List<Point3D> list = new LinkedList<>() {{
+            add(new Point3D(-1000, 90, 100));
+            add(new Point3D(50, 48, 1000));
+            add(new Point3D(0, 5, 1));
+            add(new Point3D(-20, 60, 50));
+            add(new Point3D(0, 0, -90));
+        }};
 
-
-        assertEquals(list.get(2), ray.findClosestPoint(list), "not enough points!");
+        assertEquals(list.get(2), ray.findClosestPoint(list), "wrong point!");
 
         // =============== Boundary Values Tests ==================
-        //TC10 - no intersection points
+        //TC11 - no points
         assertNull(ray.findClosestPoint(null), "supposed to be null!");
 
+        //TC21 - the closest point is at the end of the list
+        list.add(new Point3D(0, 0, 3));
+        assertEquals(list.get(list.size() - 1), ray.findClosestPoint(list), "wrong point!");
+
+        //TC22 - the closest point is at the beginning of the list
+        list.add(0, Point3D.ZERO);
+        assertEquals(list.get(0), ray.findClosestPoint(list), "wrong point!");
+
     }
-
-
 
 
 }

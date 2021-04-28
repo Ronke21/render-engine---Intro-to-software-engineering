@@ -58,26 +58,27 @@ public class Ray {
 
     /**
      * find the closest Point to Ray
+     *
      * @param points3DList List of intersections point
      * @return the closest point
      */
-    public Point3D findClosestPoint(List<Point3D> points3DList){
+    public Point3D findClosestPoint(List<Point3D> points3DList) {
         double distance = Double.POSITIVE_INFINITY;
-        Point3D nearPoint =null;
+        Point3D nearPoint = null;
 
-        if (points3DList==null){
+        if (points3DList == null) {
             return null;
         }
 
-        for (Point3D p: points3DList) {
-            double dis = p.distance(_p0);
-            if(dis < distance){
-                distance =dis;
-                nearPoint =p;
+        for (Point3D p : points3DList) {
+            double dis = p.distance(_p0); // distance from the starting point of the ray
+            if (dis < distance) {
+                distance = dis;
+                nearPoint = p;
             }
         }
 
-        return  nearPoint;
+        return nearPoint;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Color {
 
     // also can be new Color(java.awt.Color.WHITE)
     public static final Color BLACK = new Color();
+    public static final Color BLUE = new Color(java.awt.Color.BLUE);
 
     /**
      * Default constructor - to generate Black Color (privately)
