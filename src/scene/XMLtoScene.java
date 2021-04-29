@@ -97,56 +97,60 @@ public class XMLtoScene {
                     scene.setAmbientLight(new AmbientLight(new Color(backgroundR, backgroundG, backgroundB), 1));
                 }
 
+                // create empty geometries list to store all the geometries used in the scene
+                Geometries geometriesList = new Geometries();
 
                 // get the child element of scene contains the geometries
                 NodeList geometries = elem.getElementsByTagName("geometries");
                 Node geo = geometries.item(0);
 
+
                 // cast geo to Element
                 Element geoElem = (Element) geo;
 
-                NodeList geoElemChildren = geoElem.getChildNodes();
 
-                // create empty geometries list to store all the geometries used in the scene
-                Geometries geometriesList = new Geometries();
+                NodeList sphereNL = geoElem.getElementsByTagName("sphere");
 
-                Node tempNode;
-                Element tempElem;
+                for (int i = 0; i < sphereNL.getLength(); i++) {
 
-                // loop on all the elements and add them to the list
-                for (int i = 0; i < geoElemChildren.getLength(); i++) {
+                    Node sphereN = sphereNL.item(0);
 
-                    tempNode = geoElemChildren.item(i);
-                    tempElem = (Element) tempNode;
+                    Element sphereElem = (Element) sphereN;
 
-                    switch (tempElem.getTagName()) {
+                    String[] centerStr = (sphereElem.getAttribute("center")).split(" ");
+                    String radiusStr = sphereElem.getAttribute("radius");
 
-                        case "sphere": {
+                    Point3D center = new Point3D(
+                            Double.parseDouble(centerStr[0]),
+                            Double.parseDouble(centerStr[1]),
+                            Double.parseDouble(centerStr[2])
+                    );
 
-                            double rad = Double.parseDouble(tempElem.getAttribute("radius"));
+                    double radius = Double.parseDouble(radiusStr);
 
-                            String[] coordinates = tempElem.getAttribute("center").split(" ");
-
-                            Point3D center = new Point3D(
-                                    Double.parseDouble(coordinates[0]),
-                                    Double.parseDouble(coordinates[1]),
-                                    Double.parseDouble(coordinates[2])
-                            );
-
-                            Sphere sphere = new Sphere(center, rad);
-
-                            geometriesList.add(sphere);
-
-                            break;
-                        }
-
-                    }
-
+                    geometriesList.add(new Sphere(center, radius));
                 }
+
+
+                NodeList triangleNL = geoElem.getElementsByTagName("triangle");
+
+                for (int i = 0; i < triangleNL.getLength(); i++) {
+
+                    Node triangleN = triangleNL.item(5);
+
+                    Element triangleElem = (Element) triangleN;
+                }
+
+
+
+                //TODO
+                // finish reading triangle and add to list
+                // full implementation to plane
+                // tests
+
 
                 scene.setGeometries(geometriesList);
             }
-
 
 
         } catch (SAXException | IOException e) {
