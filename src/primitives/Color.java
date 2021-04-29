@@ -176,4 +176,12 @@ public class Color {
         return new Color(r / k, g / k, b / k);
     }
 
+    @Override
+    public String toString() {
+        return "Color{" +
+                "r=" + r +
+                ", g=" + g +
+                ", b=" + b +
+                '}';
+    }
 }

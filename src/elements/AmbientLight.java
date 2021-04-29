@@ -30,4 +30,10 @@ public class AmbientLight {
         return _intensity;
     }
 
+    @Override
+    public String toString() {
+        return "AmbientLight{" +
+                "_intensity=" + _intensity +
+                '}';
+    }
 }

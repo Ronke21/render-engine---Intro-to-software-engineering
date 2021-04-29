@@ -67,4 +67,11 @@ public class Geometries implements Intersectable {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Geometries{" +
+                "_intersectables=" + _intersectables +
+                '}';
+    }
 }

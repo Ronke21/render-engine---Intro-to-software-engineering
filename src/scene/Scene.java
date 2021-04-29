@@ -30,7 +30,6 @@ public class Scene {
     public final String _name;
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = new AmbientLight(new Color(192, 192, 192), 1.d);
-    ;
     public Geometries geometries = null;
 
     /**
@@ -43,9 +42,6 @@ public class Scene {
         geometries = new Geometries();
     }
 
-    public Scene XMLtoScene(String path) {
-        return null;
-    }
 
 //chaining methods
 
@@ -82,4 +78,14 @@ public class Scene {
         return this;
     }
 
+
+    @Override
+    public String toString() {
+        return "Scene{" +
+                "_name='" + _name + '\'' +
+                ", background=" + background +
+                ", ambientLight=" + ambientLight +
+                ", geometries=" + geometries +
+                '}';
+    }
 }
