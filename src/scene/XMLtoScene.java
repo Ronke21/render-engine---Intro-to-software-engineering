@@ -1,13 +1,12 @@
 package scene;
 
 import elements.AmbientLight;
-import geometries.Geometries;
-import geometries.Geometry;
-import geometries.Sphere;
+import geometries.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,13 +20,120 @@ import java.io.IOException;
 
 public class XMLtoScene {
 
+    static Scene scene;
+
+    /**
+     * get a node list contains planes,them to be in the geometries list of scene
+     *
+     * @param planeNL - node list from the XML file contains planes as nodes
+     */
+    public static void AddPlanesToScene(NodeList planeNL) {
+
+        Geometries geometriesList = scene.geometries;
+
+        for (int i = 0; i < planeNL.getLength(); i++) {
+
+            Node planeN = planeNL.item(i);
+
+            Element planeElem = (Element) planeN;
+
+            String[] q0Str = (planeElem.getAttribute("q0")).split(" ");
+            String[] normalStr = (planeElem.getAttribute("normal")).split(" ");
+
+            Point3D q0 = new Point3D(
+                    Double.parseDouble(q0Str[0]),
+                    Double.parseDouble(q0Str[1]),
+                    Double.parseDouble(q0Str[2])
+            );
+
+            Vector normal = new Vector(
+                    Double.parseDouble(normalStr[0]),
+                    Double.parseDouble(normalStr[1]),
+                    Double.parseDouble(normalStr[2])
+            );
+
+            geometriesList.add(new Plane(q0, normal));
+        }
+    }
+
+    /**
+     * get a node list contains spheres,them to be in the geometries list of scene
+     *
+     * @param sphereNL - node list from the XML file contains spheres as nodes
+     */
+    public static void AddSpheresToScene(NodeList sphereNL) {
+
+        Geometries geometriesList = scene.geometries;
+
+        for (int i = 0; i < sphereNL.getLength(); i++) {
+
+            Node sphereN = sphereNL.item(i);
+
+            Element sphereElem = (Element) sphereN;
+
+            String[] centerStr = (sphereElem.getAttribute("center")).split(" ");
+            String radiusStr = sphereElem.getAttribute("radius");
+
+            Point3D center = new Point3D(
+                    Double.parseDouble(centerStr[0]),
+                    Double.parseDouble(centerStr[1]),
+                    Double.parseDouble(centerStr[2])
+            );
+
+            double radius = Double.parseDouble(radiusStr);
+
+            geometriesList.add(new Sphere(center, radius));
+        }
+    }
+
+    /**
+     * get a node list contains triangles,them to be in the geometries list of scene
+     *
+     * @param triangleNL - node list from the XML file contains triangles as nodes
+     */
+    public static void AddTrianglesToScene(NodeList triangleNL) {
+
+        Geometries geometriesList = scene.geometries;
+
+        for (int i = 0; i < triangleNL.getLength(); i++) {
+
+            Node triangleN = triangleNL.item(i);
+            Element triangleElem = (Element) triangleN;
+
+            String[] P0 = (triangleElem.getAttribute("p0")).split(" ");
+            String[] P1 = (triangleElem.getAttribute("p1")).split(" ");
+            String[] P2 = (triangleElem.getAttribute("p2")).split(" ");
+
+            Triangle triangle = new Triangle(
+                    new Point3D(
+                            Double.parseDouble(P0[0]),
+                            Double.parseDouble(P0[1]),
+                            Double.parseDouble(P0[2])
+                    ),
+                    new Point3D(
+                            Double.parseDouble(P1[0]),
+                            Double.parseDouble(P1[1]),
+                            Double.parseDouble(P1[2])
+                    ),
+                    new Point3D(
+                            Double.parseDouble(P2[0]),
+                            Double.parseDouble(P2[1]),
+                            Double.parseDouble(P2[2])
+                    )
+            );
+
+            geometriesList.add(triangle);
+        }
+    }
+
+
     public static Scene ReadScene(String file) {
 
         // read file using DOM
 
         File xmlDocument = new File(file);
 
-        Scene scene = new Scene(xmlDocument.getName());
+        scene = new Scene(xmlDocument.getName());
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuild = null;
@@ -66,9 +172,6 @@ public class XMLtoScene {
                 var backgroundR = Double.parseDouble(backgroundRGB[0]);
                 var backgroundG = Double.parseDouble(backgroundRGB[1]);
                 var backgroundB = Double.parseDouble(backgroundRGB[2]);
-                System.out.println(backgroundR);
-                System.out.println(backgroundG);
-                System.out.println(backgroundB);
 
                 // set the background color
                 scene.setBackground(new Color(backgroundR, backgroundG, backgroundB));
@@ -89,12 +192,9 @@ public class XMLtoScene {
                     double ambientR = Double.parseDouble(ambientRGB[0]);
                     double ambientG = Double.parseDouble(ambientRGB[1]);
                     double ambientB = Double.parseDouble(ambientRGB[2]);
-                    System.out.println(ambientR);
-                    System.out.println(ambientG);
-                    System.out.println(ambientB);
 
                     // set the ambient light color
-                    scene.setAmbientLight(new AmbientLight(new Color(backgroundR, backgroundG, backgroundB), 1));
+                    scene.setAmbientLight(new AmbientLight(new Color(ambientR, ambientG, ambientB), 1));
                 }
 
                 // create empty geometries list to store all the geometries used in the scene
@@ -108,48 +208,15 @@ public class XMLtoScene {
                 // cast geo to Element
                 Element geoElem = (Element) geo;
 
-
+                // read all lists of shapes and store in a node list
                 NodeList sphereNL = geoElem.getElementsByTagName("sphere");
-
-                for (int i = 0; i < sphereNL.getLength(); i++) {
-
-                    Node sphereN = sphereNL.item(0);
-
-                    Element sphereElem = (Element) sphereN;
-
-                    String[] centerStr = (sphereElem.getAttribute("center")).split(" ");
-                    String radiusStr = sphereElem.getAttribute("radius");
-
-                    Point3D center = new Point3D(
-                            Double.parseDouble(centerStr[0]),
-                            Double.parseDouble(centerStr[1]),
-                            Double.parseDouble(centerStr[2])
-                    );
-
-                    double radius = Double.parseDouble(radiusStr);
-
-                    geometriesList.add(new Sphere(center, radius));
-                }
-
-
                 NodeList triangleNL = geoElem.getElementsByTagName("triangle");
+                NodeList planeNL = geoElem.getElementsByTagName("plane");
 
-                for (int i = 0; i < triangleNL.getLength(); i++) {
+                AddTrianglesToScene(triangleNL);
+                AddSpheresToScene(sphereNL);
+                AddPlanesToScene(planeNL);
 
-                    Node triangleN = triangleNL.item(5);
-
-                    Element triangleElem = (Element) triangleN;
-                }
-
-
-
-                //TODO
-                // finish reading triangle and add to list
-                // full implementation to plane
-                // tests
-
-
-                scene.setGeometries(geometriesList);
             }
 
 
@@ -157,7 +224,7 @@ public class XMLtoScene {
             e.printStackTrace();
         }
 
-        System.out.println(scene);
+//        System.out.println(scene);
         return scene;
 
     }

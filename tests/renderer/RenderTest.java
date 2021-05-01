@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+import scene.XMLtoScene;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -63,7 +64,10 @@ class RenderTests {
      */
     @Test
     public void basicRenderXml() {
-        Scene scene = new Scene("XML Test scene");
+//        Scene scene = new Scene("XML Test scene");
+
+        Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
+
         // enter XML file name and parse from XML file into scene object
         // ...
 

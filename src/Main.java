@@ -75,8 +75,8 @@ public final class Main {
 //
 //        out.println("If there were no any other outputs - all tests succeeded!");
 
-    //    XMLtoScene.ReadScene("C:\\Intellij\\IdeaProjects\\basicRenderTestTwoColors.xml");
-        XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
+        XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
+    //    XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
 
     }
 }
