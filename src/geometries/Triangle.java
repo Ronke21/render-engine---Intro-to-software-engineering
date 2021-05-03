@@ -70,5 +70,11 @@ public class Triangle extends Polygon {
 
         // if non of the conditions were fulfilled, return null
         return null;
+
+
     }
+
+
+
+
 }

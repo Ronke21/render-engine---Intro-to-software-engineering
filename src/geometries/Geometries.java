@@ -69,6 +69,21 @@ public class Geometries implements Intersectable {
     }
 
     @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+
+        List<GeoPoint> intersections = null;
+
+        for (Intersectable geometry : _intersectables ) {
+            var geoIntersections = geometry.findGeoIntersections(ray);
+            if (geoIntersections.size() >0){
+                intersections.addAll(geoIntersections);
+            }
+        }
+        return intersections;
+
+    }
+
+    @Override
     public String toString() {
         return "Geometries{" +
                 "_intersectables=" + _intersectables +

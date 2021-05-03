@@ -4,7 +4,7 @@ package geometries;
  * this class represents all kinds of radial shapes - sphere, tube, cylinder
  * contains the radius for the shape
  */
-public abstract class RadialGeometry {
+public abstract class RadialGeometry extends Geometry{
 
     /**
      * @member _radius - the radius of the shape

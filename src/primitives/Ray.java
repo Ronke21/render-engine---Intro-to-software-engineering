@@ -2,6 +2,7 @@ package primitives;
 
 import java.util.List;
 import java.util.Objects;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * This class represents a ray in the space = a vector that doesn't start in (0,0,0).
@@ -72,6 +73,31 @@ public class Ray {
 
         for (Point3D p : points3DList) {
             double dis = p.distance(_p0); // distance from the starting point of the ray
+            if (dis < distance) {
+                distance = dis;
+                nearPoint = p;
+            }
+        }
+
+        return nearPoint;
+    }
+
+    /**
+     * find the closest GeoPoint to Ray
+     *
+     * @param GeoPointList List of intersections point
+     * @return the closest point
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> GeoPointList) {
+        double distance = Double.POSITIVE_INFINITY;
+        GeoPoint nearPoint = null;
+
+        if (GeoPointList == null) {
+            return null;
+        }
+
+        for (GeoPoint p : GeoPointList) {
+            double dis = p.point.distance(_p0); // distance from the starting point of the ray
             if (dis < distance) {
                 distance = dis;
                 nearPoint = p;

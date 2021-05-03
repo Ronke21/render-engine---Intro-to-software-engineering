@@ -13,7 +13,7 @@ import java.util.List;
  * this class represents a sphere in the space,
  * containing the center point of the sphere and its radius.
  */
-public class Sphere extends RadialGeometry implements Geometry {
+public class Sphere extends RadialGeometry {
 
     /**
      * @member _center - the center point of the sphere
@@ -100,4 +100,50 @@ public class Sphere extends RadialGeometry implements Geometry {
         // else, return null
         return null;
     }
+
+    /**
+     * @param ray ray that cross the geometry
+     * @return list of intersection points that were found
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+
+        // redefine all needed variables (copied from the presentation, same names)
+        Point3D O = _center;
+        Point3D p0 = ray.getP0();
+        double r = _radius;
+        Vector v = ray.getDir();
+        Vector u = O.subtract(p0);
+
+        double t_m = alignZero(v.dotProduct(u));
+        double d = alignZero(Math.sqrt(u.lengthSquared() - (t_m * t_m)));
+        double t_h = alignZero(Math.sqrt(r * r - d * d));
+
+        // if d is equal to or bigger than r, there will be no intersections at all
+        if (d >= r) {
+            return null;
+        }
+
+        double t1 = alignZero(t_m + t_h);
+        double t2 = alignZero(t_m - t_h);
+
+        List<GeoPoint> ans = null;
+
+        // t must be positive
+        if (t1 > 0) {
+            ans =   List.of(new GeoPoint(this, ray.getPoint(t1)));
+        }
+
+        // must bt positive, and significantly different from t1
+        if (t2 > 0 && !isZero(t1 - t2)) {
+            ans =   List.of(new GeoPoint(this, ray.getPoint(t2)));
+        }
+
+        // if any intersections were found, return them
+        if (ans.size() > 0) {
+            return ans;
+        }
+
+        // else, return null
+        return null;    }
 }

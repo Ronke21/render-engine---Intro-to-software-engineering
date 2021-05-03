@@ -12,7 +12,7 @@ import static primitives.Util.*;
 /**
  * this class represents a plane in the space. contains a point in the plane and normal to the plane.
  */
-public class Plane extends FlatGeometry implements Geometry {
+public class Plane extends FlatGeometry {
     /**
      * @member _q0 - random point on plane
      * @member _normal - normal to plane on q0
@@ -76,6 +76,28 @@ public class Plane extends FlatGeometry implements Geometry {
             List<Point3D> ans = new LinkedList<Point3D>();
             ans.add(ray.getPoint(t));
             return ans;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param ray ray that cross the geometry
+     * @return list of intersection points that were found
+     */
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+        Point3D Q0 = _q0;
+        Vector N = _normal;
+
+        double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
+
+        if (t > 0) {
+            List<Point3D> ans = new LinkedList<Point3D>();
+            return List.of(new GeoPoint(this, ray.getPoint(t)));
         }
 
         return null;
