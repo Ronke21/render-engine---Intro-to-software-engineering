@@ -89,7 +89,9 @@ public class Ray {
      * @return the closest point
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> GeoPointList) {
+
         double distance = Double.POSITIVE_INFINITY;
+
         GeoPoint nearPoint = null;
 
         if (GeoPointList == null) {

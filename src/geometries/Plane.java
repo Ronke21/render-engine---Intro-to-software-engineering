@@ -6,6 +6,7 @@ import primitives.Vector;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static primitives.Util.*;
 
@@ -19,6 +20,7 @@ public class Plane extends FlatGeometry {
      */
     final Point3D _q0;
     final Vector _normal;
+
 
     /**
      * constructor for plane.
@@ -63,23 +65,23 @@ public class Plane extends FlatGeometry {
         return getNormal();
     }
 
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        Point3D P0 = ray.getP0();
-        Vector v = ray.getDir();
-        Point3D Q0 = _q0;
-        Vector N = _normal;
-
-        double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
-
-        if (t > 0) {
-            List<Point3D> ans = new LinkedList<Point3D>();
-            ans.add(ray.getPoint(t));
-            return ans;
-        }
-
-        return null;
-    }
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//        Point3D P0 = ray.getP0();
+//        Vector v = ray.getDir();
+//        Point3D Q0 = _q0;
+//        Vector N = _normal;
+//
+//        double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
+//
+//        if (t > 0) {
+//            List<Point3D> ans = new LinkedList<Point3D>();
+//            ans.add(ray.getPoint(t));
+//            return ans;
+//        }
+//
+//        return null;
+//    }
 
     /**
      * @param ray ray that cross the geometry
@@ -101,5 +103,19 @@ public class Plane extends FlatGeometry {
         }
 
         return null;
+    }
+
+    /**
+     * perform full comparison between a given object and this
+     *
+     * @param o - object
+     * @return - whether the object equals to this or not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return _q0.equals(plane._q0) && _normal.equals(plane._normal);
     }
 }

@@ -126,11 +126,31 @@ public class XMLtoScene {
         }
     }
 
+    /**
+     * function to read an attribute contains color and extract the color in our primitives.Color format
+     *
+     * @param node      - the node which we want to extract from
+     * @param attribute - the name of the wanted attribute we are looking for
+     * @return the color in the attribute in the node in primitives.Color format
+     */
+    public static Color NodeToColor(Node node, String attribute) {
+
+        // cast the root node to element
+        Element elem = (Element) node;
+
+        // read background color attribute from the element
+        String[] RGB = (elem.getAttribute(attribute)).split(" ");
+        var R = Double.parseDouble(RGB[0]);
+        var G = Double.parseDouble(RGB[1]);
+        var B = Double.parseDouble(RGB[2]);
+
+        return new Color(R, G, B);
+    }
 
     public static Scene ReadScene(String file) {
 
+        //region Read file safely
         // read file using DOM
-
         File xmlDocument = new File(file);
 
         scene = new Scene(xmlDocument.getName());
@@ -143,88 +163,70 @@ public class XMLtoScene {
             e.printStackTrace();
         }
 
-        // read the root element
-        try {
-            Document doc = null;
-            if (dBuild != null) {
+        Document doc = null;
+        if (dBuild != null) {
+            try {
                 doc = dBuild.parse(xmlDocument);
+            } catch (SAXException | IOException e) {
+                e.printStackTrace();
             }
+        }
+        //endregion
 
-            // read nodes
-            NodeList nodes = null;
-            if (doc != null) {
-                nodes = doc.getElementsByTagName("scene");
-            }
-
-            // the root element
-            Node node = null;
-            if (nodes != null) {
-                node = nodes.item(0);
-            }
-
-            if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-
-                // cast the root node to element
-                Element elem = (Element) node;
-
-                // read background color attribute from the element
-                String[] backgroundRGB = (elem.getAttribute("background-color")).split(" ");
-                var backgroundR = Double.parseDouble(backgroundRGB[0]);
-                var backgroundG = Double.parseDouble(backgroundRGB[1]);
-                var backgroundB = Double.parseDouble(backgroundRGB[2]);
-
-                // set the background color
-                scene.setBackground(new Color(backgroundR, backgroundG, backgroundB));
-
-
-                // get the child element of scene contains the ambient light data
-                NodeList amb = elem.getElementsByTagName("ambient-light");
-                Node ambient = amb.item(0);
-
-                if (ambient != null && ambient.getNodeType() == Node.ELEMENT_NODE) {
-
-                    // cast the node to element
-                    Element elem2 = (Element) ambient;
-
-                    // read ambient light color attribute from the element
-                    String[] ambientRGB = (elem2.getAttribute("color")).split(" ");
-
-                    double ambientR = Double.parseDouble(ambientRGB[0]);
-                    double ambientG = Double.parseDouble(ambientRGB[1]);
-                    double ambientB = Double.parseDouble(ambientRGB[2]);
-
-                    // set the ambient light color
-                    scene.setAmbientLight(new AmbientLight(new Color(ambientR, ambientG, ambientB), 1));
-                }
-
-                // create empty geometries list to store all the geometries used in the scene
-                Geometries geometriesList = new Geometries();
-
-                // get the child element of scene contains the geometries
-                NodeList geometries = elem.getElementsByTagName("geometries");
-                Node geo = geometries.item(0);
-
-
-                // cast geo to Element
-                Element geoElem = (Element) geo;
-
-                // read all lists of shapes and store in a node list
-                NodeList sphereNL = geoElem.getElementsByTagName("sphere");
-                NodeList triangleNL = geoElem.getElementsByTagName("triangle");
-                NodeList planeNL = geoElem.getElementsByTagName("plane");
-
-                AddTrianglesToScene(triangleNL);
-                AddSpheresToScene(sphereNL);
-                AddPlanesToScene(planeNL);
-
-            }
-
-
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
+        // read nodes
+        NodeList nodes = null;
+        if (doc != null) {
+            nodes = doc.getElementsByTagName("scene");
         }
 
-//        System.out.println(scene);
+        // the root element
+        Node node = null;
+        if (nodes != null) {
+            node = nodes.item(0);
+        }
+
+        if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+
+            // set the background color
+            Color BackgroundColor = NodeToColor(node, "background-color");
+            scene.setBackground(BackgroundColor);
+
+            // set the ambient light color
+            NodeList ambientNL = ((Element) node).getElementsByTagName("ambient-light");
+            Node nodeAmbientLight = null;
+            if (ambientNL != null) {
+                nodeAmbientLight = ambientNL.item(0);
+            }
+            Color ambientColor = NodeToColor(nodeAmbientLight, "color");
+            scene.setAmbientLight(new AmbientLight(ambientColor, 1));
+        }
+
+        // create empty geometries list to store all the geometries used in the scene
+        Geometries geometriesList = new Geometries();
+
+        // get the child element of scene contains the geometries
+        NodeList geometries = null;
+        if (node != null) {
+            geometries = ((Element) node).getElementsByTagName("geometries");
+        }
+        Node geo = null;
+        if (geometries != null) {
+            geo = geometries.item(0);
+        }
+
+
+        // cast geo to Element
+        Element geoElem = (Element) geo;
+
+        // read all lists of shapes and store in a node list
+        NodeList sphereNL = geoElem.getElementsByTagName("sphere");
+        NodeList triangleNL = geoElem.getElementsByTagName("triangle");
+        NodeList planeNL = geoElem.getElementsByTagName("plane");
+
+        AddTrianglesToScene(triangleNL);
+        AddSpheresToScene(sphereNL);
+        AddPlanesToScene(planeNL);
+
         return scene;
 
     }

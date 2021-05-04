@@ -1,5 +1,8 @@
 package primitives;
 
+import geometries.Geometries;
+import geometries.Geometry;
+import geometries.Intersectable.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
@@ -49,6 +52,33 @@ class RayTest {
 
     @Test
     void findClosestGeoPoint() {
+
+        Ray ray = new Ray(Point3D.ZERO, new Vector(0, 0, 1));
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01 - the closest point is in the middle of the list
+
+        List<GeoPoint> list = new LinkedList<>() {{
+            add(new GeoPoint(null, new Point3D(-1000, 90, 100)));
+            add(new GeoPoint(null, new Point3D(50, 48, 1000)));
+            add(new GeoPoint(null, new Point3D(0, 5, 1)));
+            add(new GeoPoint(null, new Point3D(-20, 60, 50)));
+            add(new GeoPoint(null, new Point3D(0, 0, -90)));
+        }};
+
+        assertEquals(list.get(2), ray.findClosestGeoPoint(list), "wrong point!");
+
+        // =============== Boundary Values Tests ==================
+        //TC11 - no points
+        assertNull(ray.findClosestPoint(null), "supposed to be null!");
+
+        //TC21 - the closest point is at the end of the list
+        list.add(new GeoPoint(null, new Point3D(0, 0, 3)));
+        assertEquals(list.get(list.size() - 1), ray.findClosestGeoPoint(list), "wrong point!");
+
+        //TC22 - the closest point is at the beginning of the list
+        list.add(0, new GeoPoint(null, Point3D.ZERO));
+        assertEquals(list.get(0), ray.findClosestGeoPoint(list), "wrong point!");
 
     }
 }

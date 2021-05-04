@@ -47,40 +47,47 @@ public class Geometries implements Intersectable {
         }
     }
 
+//    /**
+//     * a method that receive a ray and find all intersections of this ray with the shapes in this class
+//     *
+//     * @param ray - the ray to be checked with the shapes
+//     * @return list of all intersections
+//     */
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//        List<Point3D> result = null;
+//        for (Intersectable item : _intersectables) {
+//            List<Point3D> itemList = item.findIntersections(ray);
+//            if (itemList != null) {
+//                if (result == null) {
+//                    result = new LinkedList<>();
+//                }
+//                result.addAll(itemList);
+//            }
+//        }
+//        return result;
+//    }
+
     /**
      * a method that receive a ray and find all intersections of this ray with the shapes in this class
      *
      * @param ray - the ray to be checked with the shapes
-     * @return list of all intersections
+     * @return list of all intersections in a form of GeoPoint
      */
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> result = null;
-        for (Intersectable item : _intersectables) {
-            List<Point3D> itemList = item.findIntersections(ray);
-            if (itemList != null) {
-                if (result == null) {
-                    result = new LinkedList<>();
-                }
-                result.addAll(itemList);
-            }
-        }
-        return result;
-    }
-
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
 
-        List<GeoPoint> intersections = null;
+        List<GeoPoint> intersections = new LinkedList<>();
 
-        for (Intersectable geometry : _intersectables ) {
+        for (Intersectable geometry : _intersectables) {
             var geoIntersections = geometry.findGeoIntersections(ray);
-            if (geoIntersections.size() >0){
-                intersections.addAll(geoIntersections);
+            if(geoIntersections != null){
+                if (geoIntersections.size() > 0) {
+                    intersections.addAll(geoIntersections);
+                }
             }
         }
         return intersections;
-
     }
 
     @Override

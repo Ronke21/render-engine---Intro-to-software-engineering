@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import primitives.*;
 
@@ -13,7 +14,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon extends FlatGeometry  {
+public class Polygon extends FlatGeometry {
     /**
      * List of polygon's vertices
      */
@@ -22,6 +23,7 @@ public class Polygon extends FlatGeometry  {
      * Associated plane in which the polygon lays
      */
     protected Plane plane;
+
 
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
@@ -104,58 +106,58 @@ public class Polygon extends FlatGeometry  {
         return plane.getNormal(null);
     }
 
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-
-        Point3D p0 = ray.getP0();
-        Vector v = ray.getDir();
-
-        List<Vector> vectors = new LinkedList<>();
-        List<Vector> normalVectors = new LinkedList<>();
-
-
-        for (Point3D pt : vertices) {
-            Vector Vi = pt.subtract(p0);
-            vectors.add(Vi);
-        }
-
-        int n = vectors.size() - 1;
-
-        for (int i = 0; i < n; i++) {
-
-            Vector Vi = vectors.get(i);
-            Vector Vii = vectors.get(i + 1);
-
-            Vector Ni = (Vi.crossProduct(Vii)).normalize();
-
-            normalVectors.add(Ni);
-        }
-
-        Vector Vn = vectors.get(n);
-        Vector V1 = vectors.get(0);
-
-        Vector Nn = (Vn.crossProduct(V1)).normalize();
-
-        normalVectors.add(Nn);
-
-        List<Double> Vns = new LinkedList<>();
-
-        for (Vector N : normalVectors) {
-            double Vni = alignZero(N.dotProduct(v));
-            // one Vni equals to zero is enough to determine that we have no intersection points
-            if (isZero(Vni)) {
-                return null;
-            } else Vns.add(Vni);
-        }
-
-        // check that all of the elements
-        if (!Vns.stream().allMatch(i -> i > 0) && !Vns.stream().allMatch(i -> i < 0)) {
-            return null;
-        } else {
-            Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
-            return plane.findIntersections(ray);
-        }
-    }
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//
+//        Point3D p0 = ray.getP0();
+//        Vector v = ray.getDir();
+//
+//        List<Vector> vectors = new LinkedList<>();
+//        List<Vector> normalVectors = new LinkedList<>();
+//
+//
+//        for (Point3D pt : vertices) {
+//            Vector Vi = pt.subtract(p0);
+//            vectors.add(Vi);
+//        }
+//
+//        int n = vectors.size() - 1;
+//
+//        for (int i = 0; i < n; i++) {
+//
+//            Vector Vi = vectors.get(i);
+//            Vector Vii = vectors.get(i + 1);
+//
+//            Vector Ni = (Vi.crossProduct(Vii)).normalize();
+//
+//            normalVectors.add(Ni);
+//        }
+//
+//        Vector Vn = vectors.get(n);
+//        Vector V1 = vectors.get(0);
+//
+//        Vector Nn = (Vn.crossProduct(V1)).normalize();
+//
+//        normalVectors.add(Nn);
+//
+//        List<Double> Vns = new LinkedList<>();
+//
+//        for (Vector N : normalVectors) {
+//            double Vni = alignZero(N.dotProduct(v));
+//            // one Vni equals to zero is enough to determine that we have no intersection points
+//            if (isZero(Vni)) {
+//                return null;
+//            } else Vns.add(Vni);
+//        }
+//
+//        // check that all of the elements
+//        if (!Vns.stream().allMatch(i -> i > 0) && !Vns.stream().allMatch(i -> i < 0)) {
+//            return null;
+//        } else {
+//            Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
+//            return plane.findIntersections(ray);
+//        }
+//    }
 
     /**
      * @param ray ray that cross the geometry
@@ -210,7 +212,21 @@ public class Polygon extends FlatGeometry  {
             return null;
         } else {
             Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
-            return plane.findGeoIntersections(ray);
+            return List.of(new GeoPoint(this, plane.findGeoIntersections(ray).get(0).point));
         }
+    }
+
+    /**
+     * perform full comparison between a given object and this
+     *
+     * @param o - object
+     * @return - whether the object equals to this or not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Polygon polygon = (Polygon) o;
+        return vertices.equals(polygon.vertices) && plane.equals(polygon.plane);
     }
 }

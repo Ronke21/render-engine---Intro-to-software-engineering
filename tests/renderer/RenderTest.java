@@ -21,7 +21,7 @@ import java.io.File;
  *
  * @author Dan
  */
-class RenderTests {
+class RenderTest {
     private Camera camera = new Camera(
             Point3D.ZERO,
             new Vector(0, 0, -1),
@@ -66,8 +66,8 @@ class RenderTests {
     public void basicRenderXml() {
 //        Scene scene = new Scene("XML Test scene");
 
-      //  Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
-        Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
+        Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
+      //  Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
         // enter XML file name and parse from XML file into scene object
         // ...
 

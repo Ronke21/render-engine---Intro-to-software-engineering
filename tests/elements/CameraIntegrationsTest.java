@@ -54,6 +54,13 @@ public class CameraIntegrationsTest {
             .setDistance(1)
             .setViewPlaneSize(3, 3);
 
+    Camera cam3 = new Camera(
+            Point3D.ZERO,                   // camera center
+            new Vector(0, 0, -1),   // Vup
+            new Vector(0, -1, 0))   // Vto
+            .setDistance(1)
+            .setViewPlaneSize(3, 3);
+
     /**
      * Test method for spheres
      */
@@ -100,20 +107,20 @@ public class CameraIntegrationsTest {
 
         // =================================================================================
         // Plane 1 test (slide 19)
-        Plane plane1 = new Plane(Point3D.ZERO, new Vector(0, 1, 0));
-        testPoint3DS(plane1, cam2, 9);
+        Plane plane1 = new Plane(new Point3D(0, 0, -5), new Vector(0, 0, 1));
+        testPoint3DS(plane1, cam3, 9);
         // =================================================================================
 
         // =================================================================================
         // Plane 2 test (slide 20)
-        Plane plane2 = new Plane(new Point3D(-1, 0, 0), new Vector(1, 1, 1));
-        testPoint3DS(plane2, cam2, 9);
+        Plane plane2 = new Plane(new Point3D(0, 0, -5), new Vector(0, 1, 2));
+        testPoint3DS(plane2, cam3, 9);
         // =================================================================================
 
         // =================================================================================
         // Plane 3 test (slide 21)
-        Plane plane3 = new Plane(new Point3D(-1, 0, 0), new Vector(2, 1, 2));
-        testPoint3DS(plane3, cam2, 6);
+        Plane plane3 = new Plane(new Point3D(0, 0, -5), new Vector(0, 1, 1));
+        testPoint3DS(plane3, cam3, 6);
         // =================================================================================
     }
 
