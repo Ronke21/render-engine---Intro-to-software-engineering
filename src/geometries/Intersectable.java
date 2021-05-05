@@ -16,7 +16,8 @@ public interface Intersectable {
 
     /**
      * PDS
-     * TODO: understand why this is needed and complete the JAVADOC
+     * in order to find the correct color in a point, we need to
+     * take into consideration the shape which the light is bouncing from
      */
     public static class GeoPoint {
 
