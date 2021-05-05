@@ -81,13 +81,16 @@ public class Geometries implements Intersectable {
 
         for (Intersectable geometry : _intersectables) {
             var geoIntersections = geometry.findGeoIntersections(ray);
-            if(geoIntersections != null){
+            if (geoIntersections != null) {
                 if (geoIntersections.size() > 0) {
                     intersections.addAll(geoIntersections);
                 }
             }
         }
-        return intersections;
+        if (intersections.size() > 0) {
+            return intersections;
+        }
+        return null;
     }
 
     @Override

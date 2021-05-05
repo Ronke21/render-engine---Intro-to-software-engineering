@@ -130,16 +130,16 @@ public class Sphere extends RadialGeometry {
         double t1 = alignZero(t_m + t_h);
         double t2 = alignZero(t_m - t_h);
 
-        List<GeoPoint> ans = null;
+        List<GeoPoint> ans = new LinkedList<>();
 
         // t must be positive
         if (t1 > 0) {
-            ans = List.of(new GeoPoint(this, ray.getPoint(t1)));
+            ans.add(new GeoPoint(this, ray.getPoint(t1)));
         }
 
         // must bt positive, and significantly different from t1
         if (t2 > 0 && !isZero(t1 - t2)) {
-            ans = List.of(new GeoPoint(this, ray.getPoint(t2)));
+            ans.add(new GeoPoint(this, ray.getPoint(t2)));
         }
 
         // if any intersections were found, return them
