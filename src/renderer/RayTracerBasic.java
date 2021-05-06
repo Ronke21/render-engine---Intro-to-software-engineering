@@ -62,10 +62,10 @@ public class RayTracerBasic extends RayTracerBase {
 
     private Color calcLocalEffects(GeoPoint point, Ray ray) {
 
-        Vector v = ray.getDir();
-        Vector n = point.geometry.getNormal(point.point);
+        Vector v = ray.getDir().normalized();
+        Vector n = point.geometry.getNormal(point.point).normalized();
 
-        double nv = alignZero(n.dotProduct(v));
+        double nv = alignZero(n.normalized().dotProduct(v.normalized()));
         if (nv == 0) {
             return Color.BLACK;
         }
@@ -80,7 +80,7 @@ public class RayTracerBasic extends RayTracerBase {
 
         for (LightSource lightSource : _scene.lights) {
 
-            Vector l = lightSource.getL(point.point);
+            Vector l = lightSource.getL(point.point).normalized();
             double nl = alignZero(n.dotProduct(l));
 
             if (nl * nv > 0) { // sign(nl) == sing(nv)

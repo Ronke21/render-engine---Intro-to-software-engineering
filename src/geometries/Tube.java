@@ -62,11 +62,12 @@ public class Tube extends RadialGeometry {
 
         Point3D O = P0.add(v.scale(t));
 
-        Vector sub = P.subtract(O);
-
-        sub.normalize();
-
-        return sub;
+        return (P.subtract(O)).normalized();
+//        Vector sub = P.subtract(O);
+//
+//        sub.normalize();
+//
+//        return sub;
     }
 
 //    @Override

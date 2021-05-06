@@ -30,7 +30,7 @@ public class DirectionalLight extends Light implements LightSource {
      */
     @Override
     public Color getIntensity(Point3D p) {
-        return getIntensity();
+        return getIntensity(); // No attenuation with distance
     }
 
     /**
@@ -42,6 +42,6 @@ public class DirectionalLight extends Light implements LightSource {
     //todo : make sure we understood correctly (since distance is infinite)
     @Override
     public Vector getL(Point3D p) {
-        return direction;
+        return direction.normalized();
     }
 }

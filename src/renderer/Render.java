@@ -23,6 +23,7 @@ public class Render {
     private Camera _camera;
     RayTracerBase _rayTracerBase;
 
+
     /**
      * setter - chaining method style
      *

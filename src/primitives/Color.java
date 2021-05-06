@@ -39,8 +39,9 @@ public class Color {
      * @param b Blue component
      */
     public Color(double r, double g, double b) {
-        if (r < 0 || g < 0 || b < 0)
+        if (r < 0 || g < 0 || b < 0) {
             throw new IllegalArgumentException("Negative color component is illegal");
+        }
         this.r = r;
         this.g = g;
         this.b = b;
@@ -90,8 +91,9 @@ public class Color {
      * @return the Color object itself for chaining calls
      */
     public Color setColor(double r, double g, double b) {
-        if (r < 0 || g < 0 || b < 0)
+        if (r < 0 || g < 0 || b < 0) {
             throw new IllegalArgumentException("Negative color component is illegal");
+        }
         this.r = r;
         this.g = g;
         this.b = b;
@@ -134,7 +136,11 @@ public class Color {
         int ir = (int) r;
         int ig = (int) g;
         int ib = (int) b;
-        return new java.awt.Color(ir > 255 ? 255 : ir, ig > 255 ? 255 : ig, ib > 255 ? 255 : ib);
+        return new java.awt.Color(
+                Math.min(ir, 255),
+                Math.min(ig, 255),
+                ib > 255 ? 255 : ib
+        );
     }
 
     /**
@@ -162,8 +168,9 @@ public class Color {
      * @return new Color object which is the result of the operation
      */
     public Color scale(double k) {
-        if (k < 0)
+        if (k < 0) {
             throw new IllegalArgumentException("Can't scale a color by a negative number");
+        }
         return new Color(r * k, g * k, b * k);
     }
 
@@ -174,8 +181,9 @@ public class Color {
      * @return new Color object which is the result of the operation
      */
     public Color reduce(double k) {
-        if (k < 1)
+        if (k < 1) {
             throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
+        }
         return new Color(r / k, g / k, b / k);
     }
 

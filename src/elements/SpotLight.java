@@ -23,7 +23,7 @@ public class SpotLight extends PointLight {
      */
     public SpotLight(Color color, Point3D position, double kC, double kL, double kQ, Vector direction) {
         super(color, position, kC, kL, kQ);
-        this.direction = direction;
+        this.direction = direction.normalized();
     }
 
     /**
@@ -34,7 +34,7 @@ public class SpotLight extends PointLight {
      */
     @Override
     public Color getIntensity(Point3D p) {
-        var iL = super.getIntensity(p);
+        Color iL = super.getIntensity(p);
         double mul = Math.max(0, direction.dotProduct(getL(p)));
         return iL.scale(mul);
     }
