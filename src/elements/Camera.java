@@ -40,8 +40,8 @@ public class Camera {
         }
 
         _P0 = p0;
-        _Vup = Vup.normalized();
         _Vto = Vto.normalized();
+        _Vup = Vup.normalized();
 
         // _Vright is always the cross product of _Vto and _Vup since they are orthogonal by definition
         _Vright = _Vto.crossProduct(_Vup);
