@@ -243,31 +243,31 @@ public class LightsTests {
                 new Vector(1, 0, 0),
                 new Vector(0, 1, 0)
         ) //
-                .setViewPlaneSize(150, 150) //
-                .setDistance(5300);
+                .setViewPlaneSize(250, 250) //
+                .setDistance(10000);
 
         Scene scene = new Scene("Test scene")
                 .setAmbientLight(new AmbientLight(Color.WHITE, 0.15));
 
         scene.lights.add(
                 new PointLight(
-                        new Color(200, 200, 200),
+                        Color.WHITE,
                         new Point3D(-30, 50, 60),
                         1, 0.00005, 0.00003));
 
         scene.lights.add(new PointLight(
-                new Color(00, 00, 200),
+                Color.WHITE,
                 new Point3D(80, 80, 120),
                 1, 0.00005, 0.00003));
 
         scene.lights.add(new SpotLight(
-                new Color(200, 00, 000),
+                Color.WHITE,
                 new Point3D(30, 0, -60),
                 1, 0.00005, 0.00003,
                 new Vector(1, 0, 2)));
 
         scene.lights.add(new DirectionalLight(
-                new Color(10, 100, 10),
+                Color.WHITE,
                 new Vector(new Point3D(0, 0, -0.5))));
 
         // Remove this loop and all it's contents if you wish the rendering to take less than 30 minutes!!
@@ -277,7 +277,7 @@ public class LightsTests {
 
                 double z = Math.sqrt(2500 - x * x - y * y);
 
-                Sphere s = new Sphere(new Point3D(x + 60, y, z), 5);
+                Sphere s = new Sphere(new Point3D(x + 60, y, z), 3);
 
                 s.setEmission(new Color(
                         (int) Math.abs(x + y + z) % 25,
@@ -291,7 +291,7 @@ public class LightsTests {
 
                 if (z != 0) {
 
-                    s = new Sphere(new Point3D(x + 60, y, -z), 5);
+                    s = new Sphere(new Point3D(x + 60, y, -z), 3);
 
                     s.setEmission(new Color(
                             (int) Math.abs(x + y + z) % 25,
@@ -328,11 +328,11 @@ public class LightsTests {
                         .setMaterial(new Material().setKd(0.1d).setKs(1d).setShininess(15)));
 
         scene.geometries.add(new Plane(
-                new Point3D(250, -200, -150),
-                new Point3D(250, 200, -150),
-                new Point3D(250, -200, 200)).
-                setEmission(new Color(15, 15, 15)).
-                setMaterial(new Material().setKd(0.7d).setKs(1d).setShininess(99)));
+                new Point3D(250, -100, 0),
+                new Vector(1, 0, 0)
+        )
+                .setEmission(Color.WHITE.reduce(15))
+                .setMaterial(new Material().setKd(0.7d).setKs(1d).setShininess(99)));
 
         scene.geometries.add(new Triangle(
                 new Point3D(-5000, -200, -70),
@@ -357,7 +357,6 @@ public class LightsTests {
                 .setRayTracer(new RayTracerBasic(scene));
         render.renderImage();
         render.writeToImage();
-
     }
 
 }
