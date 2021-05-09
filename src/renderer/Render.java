@@ -19,7 +19,7 @@ public class Render {
      * @member _rayTracerBase - that sends the ray for camera
      */
     private ImageWriter _imageWriter;
-    private Scene _scene;
+//    private Scene _scene;
     private Camera _camera;
     RayTracerBase _rayTracerBase;
 
@@ -35,16 +35,16 @@ public class Render {
         return this;
     }
 
-    /**
-     * setter - chaining method style
-     *
-     * @param scene - the scene (containing shapes)
-     * @return - this instance
-     */
-    public Render setScene(Scene scene) {
-        _scene = scene;
-        return this;
-    }
+//    /**
+//     * setter - chaining method style
+//     *
+//     * @param scene - the scene (containing shapes)
+//     * @return - this instance
+//     */
+//    public Render setScene(Scene scene) {
+//        _scene = scene;
+//        return this;
+//    }
 
 
     /**
@@ -74,9 +74,9 @@ public class Render {
             if (_imageWriter == null) {
                 throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
             }
-            if (_scene == null) {
-                throw new MissingResourceException("missing resource", Scene.class.getName(), "");
-            }
+//            if (_scene == null) {
+//                throw new MissingResourceException("missing resource", Scene.class.getName(), "");
+//            }
             if (_camera == null) {
                 throw new MissingResourceException("missing resource", Camera.class.getName(), "");
             }

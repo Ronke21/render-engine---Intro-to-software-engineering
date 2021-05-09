@@ -6,10 +6,6 @@ import primitives.Color;
  * Ambient Light Color
  */
 public class AmbientLight extends Light {
-    /**
-     * intensity of ambient light color
-     */
-//    final private Color _intensity;
 
     /**
      * Constructor
@@ -21,14 +17,9 @@ public class AmbientLight extends Light {
         super(Ia.scale(Ka));
     }
 
-    /**
-     * get intensity color
-     *
-     * @return intensity
-     */
-//    public Color getIntensity() {
-//        return _intensity;
-//    }
+    public AmbientLight() {
+        super(Color.BLACK);
+    }
 
     @Override
     public String toString() {

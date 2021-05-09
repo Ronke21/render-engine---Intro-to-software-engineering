@@ -23,6 +23,7 @@ public class Color {
     public static final Color RED = new Color(java.awt.Color.RED);
     public static final Color GREEN = new Color(java.awt.Color.GREEN);
     public static final Color BLUE = new Color(java.awt.Color.BLUE);
+    public static final Color YELLOW = new Color(java.awt.Color.YELLOW);
 
     /**
      * Default constructor - to generate Black Color (privately)

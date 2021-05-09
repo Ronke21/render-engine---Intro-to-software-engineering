@@ -16,13 +16,9 @@ public class SpotLight extends PointLight {
      *
      * @param color     - the color of the light source
      * @param position  - the point which the light is being emitted from
-     * @param kC        - attenuation factor
-     * @param kL        - attenuation factor
-     * @param kQ        - attenuation factor
-     * @param direction - the light direction
      */
-    public SpotLight(Color color, Point3D position, double kC, double kL, double kQ, Vector direction) {
-        super(color, position, kC, kL, kQ);
+    public SpotLight(Color color, Point3D position, Vector direction) {
+        super(color, position);
         this.direction = direction.normalized();
     }
 

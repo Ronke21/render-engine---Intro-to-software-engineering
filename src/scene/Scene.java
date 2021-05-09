@@ -32,7 +32,7 @@ public class Scene {
      */
     public final String _name;
     public Color background = Color.BLACK;
-    public AmbientLight ambientLight = new AmbientLight(new Color(192, 192, 192), 1.d);
+    public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 1.d);
     public Geometries geometries = null;
     public List<LightSource> lights = new LinkedList<LightSource>();
 

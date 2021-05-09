@@ -19,16 +19,41 @@ public class PointLight extends Light implements LightSource {
      *
      * @param color    - the color of the light source
      * @param position - the point which the light is being emitted from
-     * @param kC       - attenuation factor
-     * @param kL       - attenuation factor
-     * @param kQ       - attenuation factor
      */
-    public PointLight(Color color, Point3D position, double kC, double kL, double kQ) {
+    public PointLight(Color color, Point3D position) {
         super(color);
         this.position = position;
+    }
+
+    /**
+     * setter - chaining method design pattern
+     * @param kC - attenuation factor
+     * @return the light source after the change
+     */
+    public PointLight setkC(double kC) {
         this.kC = kC;
+        return this;
+
+    }
+
+    /**
+     * setter - chaining method design pattern
+     * @param kL - attenuation factor
+     * @return the light source after the change
+     */
+    public PointLight setkL(double kL) {
         this.kL = kL;
+        return this;
+    }
+
+    /**
+     * setter - chaining method design pattern
+     * @param kQ - attenuation factor
+     * @return the light source after the change
+     */
+    public PointLight setkQ(double kQ) {
         this.kQ = kQ;
+        return this;
     }
 
     /**
