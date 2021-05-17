@@ -128,7 +128,7 @@ public class LightsTests {
     public void trianglesSpot() {
         scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
                 triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-        scene2.lights.add(new SpotLight(new Color(500, 250, 250), new Point3D(10, -10, -130), new Vector(-2, -2, -1)) //
+        scene2.lights.add(new SpotLight(new Color(500, 250, 250), new Point3D(10, -10, -130), new Vector(-2, -2, -1))
                 .setkL(0.0001).setkQ(0.000005));
 
         ImageWriter imageWriter = new ImageWriter("lightTrianglesSpot", 500, 500);
@@ -199,7 +199,7 @@ public class LightsTests {
                 new PointLight(
                         Color.BLUE.scale(2),
                         new Point3D(0, 0, 20))//
-                .setkL(0.00001).setkQ(0.000001));
+                        .setkL(0.00001).setkQ(0.000001));
 
         ImageWriter imageWriter = new ImageWriter("SphereMultiLight", 500, 500);
         Render render = new Render()//
@@ -209,6 +209,44 @@ public class LightsTests {
         render.renderImage();
         render.writeToImage();
     }
+
+    /**
+     * Produce a picture of a sphere lighted by a narrow spot light
+     */
+    @Test
+    public void sphereSpotSharp() {
+        scene1.geometries.add(sphere);
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
+                .setFocus(5).setkL(0.000005).setkQ(0.00000025));
+
+        ImageWriter imageWriter = new ImageWriter("lightSphereSpotSharp", 500, 500);
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new RayTracerBasic(scene1));
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    /**
+     * Produce a picture of a two triangles lighted by a narrow spot light
+     */
+    @Test
+    public void trianglesSpotSharp() {
+        scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
+                triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
+        scene2.lights.add(new SpotLight(new Color(800, 400, 400), new Point3D(10, -10, -130), new Vector(-2, -2, -1)) //
+                .setFocus(5).setkL(0.00005).setkQ(0.0000025));
+
+        ImageWriter imageWriter = new ImageWriter("lightTrianglesSpotSharp", 500, 500);
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera2) //
+                .setRayTracer(new RayTracerBasic(scene2));
+        render.renderImage();
+        render.writeToImage();
+    }
+
 //    @Test
 //    /**
 //     * Testing creation of lighted images

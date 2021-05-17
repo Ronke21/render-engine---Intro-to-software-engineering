@@ -1,11 +1,8 @@
 package renderer;
 
-import elements.LightSource;
+import elements.*;
 import geometries.Intersectable.*;
-import primitives.Color;
-import primitives.Material;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 import scene.Scene;
 
 import java.util.List;
@@ -87,7 +84,7 @@ public class RayTracerBasic extends RayTracerBase {
                 Color lightIntensity = lightSource.getIntensity(point.point);
                 color = color.add(
                         calcDiffusive(kd, l, n, lightIntensity),
-                        calcSpecular(ks, l, n, v, nShininess, lightIntensity)
+                        calcSpecular(ks, l, n, v, nShininess, lightIntensity, nl)
                 );
             }
         }
@@ -106,10 +103,10 @@ public class RayTracerBasic extends RayTracerBase {
         return lightIntensity.scale(ln * kd);
     }
 
-    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
+    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity, double nl) {
 
-        double ln = l.dotProduct(n);
-        Vector r = l.subtract(n.scale(2 * ln));
+        // double nl = l.dotProduct(n);
+        Vector r = l.subtract(n.scale(2 * nl));
 
         double maximal = Math.max(0, v.scale(-1).dotProduct(r));
 
@@ -117,5 +114,4 @@ public class RayTracerBasic extends RayTracerBase {
 
         return lightIntensity.scale(ks * p);
     }
-
 }

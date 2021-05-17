@@ -98,8 +98,11 @@ public class Ray {
             return null;
         }
 
+        // distance => distanceSquared
+        // no need to activate the Math.sqrt function
+        // distance is always a positive value,
         for (GeoPoint p : GeoPointList) {
-            double dis = p.point.distance(_p0); // distance from the starting point of the ray
+            double dis = p.point.distanceSquared(_p0); // distance from the starting point of the ray
             if (dis < distance) {
                 distance = dis;
                 nearPoint = p;
