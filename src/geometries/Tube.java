@@ -185,7 +185,7 @@ public class Tube extends RadialGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         // , is dotProduct
         // () is scale
@@ -281,16 +281,33 @@ public class Tube extends RadialGeometry {
 
         double X1 = alignZero(((-1 * B) + sqrtDet) / (2 * A));
 
-        // if the + has no intersections, we can determine that the - will not have
-        if (X1 <= 0) {
-            return null;
-        }
 
         double X2 = alignZero(((-1 * B) - sqrtDet) / (2 * A));
 
-        if (X2 <= 0) {
+        double checkMaxX1 = alignZero(X1 - maxDistance);
+        double checkMaxX2 = alignZero(X2 - maxDistance);
+
+
+        if (X1 > 0 && checkMaxX1 <= 0 && X2 > 0 && checkMaxX2 <= 0) {
+            return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this, ray.getPoint(X2)));
+        }
+        if (X1 > 0 && checkMaxX1 <= 0) {
             return List.of(new GeoPoint(this, ray.getPoint(X1)));
-        } else return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this,  ray.getPoint(X2)));
+        }
+        if (X2 > 0 && checkMaxX2 <= 0) {
+            return List.of(new GeoPoint(this, ray.getPoint(X2)));
+        }
+
+      //  if ((X2 <= 0) && (alignZero(X1 - maxDistance) <= 0)) {
+     ///       return List.of(new GeoPoint(this, ray.getPoint(X1)));
+     //   } else return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this,  ray.getPoint(X2)));
+        return null;
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return null;
+
     }
 
     /**

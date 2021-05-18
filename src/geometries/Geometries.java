@@ -75,12 +75,12 @@ public class Geometries implements Intersectable {
      * @return list of all intersections in a form of GeoPoint
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         List<GeoPoint> intersections = new LinkedList<>();
 
         for (Intersectable geometry : _intersectables) {
-            var geoIntersections = geometry.findGeoIntersections(ray);
+            var geoIntersections = geometry.findGeoIntersections(ray, maxDistance);
             if (geoIntersections != null) {
                 if (geoIntersections.size() > 0) {
                     intersections.addAll(geoIntersections);

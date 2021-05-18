@@ -164,7 +164,14 @@ public class Polygon extends FlatGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+
+        // First of all, check if there is a point of intersection with the plane
+        if (plane.findGeoIntersections(ray, maxDistance) == null)
+            return null;
+
+
+
 
         Point3D p0 = ray.getP0();
         Vector v = ray.getDir();
@@ -212,7 +219,7 @@ public class Polygon extends FlatGeometry {
             return null;
         } else {
             Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
-            return List.of(new GeoPoint(this, plane.findGeoIntersections(ray).get(0).point));
+            return List.of(new GeoPoint(this, plane.findGeoIntersections(ray, maxDistance).get(0).point));
         }
     }
 

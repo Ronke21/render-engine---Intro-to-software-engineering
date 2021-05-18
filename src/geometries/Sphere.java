@@ -110,7 +110,7 @@ public class Sphere extends RadialGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         // redefine all needed variables (copied from the presentation, same names)
         Point3D O = _center;
@@ -134,12 +134,12 @@ public class Sphere extends RadialGeometry {
         List<GeoPoint> ans = new LinkedList<>();
 
         // t must be positive
-        if (t1 > 0) {
+        if (t1>0 && ((alignZero(t1 - maxDistance) <= 0))) {
             ans.add(new GeoPoint(this, ray.getPoint(t1)));
         }
 
-        // must bt positive, and significantly different from t1
-        if (t2 > 0 && !isZero(t1 - t2)) {
+        // t2 must be positive, and significantly different from t1
+        if (t2>0 && (alignZero(t2 - maxDistance) <= 0) && !isZero(t1 - t2)) {
             ans.add(new GeoPoint(this, ray.getPoint(t2)));
         }
 

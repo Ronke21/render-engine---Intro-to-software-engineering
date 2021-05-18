@@ -3,7 +3,6 @@ package renderer;
 import elements.Camera;
 import primitives.Color;
 import primitives.Ray;
-import scene.Scene;
 
 import java.util.MissingResourceException;
 
@@ -18,10 +17,10 @@ public class Render {
      * @member _camera - the camera in scene that sees the photo
      * @member _rayTracerBase - that sends the ray for camera
      */
-    private ImageWriter _imageWriter;
+    public ImageWriter imageWriter;
 //    private Scene _scene;
-    private Camera _camera;
-    RayTracerBase _rayTracerBase;
+    public Camera camera;
+    public RayTracerBase rayTracer;
 
 
     /**
@@ -31,7 +30,7 @@ public class Render {
      * @return - this instance
      */
     public Render setImageWriter(ImageWriter imageWriter) {
-        _imageWriter = imageWriter;
+        this.imageWriter = imageWriter;
         return this;
     }
 
@@ -54,7 +53,7 @@ public class Render {
      * @return - this instance
      */
     public Render setCamera(Camera camera) {
-        _camera = camera;
+        this.camera = camera;
         return this;
     }
 
@@ -65,33 +64,33 @@ public class Render {
      * @return - this instance
      */
     public Render setRayTracer(RayTracerBase rayTracer) {
-        _rayTracerBase = rayTracer;
+        this.rayTracer = rayTracer;
         return this;
     }
 
     public void renderImage() {
         try {
-            if (_imageWriter == null) {
+            if (imageWriter == null) {
                 throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
             }
 //            if (_scene == null) {
 //                throw new MissingResourceException("missing resource", Scene.class.getName(), "");
 //            }
-            if (_camera == null) {
+            if (camera == null) {
                 throw new MissingResourceException("missing resource", Camera.class.getName(), "");
             }
-            if (_rayTracerBase == null) {
+            if (rayTracer == null) {
                 throw new MissingResourceException("missing resource", RayTracerBase.class.getName(), "");
             }
 
             //rendering the image
-            int nX = _imageWriter.getNx();
-            int nY = _imageWriter.getNy();
+            int nX = imageWriter.getNx();
+            int nY = imageWriter.getNy();
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
-                    Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
-                    Color pixelColor = _rayTracerBase.traceRay(ray);
-                    _imageWriter.writePixel(j, i, pixelColor);
+                    Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
+                    Color pixelColor = rayTracer.traceRay(ray);
+                    imageWriter.writePixel(j, i, pixelColor);
                 }
             }
         } catch (
@@ -103,16 +102,16 @@ public class Render {
 
     public void printGrid(int interval, Color color) {
 
-        if (_imageWriter == null) {
+        if (imageWriter == null) {
             throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
         }
 
-        int nX = _imageWriter.getNx();
-        int nY = _imageWriter.getNy();
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
                 if (i % interval == 0 || j % interval == 0) {
-                    _imageWriter.writePixel(j, i, color);
+                    imageWriter.writePixel(j, i, color);
                 }
             }
         }
@@ -120,11 +119,11 @@ public class Render {
 
     public void writeToImage() {
 
-        if (_imageWriter == null) {
+        if (imageWriter == null) {
             throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
         }
 
-        _imageWriter.writeToImage();
+        imageWriter.writeToImage();
 
     }
 

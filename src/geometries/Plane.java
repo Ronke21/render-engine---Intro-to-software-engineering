@@ -88,7 +88,7 @@ public class Plane extends FlatGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
@@ -97,7 +97,7 @@ public class Plane extends FlatGeometry {
 
         double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
 
-        if (t > 0) {
+        if ((t > 0) &&  alignZero(t - maxDistance) <= 0) {
             List<Point3D> ans = new LinkedList<Point3D>();
             return List.of(new GeoPoint(this, ray.getPoint(t)));
         }
