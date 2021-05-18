@@ -215,9 +215,9 @@ public class LightsTests {
      */
     @Test
     public void sphereSpotSharp() {
-        scene1.geometries.add(sphere.setEmission(Color.RED).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
-        scene1.lights.add(new SpotLight(new Color(0, 150, 400), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
-                .setFocus(3).setkL(0.000005).setkQ(0.00000025));
+        scene1.geometries.add(sphere);
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
+                .setFocus(5).setkL(0.000005).setkQ(0.00000025));
 
         ImageWriter imageWriter = new ImageWriter("lightSphereSpotSharp", 500, 500);
         Render render = new Render()//
