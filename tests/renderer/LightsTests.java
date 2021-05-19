@@ -6,7 +6,6 @@ import primitives.*;
 import scene.Scene;
 import org.junit.jupiter.api.Test;
 
-
 /**
  * Test rendering a basic image
  *
@@ -266,23 +265,20 @@ public class LightsTests {
 //
 //        scene.lights.add(
 //                new PointLight(
-//                        Color.WHITE,
-//                        new Point3D(-30, 50, 60),
-//                        1, 0.00005, 0.00003));
+//                        Color.RED,
+//                        new Point3D(-30, 50, 60)));
 //
 //        scene.lights.add(new PointLight(
-//                Color.WHITE,
-//                new Point3D(80, 80, 120),
-//                1, 0.00005, 0.00003));
+//                Color.BLUE,
+//                new Point3D(80, 80, 120)));
 //
 //        scene.lights.add(new SpotLight(
-//                Color.WHITE,
+//                Color.GREEN,
 //                new Point3D(30, 0, -60),
-//                1, 0.00005, 0.00003,
 //                new Vector(1, 0, 2)));
 //
 //        scene.lights.add(new DirectionalLight(
-//                Color.WHITE,
+//                Color.YELLOW,
 //                new Vector(new Point3D(0, 0, -0.5))));
 //
 //        // Remove this loop and all it's contents if you wish the rendering to take less than 30 minutes!!
@@ -363,11 +359,10 @@ public class LightsTests {
 //                .setEmission(new Color(7, 7, 7))
 //                .setMaterial(new Material().setKd(0.1d).setKs(1d).setShininess(99)));
 //
-//        ImageWriter imageWriter = new ImageWriter("The great image", 1000, 1000);
+//        ImageWriter imageWriter = new ImageWriter("The great image", 50, 50);
 //
 //        Render render = new Render()//
 //                .setImageWriter(imageWriter) //
-//                .setScene(scene) //
 //                .setCamera(BigTestCamera) //
 //                .setRayTracer(new RayTracerBasic(scene));
 //        render.renderImage();

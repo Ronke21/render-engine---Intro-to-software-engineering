@@ -54,37 +54,25 @@ public class Plane extends FlatGeometry {
         _normal = N;
     }
 
+    /**
+     * getter
+     */
     public Vector getNormal() {
-
         return _normal;
     }
 
+    /**
+     * getter
+     */
     @Override
     public Vector getNormal(Point3D point) {
-
         return getNormal();
     }
 
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        Point3D P0 = ray.getP0();
-//        Vector v = ray.getDir();
-//        Point3D Q0 = _q0;
-//        Vector N = _normal;
-//
-//        double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
-//
-//        if (t > 0) {
-//            List<Point3D> ans = new LinkedList<Point3D>();
-//            ans.add(ray.getPoint(t));
-//            return ans;
-//        }
-//
-//        return null;
-//    }
-
     /**
-     * @param ray ray that cross the geometry
+     * @param ray         - ray that cross the geometry
+     * @param maxDistance - the upper bound of distance, any point which
+     *                    its distance is greater than this bound will not be returned
      * @return list of intersection points that were found
      */
     @Override
@@ -97,7 +85,7 @@ public class Plane extends FlatGeometry {
 
         double t = alignZero((N.dotProduct(Q0.subtract(P0))) / (N.dotProduct(v)));
 
-        if ((t > 0) &&  alignZero(t - maxDistance) <= 0) {
+        if ((t > 0) && alignZero(t - maxDistance) <= 0) {
             List<Point3D> ans = new LinkedList<Point3D>();
             return List.of(new GeoPoint(this, ray.getPoint(t)));
         }

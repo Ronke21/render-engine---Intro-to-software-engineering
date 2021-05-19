@@ -30,10 +30,6 @@ class SphereTest {
 
     }
 
-    @Test
-    void findIntersections() {
-    }
-
     /**
      * Test method for {@link geometries.Sphere#findIntersections(primitives.Ray)}.
      */
@@ -162,6 +158,11 @@ class SphereTest {
         List<Point3D> TC19B_results = sphere.findIntersections(new Ray(p, new Vector(0, 0, 1)));
 
         assertNull(TC19B_results, "Wrong number of points");
+    }
+
+
+    @Test
+    void findGeoIntersections() {
 
     }
 }

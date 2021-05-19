@@ -71,7 +71,9 @@ public class Geometries implements Intersectable {
     /**
      * a method that receive a ray and find all intersections of this ray with the shapes in this class
      *
-     * @param ray - the ray to be checked with the shapes
+     * @param ray         - the ray to be checked with the shapes
+     * @param maxDistance - the upper bound of distance, any point which
+     *                    its distance is greater than this bound will not be returned
      * @return list of all intersections in a form of GeoPoint
      */
     @Override

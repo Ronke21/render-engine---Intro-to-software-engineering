@@ -181,12 +181,15 @@ public class Tube extends RadialGeometry {
 //    }
 
     /**
-     * @param ray ray that cross the geometry
+     * @param ray         - ray that cross the geometry
+     * @param maxDistance - the upper bound of distance, any point which
+     *                    its distance is greater than this bound will not be returned
      * @return list of intersection points that were found
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
+        // in the formulas from the presentation :
         // , is dotProduct
         // () is scale
 
@@ -279,14 +282,12 @@ public class Tube extends RadialGeometry {
             return null;
         }
 
+        // intersection point of the ray and the tube
         double X1 = alignZero(((-1 * B) + sqrtDet) / (2 * A));
-
-
         double X2 = alignZero(((-1 * B) - sqrtDet) / (2 * A));
 
         double checkMaxX1 = alignZero(X1 - maxDistance);
         double checkMaxX2 = alignZero(X2 - maxDistance);
-
 
         if (X1 > 0 && checkMaxX1 <= 0 && X2 > 0 && checkMaxX2 <= 0) {
             return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this, ray.getPoint(X2)));
@@ -298,20 +299,16 @@ public class Tube extends RadialGeometry {
             return List.of(new GeoPoint(this, ray.getPoint(X2)));
         }
 
-      //  if ((X2 <= 0) && (alignZero(X1 - maxDistance) <= 0)) {
-     ///       return List.of(new GeoPoint(this, ray.getPoint(X1)));
-     //   } else return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this,  ray.getPoint(X2)));
+        //  if ((X2 <= 0) && (alignZero(X1 - maxDistance) <= 0)) {
+        ///       return List.of(new GeoPoint(this, ray.getPoint(X1)));
+        //   } else return List.of(new GeoPoint(this, ray.getPoint(X1)), new GeoPoint(this,  ray.getPoint(X2)));
         return null;
     }
 
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return null;
-
-    }
 
     /**
      * perform full comparison between a given object and this
+     *
      * @param o - object
      * @return - whether the object equals to this or not
      */
@@ -320,7 +317,7 @@ public class Tube extends RadialGeometry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tube tube = (Tube) o;
-        if(tube._radius != this._radius) return false;
+        if (tube._radius != this._radius) return false;
         return _axisRay.equals(tube._axisRay);
     }
 

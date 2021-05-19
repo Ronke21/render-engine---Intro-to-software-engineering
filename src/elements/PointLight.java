@@ -83,11 +83,16 @@ public class PointLight extends Light implements LightSource {
         return p.subtract(position).normalized();
     }
 
+    /**
+     * function to calculate the distance between
+     * light source and a point to make sure no object
+     * behind the light source is casting a shadow on the tested point
+     *
+     * @param point - the tested point
+     * @return the distance between the given point and the light source
+     */
     @Override
-    public double getDistance(Point3D point){
+    public double getDistance(Point3D point) {
         return point.distance(position);
     }
-
-
-
 }

@@ -15,8 +15,13 @@ import static primitives.Util.alignZero;
  */
 public class RayTracerBasic extends RayTracerBase {
 
+    /**
+     * TODO: write again
+     * Constant value for first magnification of rays for shading rays
+     * (its value can be reduced according to the orders of magnitude of the shapes
+     * in your image so that the shift will not be noticeable in the image):
+     */
     private static final double DELTA = 0.1;
-
 
     /**
      * constructor
@@ -61,6 +66,13 @@ public class RayTracerBasic extends RayTracerBase {
                 .add(calcLocalEffects(point, ray));
     }
 
+    /**
+     * function which returns the color of the object the ray is intersecting after adding the required effects
+     *
+     * @param point - the point on the object
+     * @param ray   - ray to the point
+     * @return the color in the point with local effects
+     */
     private Color calcLocalEffects(GeoPoint point, Ray ray) {
 
         Vector v = ray.getDir().normalized();
@@ -86,7 +98,7 @@ public class RayTracerBasic extends RayTracerBase {
 
             if (nl * nv > 0) { // sign(nl) == sing(nv)
 
-                if (unshaded(lightSource, l, n, point)){
+                if (unshaded(lightSource, l, n, point)) {
                     Color lightIntensity = lightSource.getIntensity(point.point);
                     color = color.add(
                             calcDiffusive(kd, l, n, lightIntensity),
@@ -100,17 +112,31 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * @param kd
-     * @param l
-     * @param n
-     * @param lightIntensity
-     * @return
+     * function to calculate the diffusive component of the light
+     *
+     * @param kd             - diffuse attenuation factor
+     * @param l              - the vector between the light source and the point
+     * @param n              - the normal of l with the body
+     * @param lightIntensity - the color of the light
+     * @return the light after the calculated effects
      */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         double ln = Math.abs(l.dotProduct(n));
         return lightIntensity.scale(ln * kd);
     }
 
+    /**
+     * function to calculate the specular component of the light
+     *
+     * @param ks             - specular attenuation factor
+     * @param l              - the vector between the light source and the point
+     * @param n              - the normal of l with the body
+     * @param v              - the camera vector
+     * @param nShininess     - how shiny the object is
+     * @param lightIntensity - the color of the light
+     * @param nl             - n.dotProduct(l), received as a param to save unnecessary calculations
+     * @return the light after the calculated effects
+     */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity, double nl) {
 
         // double nl = l.dotProduct(n);
@@ -123,47 +149,35 @@ public class RayTracerBasic extends RayTracerBase {
         return lightIntensity.scale(ks * p);
     }
 
+    /**
+     * boolean function to test whether a given point is shaded or not
+     *
+     * @param light    - the light source which we check if the point is shaded from
+     * @param l        - the vector between the light source and the point
+     * @param n        - the normal of l with the body
+     * @param geopoint - the tested point
+     * @return true if the point is shaded, false otherwise
+     */
     private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
+
         Vector lightDirection = l.scale(-1); // from point to light source
 
-        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
-        delta = delta.normalized();
+        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : -DELTA).normalized();
         Point3D point = geopoint.point.add(delta);
         Ray lightRay = new Ray(point, lightDirection);
 
-
         List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(lightRay);
-        if (intersections == null) return true;
-        double lightDistance = light.getDistance(geopoint.point);
-        for (GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0)
-                return false;
-        }
-        return true;
-    }
 
-
-
-/*
-    private boolean unshaded_0(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(geopoint.getPoint(), lightDirection, n);
-        Point3D pointGeo = geopoint.getPoint();
-
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
         if (intersections == null) {
             return true;
         }
-        double lightDistance = light.getDistance(pointGeo);
+
+        double maxDistance = light.getDistance(geopoint.point);
+
         for (GeoPoint gp : intersections) {
-            double temp = gp.getPoint().distance(pointGeo) - lightDistance;
-            if (alignZero(temp) <= 0)
+            if (alignZero(gp.point.distance(geopoint.point) - maxDistance) <= 0)
                 return false;
         }
         return true;
     }
-
-    */
-
-
 }

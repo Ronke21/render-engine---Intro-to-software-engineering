@@ -57,13 +57,16 @@ public interface Intersectable {
     /**
      * @param ray ray that cross the geometry
      * @return list of intersection points that were found
-    */
-
+     */
     default List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
+
+    /**
+     * @param ray         - ray that cross the geometry
+     * @param maxDistance - the upper bound of distance, any point which
+     *                    its distance is greater than this bound will not be returned
+     * @return list of intersection points that were found and has valid distance value
+     */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
-
-
-
 }

@@ -92,7 +92,7 @@ public class Cylinder extends Tube {
     // TODO: ask Eliezer whether we can implement this function now and get a bonus
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        return super.findGeoIntersections(ray);
+        return super.findGeoIntersections(ray, maxDistance);
     }
 }
 
