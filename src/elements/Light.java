@@ -13,6 +13,7 @@ abstract class Light {
 
     /**
      * constructor
+     *
      * @param color - the color of the light
      */
     protected Light(Color color) {
@@ -21,11 +22,10 @@ abstract class Light {
 
     /**
      * getter
+     *
      * @return the color of this instance
      */
     public Color getIntensity() {
         return intensity;
     }
-
-
 }

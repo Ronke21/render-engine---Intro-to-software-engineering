@@ -2,7 +2,10 @@ package primitives;
 
 import java.util.List;
 import java.util.Objects;
+
 import geometries.Intersectable.GeoPoint;
+
+import static primitives.Util.*;
 
 /**
  * This class represents a ray in the space = a vector that doesn't start in (0,0,0).
@@ -12,9 +15,11 @@ public class Ray {
     /**
      * @member _dir - the point the Ray points to from p0
      * @member _p0 - starting point of Ray
+     * DELTA - Constant value defining by how much we need to move the ray's starting point
      */
     final Point3D _p0;
     final Vector _dir;
+    private static final double DELTA = 0.1;
 
     /**
      * constructor for ray. receives starting point and vector and sets them. sets the vector normalized
@@ -25,6 +30,26 @@ public class Ray {
     public Ray(Point3D p0, Vector dir) {
         _p0 = p0;
         _dir = dir.normalized();
+    }
+
+    /**
+     * constructor for ray.
+     * creates a new ray and moves its head in the
+     * normal direction by the normal scaled by DELTA
+     *
+     * @param p0     - starting point
+     * @param dir    - direction vector
+     * @param normal - the normal defining the plane
+     */
+    public Ray(Point3D p0, Vector dir, Vector normal) {
+        this(p0, dir); // activate the current instance constructor
+
+        double nv = normal.dotProduct(dir);
+
+        if (!isZero(nv)) {
+            Vector epsVector = normal.scale(nv > 0 ? DELTA : -DELTA);
+            p0 = p0.add(epsVector);
+        }
     }
 
     /**

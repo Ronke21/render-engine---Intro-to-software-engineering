@@ -1,7 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
+import primitives.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,34 +12,96 @@ import java.util.stream.Collectors;
  */
 public interface Intersectable {
 
-
     /**
      * PDS
      * in order to find the correct color in a point, we need to
-     * take into consideration the shape which the light is bouncing from
+     * take into consideration th
+     * shape which the light is bouncing from
+     */
+//    public static class GeoPoint {
+//
+//        public Geometry geometry;
+//        public Point3D point;
+//
+//        /**
+//         * constructor of inner geo Point
+//         *
+//         * @param geometry - reference to current geometry
+//         * @param point    - reference to point on current geometry
+//         */
+//        public GeoPoint(Geometry geometry, Point3D point) {
+//            this.geometry = geometry;
+//            this.point = point;
+//        }
+//
+//        @Override
+//        public boolean equals(Object o) {
+//            if (this == o) return true;
+//            if (!(o instanceof GeoPoint)) return false;
+//            GeoPoint geoPoint = (GeoPoint) o;
+//            return geometry.equals(geoPoint.geometry) && point.equals(geoPoint.point);
+//        }
+//    }
+
+    /* Helper class representing a point on a geometry surface
+     * @author Dan
      */
     public static class GeoPoint {
-
+        /* the body of the point */
         public Geometry geometry;
+        /* the point itself */
         public Point3D point;
 
-        /**
-         * constructor of inner geo Point
+        /* Constructor to initialize both fields of this helper class
          *
-         * @param geometry - reference to current geometry
-         * @param point    - reference to point on current geometry
+         * @param geo geometry (basic)
+         * @param p   point on the surface of the geometry
          */
-        public GeoPoint(Geometry geometry, Point3D point) {
-            this.geometry = geometry;
-            this.point = point;
+        public GeoPoint(Geometry geo, Point3D p) {
+            geometry = geo;
+            point = p;
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof GeoPoint)) return false;
-            GeoPoint geoPoint = (GeoPoint) o;
-            return geometry.equals(geoPoint.geometry) && point.equals(geoPoint.point);
+        public boolean equals(Object obj) {
+            if (obj == null)
+                return false;
+            if (this == obj)
+                return true;
+            if (!(obj instanceof GeoPoint))
+                return false;
+            GeoPoint oth = (GeoPoint) obj;
+            return this.geometry == oth.geometry && this.point.equals(oth.point);
+        }
+
+        @Override
+        public String toString() {
+            return "" + geometry + ": " + point;
+        }
+
+        /* Ray direction from point of view to the point*/
+        public Vector v;
+        /* Normal vector to the geometry at the point*/
+        public Vector n;
+        /* n*v - dotProduct*/
+        public double nv;
+        /* Point color (IP) being calculated (including intermediate results)*/
+        public Color c;
+        /* Geometry's material */
+        public Material m;
+
+        /* Initialize geo point cache data according to the direction of the ray
+         * that produced the point.
+         * GeoPoint now will include all the info for any functions using it thus avoiding
+         * re-calculations
+         * @param v ray direction
+         */
+        public void initCache(Vector v) {
+            this.v = v;
+            n = geometry.getNormal(point);
+            nv = v.dotProduct(n);
+            c = geometry.getEmission();
+            m = geometry.getMaterial();
         }
     }
 

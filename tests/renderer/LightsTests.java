@@ -71,7 +71,11 @@ public class LightsTests {
     @Test
     public void sphereSpot() {
         scene1.geometries.add(sphere);
-        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
+        scene1.lights.add(
+                new SpotLight(
+                        new Color(500, 300, 0),
+                        new Point3D(-50, -50, 50),
+                        new Vector(1, 1, -2)) //
                 .setkL(0.00001).setkQ(0.00000001));
 
         ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
@@ -232,10 +236,18 @@ public class LightsTests {
      */
     @Test
     public void trianglesSpotSharp() {
-        scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
-                triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-        scene2.lights.add(new SpotLight(new Color(800, 400, 400), new Point3D(10, -10, -130), new Vector(-2, -2, -1)) //
-                .setFocus(5).setkL(0.00005).setkQ(0.0000025));
+        scene2.geometries.add(
+                triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
+                triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300))
+        );
+
+        scene2.lights.add(
+                new SpotLight(
+                        new Color(800, 400, 400),
+                        new Point3D(10, -10, -130),
+                        new Vector(-2, -2, -1)
+                ) //
+                        .setFocus(5).setkL(0.00005).setkQ(0.0000025));
 
         ImageWriter imageWriter = new ImageWriter("lightTrianglesSpotSharp", 500, 500);
         Render render = new Render()//
