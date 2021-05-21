@@ -17,7 +17,7 @@ public class Ray {
      * @member _p0 - starting point of Ray
      * DELTA - Constant value defining by how much we need to move the ray's starting point
      */
-    final Point3D _p0;
+    Point3D _p0;
     final Vector _dir;
     private static final double DELTA = 0.1;
 
@@ -44,11 +44,16 @@ public class Ray {
     public Ray(Point3D p0, Vector dir, Vector normal) {
         this(p0, dir); // activate the current instance constructor
 
-        double nv = normal.dotProduct(dir);
+        // make sure the normal and the direction are not orthogonal
+        double nv = normal.dotProduct(_dir);
 
+        // if not orthogonal
         if (!isZero(nv)) {
-            Vector epsVector = normal.scale(nv > 0 ? DELTA : -DELTA);
-            p0 = p0.add(epsVector);
+            // create new vector to help move the head of
+            // the vector to the correct position
+            Vector fixVector = normal.scale(nv > 0 ? DELTA : -DELTA);
+            // move the head of the vector in the right direction
+            _p0 = p0.add(fixVector);
         }
     }
 
