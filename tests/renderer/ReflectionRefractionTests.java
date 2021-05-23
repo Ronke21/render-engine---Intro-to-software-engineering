@@ -191,7 +191,7 @@ public class ReflectionRefractionTests {
                         new Point3D(60, 50, 0),
                         new Vector(0, 0, -1)
                 ) //
-                .setkL(4E-5).setkQ(2E-7));
+                        .setkL(4E-5).setkQ(2E-7));
 
         ImageWriter imageWriter = new ImageWriter("refractionShadow", 600, 600);
         Render render = new Render() //
@@ -202,4 +202,89 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
+
+    /**
+     * Produce a picture of a sphere lighted by a spot light
+     */
+    @Test
+    public void MyTest() {
+
+        Scene scene = new Scene("Test scene");
+
+        Camera camera = new Camera(
+                new Point3D(0, 0, 1000),
+                new Vector(0, 0, -1),
+                new Vector(0, 1, 0)) //
+                .setViewPlaneSize(150, 150)
+                .setDistance(1000);
+
+        scene.setBackground(Color.BLACK);
+        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+
+        // Geometries
+        //walls and mirror
+        scene.geometries.add(
+
+                new Plane(new Point3D(0, 0, -250), new Vector(0, 0, 1))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(0).setKt(0).setKr(0))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+                new Plane(new Point3D(250, 0, 00), new Vector(1, 0, 0))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(0).setKt(0).setKr(0))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+                new Plane(new Point3D(-333, 0, 0), new Vector(1, 0, 0))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(0).setKt(0).setKr(0))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+                new Plane(new Point3D(0, 300, 0), new Vector(1, 0, 0))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(0).setKt(0).setKr(0))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+                new Plane(new Point3D(0, 300, 0), new Vector(0, 1, 0))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(0).setKt(0).setKr(0))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+
+                new Polygon(
+                        new Point3D(-120, -90, -149),
+                        new Point3D(-120, 150, -149),
+                        new Point3D(120, 150, -149),
+                        new Point3D(120, -90, -149)
+                )
+                        .setEmission(new Color(40, 40, 40))
+                        .setMaterial(new Material().setKd(0).setKs(0).setShininess(0).setKt(0).setKr(1)));
+
+
+        scene.lights.add(
+                new SpotLight(
+                        new Color(0, 0, 0),
+                        new Point3D(0, 40, 0),
+                        new Vector(0, -1, 0)
+                ).setFocus(1)
+                        .setkL(0.0005)
+                        .setkQ(0.000005));
+
+        scene.lights.add(
+                new PointLight(
+                        new Color(255, 250, 0),
+                        new Point3D(0, 40, 0))
+                        .setkL(0.001).setkQ(0.0002));
+
+        scene.lights.add(
+                new DirectionalLight(
+                        new Color(50, 50, 50),
+                        new Vector(1, -1, -1)));
+
+
+
+        Render render = new Render() //
+                .setImageWriter(new ImageWriter("MyTransparencyTest", 250, 250)) //
+                .setCamera(camera) //
+                .setRayTracer(new RayTracerBasic(scene));
+        render.renderImage();
+        render.writeToImage();
+    }
 }
+
+
