@@ -193,14 +193,14 @@ public class Vector {
         double y = _head._y._coord;
         double z = _head._z._coord;
 
-        Point3D temp = new Point3D(x/len, y/len, z/len);
+        Point3D temp = new Point3D(x / len, y / len, z / len);
 
-        if (ZERO.equals(temp)){
+        if (ZERO.equals(temp)) {
             throw new ArithmeticException(("can not normalize vector 0"));
 
         }
 
-        this._head=temp;
+        this._head = temp;
 
         return this;
     }
@@ -223,6 +223,43 @@ public class Vector {
     //getter
     public Point3D getHead() {
         return _head;
+    }
+
+    /**
+     * function to rotate the direction of "this" vector,
+     * according to a new direction axis, in the difference angle
+     * <p>
+     * https://stackoverflow.com/questions/31225062/rotating-a-vector-by-angle-and-axis-in-java
+     *
+     * @param axis  - axis of rotation
+     * @param theta - angle of rotation
+     */
+    public void rotateVector(Vector axis, double theta) {
+        double x = this._head.getX();
+        double y = this._head.getY();
+        double z = this._head.getZ();
+
+        double u = axis._head.getX();
+        double v = axis._head.getY();
+        double w = axis._head.getZ();
+
+        double v1 = u * x + v * y + w * z;
+
+        double thetaRad = Math.toRadians(theta);
+
+        double xPrime = u * v1 * (1d - Math.cos(thetaRad))
+                + x * Math.cos(thetaRad)
+                + (-w * y + v * z) * Math.sin(thetaRad);
+
+        double yPrime = v * v1 * (1d - Math.cos(thetaRad))
+                + y * Math.cos(thetaRad)
+                + (w * x - u * z) * Math.sin(thetaRad);
+
+        double zPrime = w * v1 * (1d - Math.cos(thetaRad))
+                + z * Math.cos(thetaRad)
+                + (-v * x + u * y) * Math.sin(thetaRad);
+
+        this._head = new Point3D(xPrime, yPrime, zPrime);
     }
 
     @Override

@@ -11,7 +11,6 @@ public class Camera {
      * @member _Vup - Y axis vector
      * @member _Vto - X axis vector
      * @member _Vright - Z axis vector
-     *
      * @member _width - object's actual width
      * @member _height - object's actual height
      * @member _distance - object's actual distance from the camera center
@@ -29,7 +28,7 @@ public class Camera {
     /**
      * constructor
      *
-     * @param p0 - the camera location
+     * @param p0  - the camera location
      * @param Vto - Y axis vector
      * @param Vup - X axis vector
      */
@@ -85,7 +84,6 @@ public class Camera {
      * @param nY - amount of columns in view plane (number of pixels)
      * @param j  - X's index
      * @param i  - Y's index
-     *
      * @return - the ray which goes through the pixel
      */
 
@@ -116,32 +114,19 @@ public class Camera {
     /**
      * function to set new camera location
      *
-     * @param up    add to _vUp vector
-     * @param to    add to _vTo vector
-     * @param right add to _vRight vector
+     * @param x -the new x coordinate
+     * @param y -
+     * @param z -
      * @return the camera in its new position
      */
 
-    public Camera moveCamera(double up, double to, double right) {
+    public Camera moveCamera(double x, double y, double z) {
 
-        if (!isZero(up)) {
-            this._P0.add(_Vup.scale(up));
-        }
-
-        if (!isZero(to)) {
-            this._P0.add(_Vto.scale(to));
-        }
-
-        if (!isZero(right)) {
-            this._P0.add(_Vright.scale(right));
-        }
+        this._P0 = new Point3D(_P0.getX() + x, _P0.getY() + y, _P0.getZ() + z);
 
         return this;
     }
 
-
-    // TODO: check if vector needs to be rotated by angle
-    // TODO: vector rotation : https://stackoverflow.com/questions/31225062/rotating-a-vector-by-angle-and-axis-in-java\
 
     /**
      * function to set new direction vectors to the camera
@@ -157,6 +142,22 @@ public class Camera {
         this._Vto = Vto;
         this._Vright = Vright;
 
+        return this;
+    }
+
+    /**
+     * function to set new direction vectors to the
+     * camera according to a rotating axis
+     *
+     * @param axis  - turning axis
+     * @param theta - angle to turn the camera
+     * @return
+     */
+    public Camera turnCamera(Vector axis, double theta) {
+        if (theta == 0) return this;
+        this._Vup.rotateVector(axis, theta);
+        this._Vright.rotateVector(axis, theta);
+        this._Vto.rotateVector(axis, theta);
         return this;
     }
 }
