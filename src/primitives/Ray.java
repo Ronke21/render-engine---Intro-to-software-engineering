@@ -45,7 +45,7 @@ public class Ray {
         this(p0, dir); // activate the current instance constructor
 
         // make sure the normal and the direction are not orthogonal
-        double nv = normal.dotProduct(_dir);
+        double nv = alignZero(normal.dotProduct(_dir));
 
         // if not orthogonal
         if (!isZero(nv)) {

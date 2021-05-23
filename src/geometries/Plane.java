@@ -30,7 +30,7 @@ public class Plane extends FlatGeometry {
      */
     public Plane(Point3D q0, Vector normal) {
         _q0 = q0;
-        _normal = normal;
+        _normal = normal.normalized();
     }
 
     /**
@@ -47,11 +47,7 @@ public class Plane extends FlatGeometry {
         Vector U = p2.subtract(p1);
         Vector V = p3.subtract(p1);
 
-        Vector N = U.crossProduct(V);
-
-        N.normalize();
-
-        _normal = N;
+        _normal = U.crossProduct(V).normalized();
     }
 
     /**
