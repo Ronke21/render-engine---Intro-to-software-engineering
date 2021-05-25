@@ -485,10 +485,11 @@ public class ReflectionRefractionTests {
         scene.lights.add(
                 new PointLight(Color.WHITE.reduce(2).add(Color.YELLOW).scale(3), new Point3D(10, -40, 30)));
 
+        int pixels = 3000;
 
         //70, 60, 10
         Render render = new Render() //
-                .setImageWriter(new ImageWriter("TreeTest", 500, 500)) //
+                .setImageWriter(new ImageWriter("TreeTest", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new RayTracerBasic(scene));
         render.renderImage();
@@ -501,7 +502,7 @@ public class ReflectionRefractionTests {
         camera.turnCamera(new Vector(-70, -60, 18), new Vector(8, 20, 1760d / 18d));
 
         render = new Render() //
-                .setImageWriter(new ImageWriter("TreeTest2", 500, 500)) //
+                .setImageWriter(new ImageWriter("TreeTest2", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new RayTracerBasic(scene));
         render.renderImage();
@@ -513,11 +514,39 @@ public class ReflectionRefractionTests {
         camera.turnCamera(new Vector(0, -14, -1), new Vector(0, -15d/14, 15));
 
         render = new Render() //
-                .setImageWriter(new ImageWriter("TreeTest3", 500, 500)) //
+                .setImageWriter(new ImageWriter("TreeTest3", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new RayTracerBasic(scene));
         render.renderImage();
         render.writeToImage();
+
+
+        camera.moveCamera(-20, -10, -5);
+
+        camera.setDistance(150);
+        camera.turnCamera(new Vector (0,0,1), -40);
+
+        render = new Render() //
+                .setImageWriter(new ImageWriter("TreeTest4", pixels, pixels)) //
+                .setCamera(camera) //
+                .setRayTracer(new RayTracerBasic(scene));
+        render.renderImage();
+        render.writeToImage();
+
+        camera = new Camera(
+                new Point3D(-70, -60, 10),
+                new Vector(5, 5, 1),
+                new Vector(-2.52, -2.52, 25.2))
+                .setViewPlaneSize(250, 250)
+                .setDistance(150);
+
+        render = new Render() //
+                .setImageWriter(new ImageWriter("TreeTest5", pixels, pixels)) //
+                .setCamera(camera) //
+                .setRayTracer(new RayTracerBasic(scene));
+        render.renderImage();
+        render.writeToImage();
+
     }
 }
 
