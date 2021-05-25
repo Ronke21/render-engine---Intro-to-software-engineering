@@ -417,4 +417,23 @@ class TubeTest {
         result = tube2.findIntersections(ray);
         assertNull(result, "Bad intersections");
     }
+
+    @Test
+    void TreeLikeIntersectionTest() {
+        Ray tubeRay = new Ray(
+                new Point3D(-4, 0, 0),
+                new Vector(4, 5, 3)
+        );
+
+        Tube tube = new Tube(tubeRay, 1);
+
+        Ray intersection = new Ray(
+                new Point3D(-2, -0.8, 0),
+                new Vector(-5, -2, 0)
+        );
+
+        List<Point3D> result = tube.findIntersections(intersection);
+
+        assertNull(result, "Bad intersections");
+    }
 }

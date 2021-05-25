@@ -133,16 +133,11 @@ public class Camera {
      *
      * @param Vup    - new Vup vector
      * @param Vto    - n
-     * @param Vright - new Vright vector
      * @return the camera after the rotation
      */
-    public Camera turnCamera(Vector Vup, Vector Vto, Vector Vright) {
-
-        this._Vup = Vup;
-        this._Vto = Vto;
-        this._Vright = Vright;
-
-        return this;
+    public Camera turnCamera( Vector Vto,Vector Vup) {
+        Camera newcam = new Camera(this._P0,Vto, Vup);
+        return newcam;
     }
 
     /**
