@@ -15,8 +15,8 @@ public class Material {
     public double Kd = 0.0;
     public double Ks = 0.0;
     public int Shininess = 0;
-    public double Kt = 0.0;
-    public double Kr = 0.0;
+    public double Kt = 0.0; //opaque
+    public double Kr = 0.0; //matte
 
     /**
      * setter - chaining method

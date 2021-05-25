@@ -74,7 +74,7 @@ public class Ray {
     /**
      * function to get a point on the ray which its coordinates are scaled by a number (t)
      *
-     * @param t (scaler on the direction)
+     * @param t (scalar on the direction)
      * @return point on the ray which its coordinates are scaled by a number (t)
      */
     public Point3D getPoint(double t) {

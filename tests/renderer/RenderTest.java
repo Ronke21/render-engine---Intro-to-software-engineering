@@ -45,7 +45,7 @@ class RenderTest {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -60,8 +60,8 @@ class RenderTest {
     public void basicRenderXml() {
 //        Scene scene = new Scene("XML Test scene");
 
-        Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
-        //  Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
+        //Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
+          Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
         // enter XML file name and parse from XML file into scene object
         // ...
 
@@ -69,7 +69,7 @@ class RenderTest {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -95,7 +95,7 @@ class RenderTest {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.WHITE));
@@ -133,7 +133,7 @@ class RenderTest {
             Render render = new Render(). //
                     setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
                     .setCamera(camera) //
-                    .setRayTracer(new RayTracerBasic(scene));
+                    .setRayTracer(new BasicRayTracer(scene));
             render.renderImage();
             render.writeToImage();
         }
@@ -162,7 +162,7 @@ class RenderTest {
             Render render = new Render() //
                     .setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
                     .setCamera(camera) //
-                    .setRayTracer(new RayTracerBasic(scene));
+                    .setRayTracer(new BasicRayTracer(scene));
             render.renderImage();
             render.writeToImage();
         }

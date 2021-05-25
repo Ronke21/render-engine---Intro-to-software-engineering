@@ -13,7 +13,7 @@ import static primitives.Util.*;
 /**
  * class used to trace rays for the rendering engine
  */
-public class RayTracerBasic extends RayTracerBase {
+public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Constant value defining by how much we need to move the ray's starting point
@@ -32,7 +32,7 @@ public class RayTracerBasic extends RayTracerBase {
      *
      * @param scene - the scene the rays are sent to
      */
-    public RayTracerBasic(Scene scene) {
+    public BasicRayTracer(Scene scene) {
         super(scene);
     }
 

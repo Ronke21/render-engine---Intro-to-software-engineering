@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import elements.*;
 import geometries.*;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -67,7 +65,7 @@ public class ReflectionRefractionTests {
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }
@@ -132,7 +130,7 @@ public class ReflectionRefractionTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.writeToImage();
@@ -201,7 +199,7 @@ public class ReflectionRefractionTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.writeToImage();
@@ -317,7 +315,7 @@ public class ReflectionRefractionTests {
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("MyTransparencyTest", 250, 250)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 
@@ -327,7 +325,7 @@ public class ReflectionRefractionTests {
         Render render2 = new Render() //
                 .setImageWriter(new ImageWriter("MyTransparencyTestAfter1", 250, 250)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render2.renderImage();
         render2.writeToImage();
 
@@ -337,7 +335,7 @@ public class ReflectionRefractionTests {
         Render render3 = new Render() //
                 .setImageWriter(new ImageWriter("MyTransparencyTestAfter2", 250, 250)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render3.renderImage();
         render3.writeToImage();
     }
@@ -485,13 +483,13 @@ public class ReflectionRefractionTests {
         scene.lights.add(
                 new PointLight(Color.WHITE.reduce(2).add(Color.YELLOW).scale(3), new Point3D(10, -40, 30)));
 
-        int pixels = 3000;
+        int pixels = 500;
 
         //70, 60, 10
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 
@@ -504,7 +502,7 @@ public class ReflectionRefractionTests {
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest2", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 
@@ -516,7 +514,7 @@ public class ReflectionRefractionTests {
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest3", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 
@@ -529,7 +527,7 @@ public class ReflectionRefractionTests {
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest4", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 
@@ -543,7 +541,7 @@ public class ReflectionRefractionTests {
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest5", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
 

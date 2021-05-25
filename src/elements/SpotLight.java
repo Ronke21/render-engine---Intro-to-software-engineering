@@ -6,14 +6,15 @@ import primitives.Vector;
 
 /**
  * class represents a light source in a shape  of spotlight
- *
- * @member focus - the narrowing factor, the beam gets narrower and weaker as it gets bigger.
  * in order to get the same light intensity, we need to increase the initial intensity of the light source
  */
 public class SpotLight extends PointLight {
-
-    private Vector direction;
-    public double focus = 1;
+    /**
+     * @member direction - the direction of the light
+     * @member focus - the narrowing factor, the beam gets narrower and weaker as it gets bigger.
+     */
+    private final Vector _direction;
+    private double _focus = 1;
 
     /**
      * constructor
@@ -23,7 +24,7 @@ public class SpotLight extends PointLight {
      */
     public SpotLight(Color color, Point3D position, Vector direction) {
         super(color, position);
-        this.direction = direction.normalized();
+        _direction = direction.normalized();
     }
 
     /**
@@ -36,7 +37,7 @@ public class SpotLight extends PointLight {
      * @return the updated SpotLight
      */
     public SpotLight setFocus(double focus) {
-        this.focus = Math.max(focus, 1);
+        _focus = Math.max(focus, 1);
         return this;
     }
 
@@ -53,7 +54,7 @@ public class SpotLight extends PointLight {
         // we use pow because in order to make the light intensity lower,
         // we want to increase the attenuation in any direction, to make sure that as far as we get
         // from the center of the beam, the light will get weaker, which will create the beam effect
-        double distance = Math.pow(direction.dotProduct(L), focus);
+        double distance = Math.pow(_direction.dotProduct(L), _focus);
 
         return super.getIntensity(p).scale(Math.max(0, distance));
     }
