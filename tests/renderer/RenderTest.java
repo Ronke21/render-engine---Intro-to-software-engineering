@@ -61,7 +61,7 @@ class RenderTest {
 //        Scene scene = new Scene("XML Test scene");
 
         //Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
-          Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
+        Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
         // enter XML file name and parse from XML file into scene object
         // ...
 
@@ -151,7 +151,7 @@ class RenderTest {
                             .setMaterial(new Material().setKs(0.8).setShininess(60)), //
                     new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140), new Point3D(75, 75, -150)) //
                             .setMaterial(new Material().setKs(0.8).setShininess(60)), //
-                    new Sphere( new Point3D(0, 0, -115), 30) //
+                    new Sphere(new Point3D(0, 0, -115), 30) //
                             .setEmission(new Color(java.awt.Color.BLUE)) //
                             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)) //
             );
@@ -166,6 +166,5 @@ class RenderTest {
             render.renderImage();
             render.writeToImage();
         }
-
     }
 }
