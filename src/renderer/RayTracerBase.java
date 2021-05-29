@@ -26,5 +26,4 @@ public abstract class RayTracerBase {
      * @return the color of the pixel intersects the given ray
      */
     public abstract Color traceRay(Ray ray);
-
 }

@@ -84,8 +84,9 @@ public class Render {
             this.maxCols = maxCols;
             this.pixels = (long) maxRows * maxCols;
             this.nextCounter = this.pixels / 100;
-            if (Render.this.print)
+            if (Render.this.print) {
                 System.out.printf("\r %02d%%", this.percents);
+            }
         }
 
         /**
@@ -211,8 +212,9 @@ public class Render {
      * Produce a rendered image file
      */
     public void writeToImage() {
-        if (imageWriter == null)
+        if (imageWriter == null) {
             throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
+        }
 
         imageWriter.writeToImage();
     }

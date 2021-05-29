@@ -19,7 +19,7 @@ public class AdvancedRayTracer extends RayTracerBase {
      * Constant value defining by how much we need to move the ray's starting point
      */
     // how many reflections we want to calculate
-    // USE WITH CAUTION! higher values leads to performance decreasing rapidly
+    // USE WITH CAUTION! higher values causes performance drop exponentially!
     private static final int MAX_CALC_COLOR_LEVEL = 10; // 10
     // minimal value which is not considered at fully transparent or other effects
     private static final double MIN_CALC_COLOR_K = 0.001; // 0.001
@@ -93,7 +93,7 @@ public class AdvancedRayTracer extends RayTracerBase {
      * @param intersection - closest intersection point on the object
      * @param ray          - ray to the point
      * @param level        - recursion iterations upper limit
-     * @param k            - TODO lines 26 - 27
+     * @param k            - TODO lines 26 - 27 (?)
      * @return the color in the point with all the effects
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
@@ -239,40 +239,6 @@ public class AdvancedRayTracer extends RayTracerBase {
 
         return lightIntensity.scale(ks * p);
     }
-
-    //region unshaded - replaced by transparency
-//    /**
-//     * boolean function to test whether a given point is shaded or not
-//     *
-//     * @param light    - the light source which we check if the point is shaded from
-//     * @param l        - the vector between the light source and the point
-//     * @param n        - the normal of l with the body
-//     * @param geoPoint - the tested point
-//     * @return true if the point is shaded, false otherwise
-//     */
-//    private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geoPoint) {
-//
-//        Vector lightDirection = l.scale(-1); // from point to light source
-//
-//        Ray lightRay = new Ray(geoPoint.point, lightDirection, n);
-//
-//        List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(lightRay);
-//
-//        if (intersections == null) {
-//            return true;
-//        }
-//
-//        double maxDistance = light.getDistance(geoPoint.point);
-//
-//        for (GeoPoint gp : intersections) {
-//            if (alignZero(gp.point.distance(geoPoint.point) - maxDistance) <= 0
-//                    && isZero(gp.geometry.getMaterial().Kt)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-// endregion
 
     /**
      * function to construct the new ray reflected

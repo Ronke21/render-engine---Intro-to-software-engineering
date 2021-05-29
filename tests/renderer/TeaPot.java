@@ -18,7 +18,7 @@ class TeapotTest {
             .setDistance(1000).setViewPlaneSize(200, 200);
     private final Scene scene = new Scene("Test scene");
 
-    private static final Color color = new Color(200, 0, 0);
+    private static final Color color = new Color(50, 0, 200);
     private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
 
     private static Point3D[] pnts = new Point3D[] { null, //
@@ -1563,7 +1563,7 @@ class TeapotTest {
                 .setRayTracer(new BasicRayTracer(scene)) //
                 .setMultithreading(3).setDebugPrint();
         render.renderImage();
-        render.printGrid(50, new Color(java.awt.Color.YELLOW));
+//        render.printGrid(50, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
 

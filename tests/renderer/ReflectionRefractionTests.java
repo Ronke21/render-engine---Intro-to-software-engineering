@@ -509,7 +509,7 @@ public class ReflectionRefractionTests {
         camera.moveCamera(90, 10, 5);
         // -20, 70, 5
         camera.setDistance(250);
-        camera.turnCamera(new Vector(0, -14, -1), new Vector(0, -15d/14, 15));
+        camera.turnCamera(new Vector(0, -14, -1), new Vector(0, -15d / 14, 15));
 
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest3", pixels, pixels)) //
@@ -522,7 +522,7 @@ public class ReflectionRefractionTests {
         camera.moveCamera(-20, -10, -5);
 
         camera.setDistance(150);
-        camera.turnCamera(new Vector (0,0,1), -40);
+        camera.turnCamera(new Vector(0, 0, 1), -40);
 
         render = new Render() //
                 .setImageWriter(new ImageWriter("TreeTest4", pixels, pixels)) //
