@@ -147,12 +147,12 @@ public class Ray {
      * auxiliary function to randomly scatter points within a circular surface.
      * returns a list of rays which related to the surface.
      *
-     * @param center  center point of the circular surface.
-     * @param vUp     upper vector of circular surface.
-     * @param vRight  right vector of circular surface.
-     * @param radius  radius of circular surface.
-     * @param numRays number of rays we create in the circular surface.
-     * @param dist    distance from circular surface to the other point. the point could be the target or the beginning.
+     * @param center  - center point of the circular surface.
+     * @param vUp     - upper vector of circular surface.
+     * @param vRight  - right vector of circular surface.
+     * @param radius  - radius of circular surface.
+     * @param numRays - number of rays we create in the circular surface.
+     * @param dist    - distance from circular surface to the other point. the point could be the target or the beginning.
      * @return list of rays from one point toward the surface and vice versa (rays from the surface to one point)
      */
     public List<Ray> randomRaysInCircle(Point3D center, Vector vUp, Vector vRight, double radius, int numRays, double dist) {
@@ -162,28 +162,49 @@ public class Ray {
             // radius input zero means there's no circular surface.
             return rays;
         }
+
         Point3D focalPoint = getPoint(dist);
+
         for (int i = 1; i < numRays; ++i) {
-            double cosTheta = -1 + (Math.random() * 2); // min = -1, max = 1, which means the degree of the line which the points located (between 0 to Pie)
-            double sinTheta = Math.sqrt(1 - cosTheta * cosTheta); //
-            double d = -radius + (Math.random() * (2 * radius));// min = -radius, max = +radius, which means the location on the diameter
+
+            // min = -1, max = 1
+            // which means the degree of the line which the points located (between 0 to Pie)
+            double cosTheta = -1 + (Math.random() * 2);
+
+            // using Pythagoras theorem, define the complement to cosTheta (the 'mashlim' in Hebrew)
+            double sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
+
+            // min = -radius, max = +radius
+            // if we get extreme value, it means the new p0 will be located on the diameter,
+            // otherwise, somewhere in the middle of the circle
+            double d = -radius + (Math.random() * (2 * radius));
+
             // Move from polar to Cartesian system:
             double x_move = d * cosTheta;
             double y_move = d * sinTheta;
-            Point3D pMove; // location point after move from center point of circular surface.
-            pMove = center;
+
+            // define a new starting point for the new ray
+            // start from the center of the circle
+            Point3D newP0 = center;
+
+            // if the x and y steps are not 0, move the point
             if (!isZero(x_move)) {
-                pMove = pMove.add(vRight.scale(x_move));
+                newP0 = newP0.add(vRight.scale(x_move));
             }
             if (!isZero(y_move)) {
-                pMove = pMove.add(vUp.scale(y_move));
+                newP0 = newP0.add(vUp.scale(y_move));
             }
+
             // the vectors normalized inside Ray constructor
-            if (_p0.equals(center)) {
-                rays.add(new Ray(pMove, (focalPoint.subtract(pMove)))); // from surface
-            } else {
-                rays.add(new Ray(_p0, (pMove.subtract(_p0)))); // toward surface
-            }
+//            if (_p0.equals(center)) {
+
+            // add the ray from the new starting point to the focal point
+            rays.add(new Ray(newP0, (focalPoint.subtract(newP0)))); // from surface
+
+
+//            } else {
+//                rays.add(new Ray(_p0, (newP0.subtract(_p0)))); // toward surface
+//            }
         }
         return rays;
     }

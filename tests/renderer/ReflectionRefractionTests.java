@@ -354,7 +354,8 @@ public class ReflectionRefractionTests {
                 new Vector(-5, -5, -1),
                 new Vector(-2.52, -2.52, 25.2))
                 .setViewPlaneSize(250, 250)
-                .setDistance(300);
+                .setDistance(300)
+                ;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(1.2));
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
@@ -423,7 +424,12 @@ public class ReflectionRefractionTests {
                             .setKr(0.01));
         }
 
-        Tube trunk = new Tube(new Ray(new Point3D(0, 0, 0), new Vector(0, 0, -10)), 2.5);
+        Tube trunk = new Cylinder(
+                new Ray(
+                        new Point3D(0, 0, -10),
+                        new Vector(0, 0, 1))
+                , 2.5,
+                15);
 
         trunk.setEmission(new Color(180, 83, 0).reduce(5));
 

@@ -3,6 +3,8 @@ package renderer;
 import primitives.*;
 import elements.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
 
 /**
@@ -234,6 +236,30 @@ public class Render {
     }
 
     /**
+     * Cast beam of rays from the pixel in the view plane to the focal point in the focal plane
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castBeam(int nX, int nY, int col, int row) {
+        List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, col, row);
+
+//        Color color = Color.BLACK;
+//        for (Ray ray : rays) {
+//            color = color.add(tracer.traceRay(ray));
+//        }
+//        imageWriter.writePixel(col, row, color.scale(1d / rays.size()));
+
+        List<Color> colors = new LinkedList<>();
+        for (Ray ray : rays) {
+            colors.add(tracer.traceRay(ray));
+        }
+        imageWriter.writePixel(col, row, Color.avgColor(colors));
+    }
+
+    /**
      * This function renders image's pixel color map from the scene included with
      * the Renderer object - with multi-threading
      */
@@ -246,8 +272,15 @@ public class Render {
         for (int i = threadsCount - 1; i >= 0; --i) {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
-                while (thePixel.nextPixel(pixel))
-                    castRay(nX, nY, pixel.col, pixel.row);
+                while (thePixel.nextPixel(pixel)) {
+                    // check whether the camera has DOF effect turned on,
+                    // if it is not, proceed as usual (cast a single ray)
+                    if (!camera.is_DOF()) {
+                        castRay(nX, nY, pixel.col, pixel.row);
+                    }
+                    // if it is on, cast a beam, instead of a single ray
+                    else castBeam(nX, nY, pixel.col, pixel.row);
+                }
             });
         }
         // Start threads
@@ -282,11 +315,25 @@ public class Render {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        if (threadsCount == 0)
-            for (int i = 0; i < nY; ++i)
-                for (int j = 0; j < nX; ++j)
-                    castRay(nX, nY, j, i);
-        else {
+        if (threadsCount == 0) {
+            // check whether the camera has DOF effect turned on,
+            // if it is not, proceed as usual (cast a single ray)
+            if (!camera.is_DOF()) {
+                for (int i = 0; i < nY; ++i) {
+                    for (int j = 0; j < nX; ++j) {
+                        castRay(nX, nY, j, i);
+                    }
+                }
+            }
+            // if it is on, cast a beam, instead of a single ray
+            else {
+                for (int i = 0; i < nY; ++i) {
+                    for (int j = 0; j < nX; ++j) {
+                        castBeam(nX, nY, j, i);
+                    }
+                }
+            }
+        } else {
             renderImageThreaded();
         }
     }

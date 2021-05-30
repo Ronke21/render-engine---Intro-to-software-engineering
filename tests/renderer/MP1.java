@@ -23,7 +23,7 @@ public class MP1 {
                 new Point3D(70, 60, 10),
                 new Vector(-5, -5, -1),
                 new Vector(-2.52, -2.52, 25.2),
-                1.5, 65, 13)
+                1.5, 65, 13, true)
                 .setViewPlaneSize(250, 250)
                 .setDistance(300);
 
@@ -175,7 +175,7 @@ public class MP1 {
                 new Point3D(0, 0, 1000),
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0),
-                1.5, 250, 13
+                25, 200, 36, true
         ) //
                 .setViewPlaneSize(150, 150) //
                 .setDistance(1000);
@@ -188,12 +188,16 @@ public class MP1 {
                 .setViewPlaneSize(150, 150) //
                 .setDistance(1000);
 
-        scene.geometries.add(new Sphere(new Point3D(30, 0, 750), 30) //
+        scene.geometries.add(new Sphere(new Point3D(-30, 0, -50), 30) //
+                .setEmission(Color.BLUE.reduce(2)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
+
+        scene.geometries.add(new Sphere(new Point3D(-5, 0, 750), 6) //
                 .setEmission(Color.RED.reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
 
-        scene.geometries.add(new Sphere(new Point3D(-30, 0, -50), 30) //
-                .setEmission(Color.BLUE.reduce(2)) //
+        scene.geometries.add(new Sphere(new Point3D(0, 0, 950), 1) //
+                .setEmission(Color.GREEN.reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
 
 
@@ -202,13 +206,9 @@ public class MP1 {
                         Color.YELLOW,
                         new Vector(1, 1.5, -1.5)));
 
-        scene.lights.add(
-                new PointLight(
-                        Color.BLUE.scale(2),
-                        new Point3D(0, 0, 20))//
-                        .setkL(0.00001).setkQ(0.000001));
+        int PIXELS = 500;
 
-        ImageWriter imageWriter = new ImageWriter("MP1TestDOF", 5000, 5000);
+        ImageWriter imageWriter = new ImageWriter("MP1TestDOF", PIXELS, PIXELS);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera.setDistance(750)) //
@@ -216,7 +216,7 @@ public class MP1 {
         render.renderImage();
         render.writeToImage();
 
-        imageWriter = new ImageWriter("MP1TestNODOF", 5000, 5000);
+        imageWriter = new ImageWriter("MP1TestNODOF", PIXELS, PIXELS);
         render = new Render()//
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2.setDistance(750)) //

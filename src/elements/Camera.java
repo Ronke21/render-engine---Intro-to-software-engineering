@@ -16,6 +16,12 @@ public class Camera {
      * @member _Vup - Y axis vector
      * @member _Vto - X axis vector
      * @member _Vright - Z axis vector
+     * @member _apertureSize - determines how much the aperture will be open in our camera
+     * (smaller = more objects in focus, bigger = less objects in focus, stronger blurring)
+     * @member _focalDistance - the distance between the view plane and the focal plane
+     * (focal plane, the second imaginary plane, in which the beam rays emitted from the matching pixel in the view plane are passing through)
+     * @member _numberOfRays - the number of rays emitted from the view plane towards the focal plane
+     * @member _DOF - boolean value to set whether the camera has depth of field (bokeh) effect of not
      * @member _width - object's actual width
      * @member _height - object's actual height
      * @member _distance - object's actual distance from the camera center
@@ -26,17 +32,18 @@ public class Camera {
     private Vector _Vto;
     private Vector _Vright;
 
+    // params for DOF effect
     private double _apertureSize;
     private double _focalDistance;
     private int _numberOfRays;
-    private boolean DOF;
+    private boolean _DOF;
 
     private double _width;
     private double _height;
     private double _distance;
 
     /**
-     * constructor for basic ray tracer
+     * simple constructor
      *
      * @param p0  - the camera location
      * @param Vto - Y axis vector
@@ -57,7 +64,7 @@ public class Camera {
     }
 
     /**
-     * constructor for advanced ray tracer
+     * more complex constructor for DOF
      *
      * @param p0           - the camera location
      * @param Vto          - Y axis vector
@@ -66,47 +73,134 @@ public class Camera {
      * @param focalLength  - the distance between the view plane and the focal plane
      * @param numberOfRays - number of rays
      */
-    public Camera(Point3D p0, Vector Vto, Vector Vup, double apertureSize, double focalLength, int numberOfRays) {
+    public Camera(Point3D p0, Vector Vto, Vector Vup, double apertureSize, double focalLength, int numberOfRays, boolean dof) {
 
-        if (!isZero(Vup.dotProduct(Vto))) {
-            throw new IllegalArgumentException("up vector and  to vector arent orthogonal");
-        }
+        this(p0, Vto, Vup);
 
-        _P0 = p0;
-        _Vto = Vto.normalized();
-        _Vup = Vup.normalized();
         _apertureSize = apertureSize;
         _focalDistance = focalLength;
         _numberOfRays = numberOfRays;
-
-        // _Vright is always the cross product of _Vto and _Vup since they are orthogonal by definition
-        _Vright = _Vto.crossProduct(_Vup);
+        _DOF = dof;
     }
 
+    /**
+     * getter
+     *
+     * @return p0
+     */
     public Point3D getP0() {
         return _P0;
     }
 
+    /**
+     * getter
+     *
+     * @return Vup
+     */
     public Vector getVup() {
         return _Vup;
     }
 
+    /**
+     * getter
+     *
+     * @return Vto
+     */
     public Vector getVto() {
         return _Vto;
     }
 
+    /**
+     * getter
+     *
+     * @return Vright
+     */
     public Vector getVright() {
         return _Vright;
     }
 
+    /**
+     * getter
+     *
+     * @return aperture Size
+     */
+    public double get_apertureSize() {
+        return _apertureSize;
+    }
 
-    //chaining methods
+    /**
+     * getter
+     *
+     * @return focal distance
+     */
+    public double get_focalDistance() {
+        return _focalDistance;
+    }
+
+    /**
+     * getter
+     *
+     * @return number Of rays
+     */
+    public int get_numberOfRays() {
+        return _numberOfRays;
+    }
+
+    /**
+     * getter
+     *
+     * @return whether the DOF effect is activated or not
+     */
+    public boolean is_DOF() {
+        return _DOF;
+    }
+
+    /**
+     * getter
+     *
+     * @return the width of the view plane
+     */
+    public double get_width() {
+        return _width;
+    }
+
+    /**
+     * getter
+     *
+     * @return the height of the view plane
+     */
+    public double get_height() {
+        return _height;
+    }
+
+    /**
+     * getter
+     *
+     * @return the object's actual distance from the camera center
+     */
+    public double get_distance() {
+        return _distance;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param width   - the width of the view plane
+     * @param height- the height of the view plane
+     * @return the camera with the configured view plane
+     */
     public Camera setViewPlaneSize(double width, double height) {
         _height = height;
         _width = width;
         return this;
     }
 
+    /**
+     * setter - chaining method
+     *
+     * @param distance - the object's actual distance from the camera center
+     * @return the camera with the configured distance
+     */
     public Camera setDistance(double distance) {
         _distance = distance;
         return this;
@@ -149,46 +243,50 @@ public class Camera {
 
     /**
      * this function gets the view plane size and a selected pixel,
-     * and return the ray from the camera which intersects this pixel
+     * and return the rays from the view plane which intersects the focal plane
      *
      * @param nX - amount of rows in view plane (number of pixels)
      * @param nY - amount of columns in view plane (number of pixels)
      * @param j  - X's index
      * @param i  - Y's index
-     * @return - the ray which goes through the pixel
+     * @return - the list of rays which goes from the pixel through the focal plane
      */
-    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, double distanceFromScreen, double screenWidth, double screenHeight) {
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
 
+        // the returned list of rays
         List<Ray> _rays = new ArrayList<>();
 
-        Ray center_ray = constructRayThroughPixel(nX, nY, j, i);
-        if (_numberOfRays == 1) {
-            _rays.add(center_ray);
-        }
-        double rY = alignZero(screenHeight / nY);   //  Ry = h/Ny
-        double rX = alignZero(screenWidth / nX);   //  Rx = w/Nx
+        // add the center ray to the list
+        _rays.add(constructRayThroughPixel(nX, nY, j, i));
 
+        // calculate the actual size of a pixel
+        // pixel height is the division of the view plane height in the number of rows of pixels
+        double pixelHeight = alignZero(_height / nY);   //  Ry = h/Ny
+        // pixel width is the division of the view plane width in the number of columns of pixels
+        double pixelWidth = alignZero(_width / nX);   //  Rx = w/Nx
+
+        // if more then one ray is emitted (DOF effect)
         if (_numberOfRays != 1) {
             List<Ray> temp_rays = new LinkedList<>();
             // apertureSize is the value of how many pixels it spreads on
-            double apertureRadius = Math.sqrt(_apertureSize * (rY * rX)) / 2d;
+            double apertureRadius = Math.sqrt(_apertureSize * (pixelHeight * pixelWidth)) / 2d;
             for (Ray ray : _rays) {
-                // creating list of focal rays (from the aperture plane towards the focal point)
+                // creating list of focal rays (from the aperture on the view plane to the point on the focal plane)
                 temp_rays.addAll(ray.randomRaysInCircle(ray.getP0(), _Vup, _Vright, apertureRadius, _numberOfRays, _focalDistance));
-                _rays = temp_rays; // the original rays included in the temp rays
             }
+            // the original rays included in the temp rays
+            _rays = temp_rays;
         }
         return _rays;
     }
 
 
-
     /**
      * function to set new camera location
      *
-     * @param x -the new x coordinate
-     * @param y -
-     * @param z -
+     * @param x - added amount to the x coordinates
+     * @param y - added amount to the y coordinates
+     * @param z - added amount to the z coordinates
      * @return the camera in its new position
      */
 

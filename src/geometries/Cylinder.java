@@ -4,7 +4,10 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static primitives.Util.alignZero;
 
 /**
  * this class represents a Cylinder in the space - kind of long tube.
@@ -83,16 +86,59 @@ public class Cylinder extends Tube {
     }
 
 
-
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        return super.findIntersections(ray);
-//    }
-
-    // TODO: ask Eliezer whether we can implement this function now and get a bonus
+    /**
+     * findIntersections method will group all the points which the ray intersect with the class Tube
+     * Cases are: ray cross cylinder (2 points) ,ray launch cylinder(1 points), ray doesn't intersect cylinder at all (0 points)
+     * or that the distance is beyond the maximum (0 points).
+     *
+     * @param ray         - which could intersect the cylinder
+     * @param maxDistance - is the maximum distance to find intersections in
+     * @return list of points
+     */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        return super.findGeoIntersections(ray, maxDistance);
+
+        List<GeoPoint> intersections = super.findGeoIntersections(ray, maxDistance);
+        if (intersections == null) return null;
+        // Step 2: intersect is between caps
+        Vector va = _axisRay.getDir();
+        Point3D A = _axisRay.getP0();
+        Point3D B = _axisRay.getPoint(_height);
+        double lowerBound, upperBound;
+        List<GeoPoint> intersectionsCylinder = new ArrayList<>();
+        for (GeoPoint gPoint : intersections) {
+            lowerBound = va.dotProduct(gPoint.point.subtract(A));
+            upperBound = va.dotProduct(gPoint.point.subtract(B));
+            if (lowerBound > 0 && upperBound < 0) {
+                // the check for distance, if the intersection point is beyond the distance
+                if (alignZero(gPoint.point.distance(ray.getP0()) - maxDistance) <= 0)
+                    intersectionsCylinder.add(gPoint);
+            }
+        }
+        // Step 3: intersect with each plane which belongs to the caps
+        Plane planeA = new Plane(A, va);
+        Plane planeB = new Plane(B, va);
+        List<GeoPoint> intersectionPlaneA = planeA.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> intersectionPlaneB = planeB.findGeoIntersections(ray, maxDistance);
+        if (intersectionPlaneA == null && intersectionPlaneB == null)
+            return intersectionsCylinder;
+        // Step 4: intersect inside caps
+        Point3D q3, q4;
+        if (intersectionPlaneA != null) {
+            q3 = intersectionPlaneA.get(0).point;
+            if (q3.subtract(A).lengthSquared() < _radius * _radius) {
+                intersectionsCylinder.add(intersectionPlaneA.get(0));
+            }
+        }
+        if (intersectionPlaneB != null) {
+            q4 = intersectionPlaneB.get(0).point;
+            if (q4.subtract(B).lengthSquared() < _radius * _radius) {
+                intersectionsCylinder.add(intersectionPlaneB.get(0));
+            }
+        }
+        if (intersectionsCylinder.isEmpty()) return null;
+        return intersectionsCylinder;
     }
 }
+
 
