@@ -3,8 +3,10 @@ package elements;
 import primitives.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Camera {
@@ -25,9 +27,9 @@ public class Camera {
     private Vector _Vright;
 
     private double _apertureSize;
-    private double _focalLength;
+    private double _focalDistance;
     private int _numberOfRays;
-//    private boolean DOF;
+    private boolean DOF;
 
     private double _width;
     private double _height;
@@ -74,7 +76,7 @@ public class Camera {
         _Vto = Vto.normalized();
         _Vup = Vup.normalized();
         _apertureSize = apertureSize;
-        _focalLength = focalLength;
+        _focalDistance = focalLength;
         _numberOfRays = numberOfRays;
 
         // _Vright is always the cross product of _Vto and _Vup since they are orthogonal by definition
@@ -146,6 +148,42 @@ public class Camera {
     }
 
     /**
+     * this function gets the view plane size and a selected pixel,
+     * and return the ray from the camera which intersects this pixel
+     *
+     * @param nX - amount of rows in view plane (number of pixels)
+     * @param nY - amount of columns in view plane (number of pixels)
+     * @param j  - X's index
+     * @param i  - Y's index
+     * @return - the ray which goes through the pixel
+     */
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, double distanceFromScreen, double screenWidth, double screenHeight) {
+
+        List<Ray> _rays = new ArrayList<>();
+
+        Ray center_ray = constructRayThroughPixel(nX, nY, j, i);
+        if (_numberOfRays == 1) {
+            _rays.add(center_ray);
+        }
+        double rY = alignZero(screenHeight / nY);   //  Ry = h/Ny
+        double rX = alignZero(screenWidth / nX);   //  Rx = w/Nx
+
+        if (_numberOfRays != 1) {
+            List<Ray> temp_rays = new LinkedList<>();
+            // apertureSize is the value of how many pixels it spreads on
+            double apertureRadius = Math.sqrt(_apertureSize * (rY * rX)) / 2d;
+            for (Ray ray : _rays) {
+                // creating list of focal rays (from the aperture plane towards the focal point)
+                temp_rays.addAll(ray.randomRaysInCircle(ray.getP0(), _Vup, _Vright, apertureRadius, _numberOfRays, _focalDistance));
+                _rays = temp_rays; // the original rays included in the temp rays
+            }
+        }
+        return _rays;
+    }
+
+
+
+    /**
      * function to set new camera location
      *
      * @param x -the new x coordinate
@@ -188,57 +226,5 @@ public class Camera {
         this._Vright.rotateVector(axis, theta);
         this._Vto.rotateVector(axis, theta);
         return this;
-    }
-
-
-    // COPY ++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-    public List<Ray> constructRaysThroughPixel(int nX, int nY,
-                                               int j, int i, double screenDistance,
-                                               double screenWidth, double screenHeight) {
-        List<Ray> rays = new ArrayList<>();
-        //find the ray through pixel.
-        Ray ray = constructRayThroughPixel(nX, nY, j, i);
-
-//        if (this.DepthOfFiled == false) //do'nt activate the effect depth of field
-//            return List.of(ray);  //the one original ray
-
-
-//        Point3D edgePoint = _P0.add(_Vup.scale((_apertureSize / 2)).subtract(_Vright.scale((_apertureSize / 2))));
-        return constructRaysForDepthOfField(ray, _apertureSize);//(ray,screenDistance); //activate the effect depth of field
-    }
-
-    public Point3D findFocalPoint(Ray ray) {
-
-        double cosine = _Vto.dotProduct(ray.getDir()); //the cosine of the angle between vto and the vector of ray from pixel
-        double distance = this._focalLength / cosine; //the length of the ray from the camera to the focal point by using the law of cosines
-        Point3D focalPoint = ray.getPoint(distance); //find focal point by the ray and the distance from camera.
-        return focalPoint;
-    }
-
-    public List<Ray> constructRaysForDepthOfField(Ray ray, double screenDistance) {
-        Point3D focalPoint = this.findFocalPoint(ray);//find focal point of ray
-        //width and height are the size of the aperture
-        double width = this._apertureSize;
-        double height = this._apertureSize;
-
-        //Nx and Ny are the width and height of the number of rays.
-        int Nx = _numberOfRays; //columns
-        int Ny = _numberOfRays; //rows
-        // the right down edge of the rect around the camera.
-        Point3D p1 = _P0.add(_Vright.scale((double) width / -2d)).add(_Vup.scale((double) height / -2d));
-
-        //list of the rays through the focal point.
-        List<Ray> rays = new ArrayList<>();
-        //create grid around the camera (numberOfRays X numberOfRays) and construct rays from the middle of every square.
-        for (int row = 0; row < Ny; ++row) {
-            for (int column = 0; column < Nx; ++column) {
-                Point3D point = p1.add(_Vright.scale((0.5 + row) * (height / Ny))).add(_Vup.scale((0.5 + column) * (width / Nx)));// the point at the middle of every square
-                Vector vector = focalPoint.subtract(point); //the vector from the point to the focal point
-                Ray ray1 = new Ray(point, vector);//the new ray that start in the point and have the direction of the vector.
-                rays.add(ray1);
-            }
-        }
-        return rays;
     }
 }

@@ -286,8 +286,9 @@ public class Render {
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
                     castRay(nX, nY, j, i);
-        else
+        else {
             renderImageThreaded();
+        }
     }
 
     /**
