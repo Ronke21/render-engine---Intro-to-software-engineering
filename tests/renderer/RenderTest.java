@@ -60,8 +60,8 @@ class RenderTest {
     public void basicRenderXml() {
 //        Scene scene = new Scene("XML Test scene");
 
-        //Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
-        Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
+        Scene scene = XMLtoScene.ReadScene("C:\\Users\\amiha\\IdeaProjects\\IntroToSE_Project\\basicRenderTestTwoColors.xml");
+//        Scene scene = XMLtoScene.ReadScene("C:\\Users\\ronke\\IdeaProjects\\basicRenderTestTwoColors.xml");
         // enter XML file name and parse from XML file into scene object
         // ...
 

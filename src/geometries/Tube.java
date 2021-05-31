@@ -181,6 +181,8 @@ public class Tube extends RadialGeometry {
 //    }
 
     /**
+     * this function finds the intersection points of a given ray with the tube
+     *
      * @param ray         - ray that cross the geometry
      * @param maxDistance - the upper bound of distance, any point which
      *                    its distance is greater than this bound will not be returned

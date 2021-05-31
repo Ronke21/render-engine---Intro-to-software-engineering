@@ -354,12 +354,10 @@ public class ReflectionRefractionTests {
                 new Vector(-5, -5, -1),
                 new Vector(-2.52, -2.52, 25.2))
                 .setViewPlaneSize(250, 250)
-                .setDistance(300)
-                ;
+                .setDistance(300);
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(1.2));
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
-
 
         // create all relevant points
         Point3D a = new Point3D(-14, 1, 1);
