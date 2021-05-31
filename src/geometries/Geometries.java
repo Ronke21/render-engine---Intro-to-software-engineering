@@ -47,26 +47,10 @@ public class Geometries implements Intersectable {
         }
     }
 
-//    /**
-//     * a method that receive a ray and find all intersections of this ray with the shapes in this class
-//     *
-//     * @param ray - the ray to be checked with the shapes
-//     * @return list of all intersections
-//     */
-//    @Override
-//    public List<Point3D> findIntersections(Ray ray) {
-//        List<Point3D> result = null;
-//        for (Intersectable item : _intersectables) {
-//            List<Point3D> itemList = item.findIntersections(ray);
-//            if (itemList != null) {
-//                if (result == null) {
-//                    result = new LinkedList<>();
-//                }
-//                result.addAll(itemList);
-//            }
-//        }
-//        return result;
-//    }
+    public void addAll(List<Geometry> geometries) {
+        _intersectables.addAll(geometries);
+    }
+
 
     /**
      * a method that receive a ray and find all intersections of this ray with the shapes in this class
