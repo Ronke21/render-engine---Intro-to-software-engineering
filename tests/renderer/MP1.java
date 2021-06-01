@@ -25,11 +25,11 @@ public class MP1 {
                 new Point3D(70, 60, 10),
                 new Vector(-5, -5, -1),
                 new Vector(-2.52, -2.52, 25.2),
-                10, 85, 1, true)
+                50, 85, 81, true)
                 .setViewPlaneSize(250, 250)
                 .setDistance(300);
 
-        int pixels = 250;
+        int pixels = 1000;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -480,7 +480,7 @@ public class MP1 {
         );
 
         ground.setEmission(Color.BLUE.add(Color.GREEN.reduce(3)).reduce(10))
-                .setMaterial(new Material().setKd(0.025).setKs(0.00005).setKr(0.8));
+                .setMaterial(new Material().setKd(0.025).setKs(0.00005).setKr(0.3));
 
         scene.geometries.add(ground);
         //endregion
