@@ -615,11 +615,11 @@ public class MP1 {
                 new Point3D(100, 100, 10),
                 new Vector(-5, -5, -1),
                 new Vector(-2.52, -2.52, 25.2),
-                10, 85, 20, false)
+                10, 85, 20, true)
                 .setViewPlaneSize(250, 250)
                 .setDistance(150);
 
-        int pixels = 200;
+        int pixels = 1000;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -864,7 +864,9 @@ public class MP1 {
         File picture = new File(s);
         Desktop.getDesktop().open(picture);
     }
+
 }
+
 
 
 
