@@ -150,12 +150,14 @@ public class Render {
             if (Render.this.print && percent > 0)
                 synchronized (this) {
                     notifyAll();
+                    System.out.println(percent);
                 }
             if (percent >= 0)
                 return true;
             if (Render.this.print)
                 synchronized (this) {
                     notifyAll();
+                    System.out.println(percent);
                 }
             return false;
         }

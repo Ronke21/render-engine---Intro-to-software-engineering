@@ -609,17 +609,16 @@ public class MP1 {
 
         Scene scene = new Scene("Test scene");
 
-
         // need to aim the camera
         Camera camera = new Camera(
-                new Point3D(100, 100, 10),
-                new Vector(-5, -5, -1),
-                new Vector(-2.52, -2.52, 25.2),
-                10, 85, 20, true)
+                new Point3D(30, 150, 20),
+                new Vector(-5, -27, -3),
+                new Vector(-1.2, -2, 20),
+                10, 140, 9, true)
                 .setViewPlaneSize(250, 250)
                 .setDistance(150);
 
-        int pixels = 1000;
+        int pixels = 300;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -628,13 +627,13 @@ public class MP1 {
         Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
         // region trees in loop
-        for (int treesRow = -1; treesRow < 1; treesRow++) {
-            for (int treesCol = 0; treesCol < 2; treesCol++) {
+        for (int treesRow = -2; treesRow < 2; treesRow++) {     // number of trees in a row
+            for (int treesCol = 0; treesCol < 3; treesCol++) {  // number of rows
 
                 //region Tree1 points
                 // create all relevant points
-                double xMove = 0 + treesRow * 30 + treesCol*15;
-                double yMove = treesCol*80;
+                double xMove = treesRow * 30 + treesCol * 20;
+                double yMove = treesCol * 40;
                 double zMove = 0;
 
                 Point3D a = new Point3D(-14 + xMove, 1 + yMove, 1 + zMove);
@@ -719,30 +718,6 @@ public class MP1 {
             }
         }
 
-//        //region Tree1 points
-//        // create all relevant points
-//        double xMoveTree = 0;
-//        double yMoveTree = -5;
-//        double zMoveTree = 0;
-//
-//        Point3D a = new Point3D(-14 + xMoveTree, 1 + yMoveTree, 1 + zMoveTree);
-//        Point3D b = new Point3D(1 + xMoveTree, -14 + yMoveTree, 1 + zMoveTree);
-//        Point3D c = new Point3D(14 + xMoveTree, 1 + yMoveTree, 1 + zMoveTree);
-//        Point3D d = new Point3D(1 + xMoveTree, 14 + yMoveTree, 1 + zMoveTree);
-//        Point3D f = new Point3D(-12 + xMoveTree, 1 + yMoveTree, 10 + zMoveTree);
-//        Point3D g = new Point3D(1 + xMoveTree, -12 + yMoveTree, 10 + zMoveTree);
-//        Point3D h = new Point3D(12 + xMoveTree, 1 + yMoveTree, 10 + zMoveTree);
-//        Point3D i = new Point3D(1 + xMoveTree, 12 + yMoveTree, 10 + zMoveTree);
-//        Point3D j = new Point3D(1 + xMoveTree, 1 + yMoveTree, 30 + zMoveTree);
-//        Point3D k = new Point3D(-10 + xMoveTree, 1 + yMoveTree, 20 + zMoveTree);
-//        Point3D l = new Point3D(1 + xMoveTree, -10 + yMoveTree, 20 + zMoveTree);
-//        Point3D m = new Point3D(10 + xMoveTree, 1 + yMoveTree, 20 + zMoveTree);
-//        Point3D n = new Point3D(1 + xMoveTree, 10 + yMoveTree, 20 + zMoveTree);
-//        Point3D o = new Point3D(1 + xMoveTree, 1 + yMoveTree, 40 + zMoveTree);
-//        Point3D p = new Point3D(1 + xMoveTree, 1 + yMoveTree, 20 + zMoveTree);
-//        //endregion
-
-
         //region add the ground plane
         Plane ground = new Plane(
                 new Point3D(5, 10, -10),
@@ -758,10 +733,9 @@ public class MP1 {
 
 
         //region moon
-
         Point3D moonPoint = new Point3D(-10, -20, 80);
-        Sphere sun = new Sphere(moonPoint, 10);
-        sun.setEmission(Color.YELLOW.add(Color.RED.reduce(1)))
+        Sphere moon = new Sphere(moonPoint, 10);
+        moon.setEmission(Color.YELLOW.add(Color.WHITE.reduce(12)))
                 .setMaterial(
                         new Material()
                                 .setKd(0.005)
@@ -769,36 +743,36 @@ public class MP1 {
                                 .setShininess(50)
                                 .setKt(0.9)
                 );
-        scene.geometries.add(sun);
+        scene.geometries.add(moon);
 
         scene.lights.add(
                 new PointLight(
-                        Color.WHITE.reduce(2).add(Color.YELLOW).scale(3),
+                        Color.YELLOW.scale(2),
                         moonPoint)
         );
-
 
         //endregion
 
         //region stars
 
-        //set random numbers and sign to get diffrent places for stars
+        //set random numbers and sign to get different places for stars
         Random rand = new Random();
         int sign = 1;
         double randX;
+//        double randY;
         double randZ;
 
-        for (int starX = 0; starX < 8; starX ++) {
+        for (int starX = -2; starX < 8; starX++) {
             for (int starZ = 0; starZ < 5; starZ++) {
 
-                if (starZ*starX % 5 == 0) { //every 5 stars - don't draw one for real feeling
+                if (starZ * starX % 5 == 0) { //every 5 stars - don't draw one for real feeling
                     continue; //finish current inner for iteration
                 }
 
-                //create the random addings to star positions
-                randX = starX*30 + rand.nextDouble() * 8 * sign;
-                sign = sign*-1;
-                randZ = starZ*25 + rand.nextDouble() * 8 * sign;
+                //create the random adding to star positions
+                randX = starX * 30 + rand.nextDouble() * 8 * sign;
+                sign = sign * -1;
+                randZ = starZ * 25 + rand.nextDouble() * 8 * sign;
 
                 Point3D starPoint = new Point3D(80 - randX, -20, 150 - randZ);
                 Sphere star = new Sphere(starPoint, 1);
@@ -814,34 +788,39 @@ public class MP1 {
 
                 scene.lights.add(
                         new PointLight(
-                                Color.WHITE.reduce(2).add(Color.YELLOW.reduce(3)),
+                                (Color.WHITE.reduce(2).add(Color.YELLOW.reduce(3))).reduce(6),
                                 starPoint)
                 );
-
             }
-
         }
 
         //endregion
 
-        Point3D starP = new Point3D(-40, -100, 30);
-        sun = new Sphere(moonPoint, 10);
-        sun.setEmission(Color.YELLOW)
-                .setMaterial(
-                        new Material()
-                                .setKd(0.005)
-                                .setKs(0.00005)
-                                .setShininess(50)
-                                .setKt(0.9)
-                );
-        scene.geometries.add(sun);
+//        moon = new Sphere(moonPoint, 10);
+//        moon.setEmission(Color.YELLOW)
+//                .setMaterial(
+//                        new Material()
+//                                .setKd(0.005)
+//                                .setKs(0.00005)
+//                                .setShininess(50)
+//                                .setKt(0.9)
+//                );
+//        scene.geometries.add(moon);
 
 
         scene.lights.add(
                 new SpotLight(
-                        new Color(Color.WHITE.scale(10)),
-                        new Point3D(70, 60, 20),
-                        new Vector(-5, -5, -1))
+                        new Color(Color.WHITE.scale(15)),
+                        new Point3D(30, 150, 20),
+                        new Vector(-5, -27, -3))
+                        .setkL(0.0004)
+                        .setkQ(0.0000006));
+
+        scene.lights.add(
+                new SpotLight(
+                        new Color((Color.YELLOW.add(Color.WHITE)).scale(8)),
+                        new Point3D(50, 150, 20),
+                        new Vector(-5, -27, -3))
                         .setkL(0.0004)
                         .setkQ(0.0000006));
 
@@ -855,6 +834,7 @@ public class MP1 {
                 .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
+        render.setMultithreading(3);
         render.renderImage();
         render.writeToImage();
 
@@ -864,7 +844,6 @@ public class MP1 {
         File picture = new File(s);
         Desktop.getDesktop().open(picture);
     }
-
 }
 
 
