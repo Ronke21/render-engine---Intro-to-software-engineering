@@ -66,6 +66,15 @@ public class ImageWriter {
         return nX;
     }
 
+    /**
+     * getter
+     *
+     * @return image name
+     */
+    public String getImageName() {
+        return imageName;
+    }
+
     // ***************** Operations ******************** //
 
     /**
@@ -80,6 +89,8 @@ public class ImageWriter {
             logger.log(Level.SEVERE, "I/O error", e);
         }
     }
+
+
 
     /**
      * The function writePixel writes a color of a specific pixel into pixel color

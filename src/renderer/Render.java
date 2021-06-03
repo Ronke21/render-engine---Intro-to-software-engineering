@@ -211,6 +211,14 @@ public class Render {
     }
 
     /**
+     * get the image writer object
+     * @return image writer object
+     */
+    public ImageWriter getImageWriter() {
+        return imageWriter;
+    }
+
+    /**
      * Produce a rendered image file
      */
     public void writeToImage() {
