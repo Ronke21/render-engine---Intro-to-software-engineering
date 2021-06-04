@@ -1,9 +1,8 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Material;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
+
+import java.util.List;
 
 /**
  * interface for all shapes in the space.
@@ -70,4 +69,8 @@ public abstract class Geometry implements Intersectable {
      */
     @Override
     public abstract boolean equals(Object o);
+
+
+
+
 }

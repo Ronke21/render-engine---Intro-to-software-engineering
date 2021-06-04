@@ -120,4 +120,20 @@ public class Sphere extends RadialGeometry {
         if (sphere._radius != this._radius) return false;
         return _center.equals(sphere._center);
     }
+
+    /**
+     * method sets the values of the bounding volume for the intersectable sphere
+     */
+    @Override
+    public void setBoundingRegion() {
+        super.setBoundingRegion();
+        _boundingBox.setBoundingBox(
+                _center.getX() - _radius,
+                _center.getX() + _radius,
+                _center.getY() - _radius,
+                _center.getY() + _radius,
+                _center.getZ() - _radius,
+                _center.getZ() + _radius
+        );
+    }
 }

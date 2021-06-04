@@ -1,8 +1,11 @@
 package renderer;
 
+import org.w3c.dom.ls.LSOutput;
 import primitives.*;
 import elements.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
@@ -146,20 +149,32 @@ public class Render {
          * @return true if the work still in progress, -1 if it's done
          */
         public boolean nextPixel(Pixel target) {
-            int percent = nextP(target);
-            if (Render.this.print && percent > 0)
-                synchronized (this) {
-                    notifyAll();
-                    System.out.println(percent);
+//            int percent = nextP(target);
+//            print();
+//            if (Render.this.print && percent > 0)
+//                synchronized (this) {
+//                    notifyAll();
+//                }
+//            if (percent >= 0)
+//                return true;
+//            if (Render.this.print)
+//                synchronized (this) {
+//                    notifyAll();
+//                }
+//            return false;
+
+
+            int percents = nextP(target);
+            if (percents > 0)
+                if (Render.this.print) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(" HH:mm:ss ");
+                    System.out.println(percents + "%" + dtf.format(LocalDateTime.now()));
                 }
-            if (percent >= 0)
+            if (percents >= 0)
                 return true;
-            if (Render.this.print)
-                synchronized (this) {
-                    notifyAll();
-                    System.out.println(percent);
-                }
             return false;
+
+
         }
 
         /**
@@ -173,6 +188,8 @@ public class Render {
                             wait();
                         }
                         System.out.printf("\r %02d%%", this.percents);
+                        System.out.println( percents + "%");
+
                         System.out.flush();
                     } catch (Exception e) {
                     }
@@ -226,6 +243,7 @@ public class Render {
     public void writeToImage() {
         if (imageWriter == null) {
             throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
+
         }
 
         imageWriter.writeToImage();

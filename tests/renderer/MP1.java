@@ -614,11 +614,11 @@ public class MP1 {
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20),
-                10, 140, 9, true)
+                10, 140, 1, false)
                 .setViewPlaneSize(250, 250)
                 .setDistance(150);
 
-        int pixels = 300;
+        int pixels = 100;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -834,7 +834,7 @@ public class MP1 {
                 .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-        render.setMultithreading(3);
+       // render.setMultithreading(3).setDebugPrint();
         render.renderImage();
         render.writeToImage();
 
