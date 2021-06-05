@@ -834,7 +834,7 @@ public class MP1 {
                 .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
-       // render.setMultithreading(3).setDebugPrint();
+        render.setMultithreading(3);//.setDebugPrint();
         render.renderImage();
         render.writeToImage();
 
