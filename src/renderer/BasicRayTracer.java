@@ -26,6 +26,12 @@ public class BasicRayTracer extends RayTracerBase {
     // TODO : understand the physical meaning of this value.
     //  0 leads to no reflections at all, but no significant difference with any other value
     private static final double INITIAL_K = 1; // 1
+    private boolean _bb;
+
+    public BasicRayTracer set_bb(boolean _bb) {
+        this._bb = _bb;
+        return this;
+    }
 
     /**
      * constructor
@@ -60,7 +66,12 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the point closest to the ray's starting point
      */
     private GeoPoint findClosestIntersection(Ray ray) {
-        List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(ray);
+        List<GeoPoint> intersections;
+        if (!_bb) {
+            intersections = _scene.geometries.findGeoIntersections(ray);
+        } else {
+            intersections = _scene.geometries.findIntersectBoundingRegion(ray);
+        }
         if (intersections == null || intersections.size() == 0) {
             return null;
         } else {
@@ -319,7 +330,12 @@ public class BasicRayTracer extends RayTracerBase {
         // distance between the light source and the point
         double lightDistance = light.getDistance(geoPoint.point);
 
-        List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(lightRay);
+        List<GeoPoint> intersections;
+        if (!_bb) {
+            intersections = _scene.geometries.findGeoIntersections(lightRay);
+        } else {
+            intersections = _scene.geometries.findIntersectBoundingRegion(lightRay);
+        }
 
         // if no intersections, the ray is not blocked at all, meaning full transparency!
         if (intersections == null) {

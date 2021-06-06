@@ -1556,15 +1556,14 @@ class TeapotTest {
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point3D(100, 0, -100)) //
                 .setkQ(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
+        ImageWriter imageWriter = new ImageWriter("teapot", 200, 200);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
-                .setRayTracer(new BasicRayTracer(scene)) //
-                .setMultithreading(3).setDebugPrint();
+                .setRayTracer(new BasicRayTracer(scene))//
+                .setMultithreading(3);//.setDebugPrint();
         render.renderImage();
 //        render.printGrid(50, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
-
 }

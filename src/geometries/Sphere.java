@@ -8,7 +8,6 @@ import static primitives.Util.*;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * this class represents a sphere in the space,
@@ -125,15 +124,23 @@ public class Sphere extends RadialGeometry {
      * method sets the values of the bounding volume for the intersectable sphere
      */
     @Override
-    public void setBoundingRegion() {
-        super.setBoundingRegion();
-        _boundingBox.setBoundingBox(
-                _center.getX() - _radius,
-                _center.getX() + _radius,
-                _center.getY() - _radius,
-                _center.getY() + _radius,
-                _center.getZ() - _radius,
-                _center.getZ() + _radius
-        );
+    public void setBoundingBox() {
+
+        super.setBoundingBox();
+
+        // get minimal & maximal x value for the containing box
+        double minX = _center.getX() - _radius;
+        double maxX = _center.getX() + _radius;
+
+        // get minimal & maximal y value for the containing box
+        double minY = _center.getY() - _radius;
+        double maxY = _center.getY() + _radius;
+
+        // get minimal & maximal z value for the containing box
+        double minZ = _center.getZ() - _radius;
+        double maxZ = _center.getZ() + _radius;
+
+        // set the minimum and maximum values in 3 axes for this bounding region of the component
+        _boundingBox.setBoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
     }
 }

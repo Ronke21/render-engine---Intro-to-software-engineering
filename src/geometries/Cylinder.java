@@ -39,7 +39,6 @@ public class Cylinder extends Tube {
      * getter
      */
     public double getHeight() {
-
         return _height;
     }
 
@@ -161,23 +160,32 @@ public class Cylinder extends Tube {
         return intersectionsCylinder;
     }
 
-
     /**
-     * method sets the values of the bounding volume for the intersectable cylinder
+     * method sets the values of the bounding box for the cylinder
      */
     @Override
-    public void setBoundingRegion() {
-       // if (_boundingBox == null)
-       //     _boundingBox = new BoundingBox();
-        Point3D A = _axisRay.getP0();
-        Point3D B = _axisRay.getPoint(_height);
-        _boundingBox.setBoundingBox(
-                Math.min(A.getX(), B.getX()) - _radius,
-                Math.max(A.getX(), B.getX()) + _radius,
-                Math.min(A.getY(), B.getY()) - _radius,
-                Math.max(A.getY(), B.getY()) + _radius,
-                Math.min(A.getZ(), B.getZ()) - _radius,
-                Math.max(A.getZ(), B.getZ()) + _radius);
+    public void setBoundingBox() {
+        if (_boundingBox == null) {
+            _boundingBox = new BoundingBox();
+        }
+
+        Point3D bottomCapCenter = _axisRay.getP0();
+        Point3D upperCapCenter = _axisRay.getPoint(_height);
+
+        // get minimal & maximal x value for the containing box
+        double minX = Math.min(bottomCapCenter.getX(), upperCapCenter.getX()) - _radius;
+        double maxX = Math.max(bottomCapCenter.getX(), upperCapCenter.getX()) + _radius;
+
+        // get minimal & maximal y value for the containing box
+        double minY = Math.min(bottomCapCenter.getY(), upperCapCenter.getY()) - _radius;
+        double maxY = Math.max(bottomCapCenter.getY(), upperCapCenter.getY()) + _radius;
+
+        // get minimal & maximal z value for the containing box
+        double minZ = Math.min(bottomCapCenter.getZ(), upperCapCenter.getZ()) - _radius;
+        double maxZ = Math.max(bottomCapCenter.getZ(), upperCapCenter.getZ()) + _radius;
+
+        // set the minimum and maximum values in 3 axes for this bounding region of the component
+        _boundingBox.setBoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
     }
 }
 

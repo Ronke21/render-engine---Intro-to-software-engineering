@@ -1,11 +1,8 @@
 package renderer;
 
-import org.w3c.dom.ls.LSOutput;
 import primitives.*;
 import elements.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
@@ -89,9 +86,8 @@ public class Render {
             this.maxCols = maxCols;
             this.pixels = (long) maxRows * maxCols;
             this.nextCounter = this.pixels / 100;
-            if (Render.this.print) {
+            if (Render.this.print)
                 System.out.printf("\r %02d%%", this.percents);
-            }
         }
 
         /**
@@ -149,32 +145,18 @@ public class Render {
          * @return true if the work still in progress, -1 if it's done
          */
         public boolean nextPixel(Pixel target) {
-//            int percent = nextP(target);
-//            print();
-//            if (Render.this.print && percent > 0)
-//                synchronized (this) {
-//                    notifyAll();
-//                }
-//            if (percent >= 0)
-//                return true;
-//            if (Render.this.print)
-//                synchronized (this) {
-//                    notifyAll();
-//                }
-//            return false;
-
-
-            int percents = nextP(target);
-            if (percents > 0)
-                if (Render.this.print) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(" HH:mm:ss ");
-                    System.out.println(percents + "%" + dtf.format(LocalDateTime.now()));
+            int percent = nextP(target);
+            if (Render.this.print && percent > 0)
+                synchronized (this) {
+                    notifyAll();
                 }
-            if (percents >= 0)
+            if (percent >= 0)
                 return true;
+            if (Render.this.print)
+                synchronized (this) {
+                    notifyAll();
+                }
             return false;
-
-
         }
 
         /**
@@ -188,8 +170,6 @@ public class Render {
                             wait();
                         }
                         System.out.printf("\r %02d%%", this.percents);
-                        System.out.println( percents + "%");
-
                         System.out.flush();
                     } catch (Exception e) {
                     }
@@ -230,21 +210,11 @@ public class Render {
     }
 
     /**
-     * get the image writer object
-     * @return image writer object
-     */
-    public ImageWriter getImageWriter() {
-        return imageWriter;
-    }
-
-    /**
      * Produce a rendered image file
      */
     public void writeToImage() {
-        if (imageWriter == null) {
+        if (imageWriter == null)
             throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
-
-        }
 
         imageWriter.writeToImage();
     }
@@ -364,6 +334,10 @@ public class Render {
         } else {
             renderImageThreaded();
         }
+    }
+
+    public ImageWriter getImageWriter() {
+        return imageWriter;
     }
 
     /**

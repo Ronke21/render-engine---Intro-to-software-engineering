@@ -1,13 +1,14 @@
 package geometries;
 
-import primitives.*;
-
-import java.util.List;
+import primitives.Color;
+import primitives.Material;
+import primitives.Point3D;
+import primitives.Vector;
 
 /**
  * interface for all shapes in the space.
  */
-public abstract class Geometry implements Intersectable {
+public abstract class Geometry extends Container{
 
     /**
      * emission light
@@ -69,8 +70,4 @@ public abstract class Geometry implements Intersectable {
      */
     @Override
     public abstract boolean equals(Object o);
-
-
-
-
 }

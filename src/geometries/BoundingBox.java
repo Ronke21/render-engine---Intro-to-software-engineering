@@ -14,11 +14,14 @@ import primitives.Util;
  * the calculation of all the intersections of the same ray should be taken into account.
  */
 public class BoundingBox {
-    private double _xMin = Double.POSITIVE_INFINITY, _xMax = Double.NEGATIVE_INFINITY;
-    private double _yMin = Double.POSITIVE_INFINITY, _yMax = Double.NEGATIVE_INFINITY;
-    private double _zMin = Double.POSITIVE_INFINITY, _zMax = Double.NEGATIVE_INFINITY;
 
+    private double _xMin = Double.POSITIVE_INFINITY;
+    private double _yMin = Double.POSITIVE_INFINITY;
+    private double _zMin = Double.POSITIVE_INFINITY;
 
+    private double _xMax = Double.NEGATIVE_INFINITY;
+    private double _yMax = Double.NEGATIVE_INFINITY;
+    private double _zMax = Double.NEGATIVE_INFINITY;
 
     /**
      * default constructor for class BoundingBox
@@ -34,8 +37,8 @@ public class BoundingBox {
      * @param xMax maximum value in x axis
      * @param yMin minimum value in y axis
      * @param yMax maximum value in y axis
-     * @param zMin minimum value in z axis
      * @param zMax maximum value in z axis
+     * @param zMin minimum value in z axis
      */
     public BoundingBox(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax) {
         this._xMin = xMin;
@@ -115,11 +118,15 @@ public class BoundingBox {
         // after that, we find the ray's first and second intersections with the planes.
         if (dX > 0) {
             t_Max = (_xMax - oX) / dX;
-            if (t_Max <= 0) return false; // if value for t_Max is negative, the box is behind the ray.
+            if (t_Max <= 0) {
+                return false; // if value for t_Max is negative, the box is behind the ray.
+            }
             t_Min = (_xMin - oX) / dX; // oX + tDx = b0x => t0X = (b0x - oX) / dX
         } else if (dX < 0) {
             t_Max = (_xMin - oX) / dX;
-            if (t_Max <= 0) return false; // if value for t_Max is negative, the box is behind the ray.
+            if (t_Max <= 0) {
+                return false; // if value for t_Max is negative, the box is behind the ray.
+            }
             t_Min = (_xMax - oX) / dX;
         } else { // preventing parallel to the x axis
             t_Max = Double.POSITIVE_INFINITY;
@@ -128,11 +135,15 @@ public class BoundingBox {
 
         if (dY > 0) {
             t_yMax = (_yMax - oY) / dY;
-            if (t_yMax <= 0) return false; // if value for t_yMax is negative, the box is behind the ray.
+            if (t_yMax <= 0) {
+                return false; // if value for t_yMax is negative, the box is behind the ray.
+            }
             t_yMin = (_yMin - oY) / dY;
         } else if (dY < 0) {
             t_yMax = (_yMin - oY) / dY;
-            if (t_yMax <= 0) return false; // if value for t_yMax is negative, the box is behind the ray.
+            if (t_yMax <= 0) {
+                return false; // if value for t_yMax is negative, the box is behind the ray.
+            }
             t_yMin = (_yMax - oY) / dY;
         } else { // preventing parallel to the y axis
             t_yMax = Double.POSITIVE_INFINITY;
@@ -140,8 +151,9 @@ public class BoundingBox {
         }
         // cases where the ray misses the cube
         // the ray misses the box when t0x is greater than t1y and when t0y is greater than  t1x
-        if ((t_Min > t_yMax) || (t_yMin > t_Max))
+        if ((t_Min > t_yMax) || (t_yMin > t_Max)) {
             return false;
+        }
 
         // we find which one of these two points lie on the cube by comparing their values:
         // we simply need to chose the point which value for t is the greatest.
@@ -154,11 +166,15 @@ public class BoundingBox {
 
         if (dZ > 0) {
             t_zMax = (_zMax - oZ) / dZ;
-            if (t_zMax <= 0) return false; // if value for t_zMax is negative, the box is behind the ray.
+            if (t_zMax <= 0) {
+                return false; // if value for t_zMax is negative, the box is behind the ray.
+            }
             t_zMin = (_zMin - oZ) / dZ;
         } else if (dZ < 0) {
             t_zMax = (_zMin - oZ) / dZ;
-            if (t_zMax <= 0) return false; // if value for t_zMax is negative, the box is behind the ray.
+            if (t_zMax <= 0) {
+                return false; // if value for t_zMax is negative, the box is behind the ray.
+            }
             t_zMin = (_zMax - oZ) / dZ;
         } else { // preventing parallel to the z axis
             t_zMax = Double.POSITIVE_INFINITY;

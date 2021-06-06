@@ -2,7 +2,6 @@ package geometries;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import primitives.*;
 
@@ -197,19 +196,32 @@ public class Polygon extends FlatGeometry {
      * method sets the values of the bounding volume for the intersectable polygon
      */
     @Override
-    public void setBoundingRegion() {
-        super.setBoundingRegion();
-        double minX, maxX, minY, maxY, minZ, maxZ;
-        minX = minY = minZ = Double.POSITIVE_INFINITY;
-        maxX = maxY = maxZ = Double.NEGATIVE_INFINITY;
+    public void setBoundingBox() {
+        super.setBoundingBox();
+
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
+
         for (Point3D vertex : vertices) {
+            // get minimal & maximal x value for the containing box
             minX = Math.min(vertex.getX(), minX);
             maxX = Math.max(vertex.getX(), maxX);
+
+            // get minimal & maximal y value for the containing box
             minY = Math.min(vertex.getY(), minY);
             maxY = Math.max(vertex.getY(), maxY);
+
+            // get minimal & maximal z value for the containing box
             minZ = Math.min(vertex.getZ(), minZ);
             maxZ = Math.max(vertex.getZ(), maxZ);
         }
+
+        // set the minimum and maximum values in 3 axes for this bounding region of the component
         _boundingBox.setBoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
     }
 

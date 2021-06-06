@@ -3,14 +3,13 @@ package geometries;
 import primitives.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
  * Aמ Interface for Composite Design Pattern The Composite Class - Geometries The
  * Basic Classes - all the specific geometries
  */
-public abstract interface Intersectable {
+public interface Intersectable {
 
     /**
      * PDS
@@ -18,7 +17,6 @@ public abstract interface Intersectable {
      * take into consideration th
      * shape which the light is bouncing from
      */
-
 
     /* Helper class representing a point on a geometry surface
      * @author Dan
@@ -107,67 +105,4 @@ public abstract interface Intersectable {
      * @return list of intersection points that were found and has valid distance value
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
-
-
-
-    // TODO:
-    //  read all code, understand it and also the documentation
-    // TODO:
-    //  check if can be transferred to intersectable
-
-
-
-    /**
-     * every Intersectable composite have his bounding volume, which represented by a bounding box
-     */
-    public BoundingBox _boundingBox = null; // = null as default
-
-    /**
-     * method of checking if bounding region exists and if the ray intersections it,
-     * only ray value input.
-     *
-     * @param ray the ray which we about to check for intersection with it and some geometries which in her way
-     * @return list of intersection points with the ray and the geometries,
-     * calls origin function of for calculating the points
-     */
-    public default List<GeoPoint> findIntersectBoundingRegion(Ray ray) {
-        if (_boundingBox == null || _boundingBox.intersectBV(ray))
-            return findGeoIntersections(ray);
-        return null;
-    }
-
-    /**
-     * method of checking if bounding region exists and if the ray intersections it,
-     *  only ray value and distance inputs
-     *
-     * @param ray the ray which we about to check for intersection with it and some geometries which in her way
-     * @param maxDistance the maximum distance we will like to calculate the intersections in it
-     * @return list of intersection points with the ray and the geometries,
-     * calls origin function of for calculating the points
-     */
-    public default List<GeoPoint> findIntersectBoundingRegion(Ray ray, double maxDistance) {
-        if (_boundingBox == null || _boundingBox.intersectBV(ray))
-            return findGeoIntersections(ray, maxDistance);
-        return null;
-    }
-
-
-    /**
-     * method sets the values of the bounding volume of the intersectable component
-     * this implementation is for constructing new bounding box if necessary/needed
-     */
-    public default void setBoundingRegion(){
-      //  if (_boundingBox == null)
-       //     _boundingBox = new BoundingBox();
-
-
-        /*
-        להוסיף דגל שאומר אם זה מאותחל וזה יבדק בכל המקומות.
-         */
-    }
-
-
-
-
 }
-

@@ -418,8 +418,7 @@ public class ReflectionRefractionTests {
                     .setMaterial(new Material()
                             .setKd(0.01)
                             .setKs(0.0001)
-                            .setShininess(2)
-                            .setKr(0.01));
+                            .setShininess(2));
         }
 
         Tube trunk = new Cylinder(
@@ -439,13 +438,6 @@ public class ReflectionRefractionTests {
 
         ground.setEmission(Color.BLUE.add(Color.GREEN.reduce(3)).reduce(10))
                 .setMaterial(new Material().setKd(0.03).setKs(0.00005).setKr(0.8));
-
-//        BottomPyramidBottom.setEmission(Color.RED)
-//                .setMaterial(new Material()
-//                        .setKd(0.01)
-//                        .setKs(0.0001)
-//                        .setShininess(2)
-//                        .setKr(0.01));
 
         Sphere sun = new Sphere(new Point3D(10, -40, 30), 10);
         sun.setEmission(Color.YELLOW.add(Color.RED.reduce(6)))
@@ -487,7 +479,7 @@ public class ReflectionRefractionTests {
         scene.lights.add(
                 new PointLight(Color.WHITE.reduce(2).add(Color.YELLOW).scale(3), new Point3D(10, -40, 30)));
 
-        int pixels = 500;
+        int pixels = 100;
 
         //70, 60, 10
         Render render = new Render() //

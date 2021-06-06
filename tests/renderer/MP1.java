@@ -1,11 +1,11 @@
 package renderer;
 
 import elements.*;
-import geometries.*;
 import geometries.Polygon;
+import geometries.*;
 import org.junit.jupiter.api.Test;
-import primitives.*;
 import primitives.Color;
+import primitives.*;
 import scene.Scene;
 
 import java.awt.*;
@@ -16,8 +16,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MP1 {
     /**
@@ -43,7 +41,7 @@ public class MP1 {
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
 
         Color naturalGreen = new Color(Color.GREEN.add(Color.RED.reduce(10)).reduce(4));
-        Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
+        //Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
         //region Tree1 points
         // create all relevant points
@@ -335,7 +333,6 @@ public class MP1 {
         // create all relevant points
         xMoveTree = -15;
         yMoveTree = 10;
-        ;
         zMoveTree = 0;
 
         a = new Point3D(-14 + xMoveTree, 1 + yMoveTree, 1 + zMoveTree);
@@ -514,18 +511,6 @@ public class MP1 {
         );
         //endregion
 
-        Point3D starPoint = new Point3D(-40, -100, 30);
-        sun = new Sphere(moonPoint, 10);
-        sun.setEmission(Color.YELLOW)
-                .setMaterial(
-                        new Material()
-                                .setKd(0.005)
-                                .setKs(0.00005)
-                                .setShininess(50)
-                                .setKt(0.9)
-                );
-        scene.geometries.add(sun);
-
 
         scene.lights.add(
                 new SpotLight(
@@ -551,7 +536,7 @@ public class MP1 {
 
 
     @Test
-    public void MP1() {
+    public void MP() {
         Scene scene = new Scene("Test scene");
 
         Camera camera = new Camera(
@@ -614,17 +599,17 @@ public class MP1 {
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20),
-                10, 140, 1, false)
+                10, 140, 81, true)
                 .setViewPlaneSize(250, 250)
                 .setDistance(150);
 
-        int pixels = 100;
+        int pixels = 500;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
 
         Color naturalGreen = new Color(Color.GREEN.add(Color.RED.reduce(10)).reduce(4));
-        Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
+//        Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
         // region trees in loop
         for (int treesRow = -2; treesRow < 2; treesRow++) {     // number of trees in a row
@@ -695,8 +680,7 @@ public class MP1 {
                             .setMaterial(new Material()
                                     .setKd(0.01)
                                     .setKs(0.0001)
-                                    .setShininess(2)
-                                    .setKr(0.01));
+                                    .setShininess(2));
                 }
 
                 scene.geometries.addAll(greenTriangles);
@@ -754,16 +738,15 @@ public class MP1 {
         //endregion
 
         //region stars
-
         //set random numbers and sign to get different places for stars
         Random rand = new Random();
         int sign = 1;
         double randX;
-//        double randY;
+        // double randY;
         double randZ;
 
         for (int starX = -2; starX < 8; starX++) {
-            for (int starZ = 0; starZ < 5; starZ++) {
+            for (int starZ = 0; starZ < 5; starZ += 2) {
 
                 if (starZ * starX % 5 == 0) { //every 5 stars - don't draw one for real feeling
                     continue; //finish current inner for iteration
@@ -792,21 +775,7 @@ public class MP1 {
                                 starPoint)
                 );
             }
-        }
-
-        //endregion
-
-//        moon = new Sphere(moonPoint, 10);
-//        moon.setEmission(Color.YELLOW)
-//                .setMaterial(
-//                        new Material()
-//                                .setKd(0.005)
-//                                .setKs(0.00005)
-//                                .setShininess(50)
-//                                .setKt(0.9)
-//                );
-//        scene.geometries.add(moon);
-
+        }//endregion
 
         scene.lights.add(
                 new SpotLight(
@@ -831,16 +800,16 @@ public class MP1 {
         );
 
         Render render = new Render() //
-                .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene));
-        render.setMultithreading(3);//.setDebugPrint();
+                .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
+                .setRayTracer(new BasicRayTracer(scene)) //
+                .setMultithreading(3);//.setDebugPrint();
         render.renderImage();
         render.writeToImage();
 
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        s += "\\images\\" + render.getImageWriter().getImageName().toString() + ".png";
+        s += "\\images\\" + render.getImageWriter().getImageName() + ".png";
         File picture = new File(s);
         Desktop.getDesktop().open(picture);
     }
