@@ -599,11 +599,11 @@ public class MP1 {
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20),
-                10, 140, 81, true)
+                25, 140, 81, true)
                 .setViewPlaneSize(250, 250)
-                .setDistance(150);
+                .setDistance(200);
 
-        int pixels = 500;
+        int pixels = 1000;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -612,8 +612,8 @@ public class MP1 {
 //        Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
         // region trees in loop
-        for (int treesRow = -2; treesRow < 2; treesRow++) {     // number of trees in a row
-            for (int treesCol = 0; treesCol < 3; treesCol++) {  // number of rows
+        for (int treesRow = -2; treesRow < 2; treesRow += 2) {     // number of trees in a row
+            for (int treesCol = -2; treesCol < 4; treesCol += 2) {  // number of rows
 
                 //region Tree1 points
                 // create all relevant points
@@ -745,19 +745,20 @@ public class MP1 {
         // double randY;
         double randZ;
 
-        for (int starX = -2; starX < 8; starX++) {
-            for (int starZ = 0; starZ < 5; starZ += 2) {
+        //(-10, -20, 80)
+        for (int starX = -4; starX < 8; starX ++) {
+            for (int starZ = 1; starZ < 3; starZ ++) {
 
-                if (starZ * starX % 5 == 0) { //every 5 stars - don't draw one for real feeling
+                if (starZ * starX % 3 == 0) { //every 5 stars - don't draw one for real feeling
                     continue; //finish current inner for iteration
                 }
 
                 //create the random adding to star positions
-                randX = starX * 30 + rand.nextDouble() * 8 * sign;
+                randX = starX * 20 + rand.nextDouble() * 12 * sign;
                 sign = sign * -1;
-                randZ = starZ * 25 + rand.nextDouble() * 8 * sign;
+                randZ = starZ * 20 + rand.nextDouble() * 12 * sign;
 
-                Point3D starPoint = new Point3D(80 - randX, -20, 150 - randZ);
+                Point3D starPoint = new Point3D(80 - randX, -20, 100 - randZ);
                 Sphere star = new Sphere(starPoint, 1);
                 star.setEmission(Color.YELLOW.reduce(4))
                         .setMaterial(
@@ -803,7 +804,7 @@ public class MP1 {
                 .setCamera(camera) //
                 .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
                 .setRayTracer(new BasicRayTracer(scene)) //
-                .setMultithreading(3);//.setDebugPrint();
+                .setMultithreading(3).setDebugPrint();
         render.renderImage();
         render.writeToImage();
 

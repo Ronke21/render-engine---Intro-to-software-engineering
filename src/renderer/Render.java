@@ -6,6 +6,7 @@ import elements.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.text.NumberFormat;
 
 /**
  * Renderer class is responsible for generating pixel color map from a graphic
@@ -86,8 +87,9 @@ public class Render {
             this.maxCols = maxCols;
             this.pixels = (long) maxRows * maxCols;
             this.nextCounter = this.pixels / 100;
-            if (Render.this.print)
-                System.out.printf("\r %02d%%", this.percents);
+            if (Render.this.print){
+                System.out.printf("\r %d", this.percents);
+            }
         }
 
         /**
@@ -148,14 +150,17 @@ public class Render {
             int percent = nextP(target);
             if (Render.this.print && percent > 0)
                 synchronized (this) {
-                    notifyAll();
+                    this.notifyAll();
+                    System.out.println();
                 }
-            if (percent >= 0)
+            if (percent >= 0) {
                 return true;
-            if (Render.this.print)
+            }
+            if (Render.this.print) {
                 synchronized (this) {
-                    notifyAll();
+                    this.notifyAll();
                 }
+            }
             return false;
         }
 

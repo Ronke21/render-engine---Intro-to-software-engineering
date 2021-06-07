@@ -150,7 +150,7 @@ public class Ray {
      * @param center  - center point of the circular surface.
      * @param vUp     - upper vector of circular surface.
      * @param vRight  - right vector of circular surface.
-     * @param radius  - radius of circular surface.
+     * @param radius  - radius of circular surface. (mostly aperture)
      * @param numRays - number of rays we create in the circular surface.
      * @param dist    - distance from circular surface to the other point. the point could be the target or the beginning.
      * @return list of rays from one point toward the surface and vice versa (rays from the surface to one point)
