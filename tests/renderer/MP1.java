@@ -599,7 +599,7 @@ public class MP1 {
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20),
-                25, 140, 81, true)
+                100, 140, 81, false)
                 .setViewPlaneSize(250, 250)
                 .setDistance(200);
 
@@ -609,9 +609,10 @@ public class MP1 {
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
 
         Color naturalGreen = new Color(Color.GREEN.add(Color.RED.reduce(10)).reduce(4));
-//        Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
+        //Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
-        // region trees in loop
+        //region trees in loop
+
         for (int treesRow = -2; treesRow < 2; treesRow += 2) {     // number of trees in a row
             for (int treesCol = -2; treesCol < 4; treesCol += 2) {  // number of rows
 
@@ -715,7 +716,6 @@ public class MP1 {
         scene.geometries.add(ground);
         //endregion
 
-
         //region moon
         Point3D moonPoint = new Point3D(-10, -20, 80);
         Sphere moon = new Sphere(moonPoint, 10);
@@ -778,6 +778,7 @@ public class MP1 {
             }
         }//endregion
 
+        //region lights
         scene.lights.add(
                 new SpotLight(
                         new Color(Color.WHITE.scale(15)),
@@ -799,10 +800,11 @@ public class MP1 {
                         Color.WHITE.reduce(2).add(Color.YELLOW).scale(3),
                         moonPoint)
         );
+        //endregion
 
         Render render = new Render() //
                 .setCamera(camera) //
-                .setImageWriter(new ImageWriter("TreeTestDOF_MP1_try", pixels, pixels)) //
+                .setImageWriter(new ImageWriter("TreeTestNO_DOF_MP1_try", pixels, pixels)) //
                 .setRayTracer(new BasicRayTracer(scene)) //
                 .setMultithreading(3).setDebugPrint();
         render.renderImage();

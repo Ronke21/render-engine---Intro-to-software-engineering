@@ -143,7 +143,7 @@ public class Color {
         return new java.awt.Color(
                 Math.min(ir, 255),
                 Math.min(ig, 255),
-                ib > 255 ? 255 : ib
+                Math.min(ib, 255)
         );
     }
 
@@ -205,7 +205,8 @@ public class Color {
         for (Color col : colors) {
             color = color.add(col);
         }
-        return color.scale(1d / colors.size());
+        // to make sure division by 0 is impossible
+        return color.scale(1d / (Math.max(1, colors.size())));
     }
 
     @Override

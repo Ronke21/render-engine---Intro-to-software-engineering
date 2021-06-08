@@ -87,7 +87,7 @@ public class Render {
             this.maxCols = maxCols;
             this.pixels = (long) maxRows * maxCols;
             this.nextCounter = this.pixels / 100;
-            if (Render.this.print){
+            if (Render.this.print) {
                 System.out.printf("\r %d", this.percents);
             }
         }
@@ -175,7 +175,6 @@ public class Render {
                             wait();
                         }
                         System.out.printf("\r %02d%%", this.percents);
-                        System.out.flush();
                     } catch (Exception e) {
                     }
         }
@@ -249,12 +248,6 @@ public class Render {
     private void castBeam(int nX, int nY, int col, int row) {
         List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, col, row);
 
-//        Color color = Color.BLACK;
-//        for (Ray ray : rays) {
-//            color = color.add(tracer.traceRay(ray));
-//        }
-//        imageWriter.writePixel(col, row, color.scale(1d / rays.size()));
-
         List<Color> colors = new LinkedList<>();
         for (Ray ray : rays) {
             colors.add(tracer.traceRay(ray));
@@ -286,6 +279,7 @@ public class Render {
                 }
             });
         }
+
         // Start threads
         for (Thread thread : threads)
             thread.start();
