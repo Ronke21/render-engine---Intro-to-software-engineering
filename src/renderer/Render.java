@@ -271,7 +271,7 @@ public class Render {
                 while (thePixel.nextPixel(pixel)) {
                     // check whether the camera has DOF effect turned on,
                     // if it is not, proceed as usual (cast a single ray)
-                    if (!camera.is_DOF()) {
+                    if (!camera.is_DOF() && !camera.is_AA()) {
                         castRay(nX, nY, pixel.col, pixel.row);
                     }
                     // if it is on, cast a beam, instead of a single ray
@@ -315,7 +315,7 @@ public class Render {
         if (threadsCount == 0) {
             // check whether the camera has DOF effect turned on,
             // if it is not, proceed as usual (cast a single ray)
-            if (!camera.is_DOF()) {
+            if (!camera.is_DOF() && !camera.is_AA()) {
                 for (int i = 0; i < nY; ++i) {
                     for (int j = 0; j < nX; ++j) {
                         castRay(nX, nY, j, i);

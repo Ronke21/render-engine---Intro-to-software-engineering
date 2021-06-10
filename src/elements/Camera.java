@@ -35,8 +35,12 @@ public class Camera {
     // params for DOF effect
     private double _apertureSize;
     private double _focalDistance;
-    private int _numberOfRays;
+    private int _numberOfRaysInAperture;
     private boolean _DOF;
+
+    // params for AA effect
+    private int _numberOfRaysInPixel;
+    private boolean _AA;
 
     private double _width;
     private double _height;
@@ -63,25 +67,25 @@ public class Camera {
         _Vright = _Vto.crossProduct(_Vup);
     }
 
-    /**
-     * more complex constructor for DOF
-     *
-     * @param p0           - the camera location
-     * @param Vto          - Y axis vector
-     * @param Vup          - X axis vector
-     * @param apertureSize - the radius of the aperture
-     * @param focalLength  - the distance between the view plane and the focal plane
-     * @param numberOfRays - number of rays
-     */
-    public Camera(Point3D p0, Vector Vto, Vector Vup, double apertureSize, double focalLength, int numberOfRays, boolean dof) {
-
-        this(p0, Vto, Vup);
-
-        _apertureSize = apertureSize;
-        _focalDistance = focalLength;
-        _numberOfRays = numberOfRays;
-        _DOF = dof;
-    }
+//    /**
+//     * more complex constructor for DOF
+//     *
+//     * @param p0           - the camera location
+//     * @param Vto          - Y axis vector
+//     * @param Vup          - X axis vector
+//     * @param apertureSize - the radius of the aperture
+//     * @param focalLength  - the distance between the view plane and the focal plane
+//     * @param numberOfRays - number of rays
+//     */
+//    public Camera(Point3D p0, Vector Vto, Vector Vup, double apertureSize, double focalLength, int numberOfRays, boolean dof) {
+//
+//        this(p0, Vto, Vup);
+//
+//        _apertureSize = apertureSize;
+//        _focalDistance = focalLength;
+//        _numberOfRays = numberOfRays;
+//        _DOF = dof;
+//    }
 
     /**
      * getter
@@ -142,8 +146,8 @@ public class Camera {
      *
      * @return number Of rays
      */
-    public int get_numberOfRays() {
-        return _numberOfRays;
+    public int get_numberOfRaysInAperture() {
+        return _numberOfRaysInAperture;
     }
 
     /**
@@ -153,6 +157,15 @@ public class Camera {
      */
     public boolean is_DOF() {
         return _DOF;
+    }
+
+    /**
+     * getter
+     *
+     * @return whether the AA effect is activated or not
+     */
+    public boolean is_AA() {
+        return _AA;
     }
 
     /**
@@ -206,6 +219,71 @@ public class Camera {
         return this;
     }
 
+    /**
+     * setter - chaining method
+     *
+     * @param apertureSize - camera's aperture size
+     * @return the camera with the configured aperture
+     */
+    public Camera setApertureSize(double apertureSize) {
+        _apertureSize = apertureSize;
+        return this;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param focalDistance -  the distance between the view plane and the focal plane
+     * @return the camera with the configured distance
+     */
+    public Camera setFocalDistance(double focalDistance) {
+        _focalDistance = focalDistance;
+        return this;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param numberOfRays - number of rays in the aperture
+     * @return the camera with the configured number of rays
+     */
+    public Camera setNumberOfRaysInAperture(int numberOfRays) {
+        _numberOfRaysInAperture = numberOfRays;
+        return this;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param DOF - does the picture has depth of field
+     * @return the camera with the configured DOF
+     */
+    public Camera set_DOF(boolean DOF) {
+        _DOF = DOF;
+        return this;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param numberOfRaysInPixel - number of rays in a pixel
+     * @return the camera with the configured number of rays
+     */
+    public Camera setNumberOfRaysInPixel(int numberOfRaysInPixel) {
+        _numberOfRaysInPixel = numberOfRaysInPixel;
+        return this;
+    }
+
+    /**
+     * setter - chaining method
+     *
+     * @param AA - does the picture has Anti Aliasing
+     * @return the camera with the configured AA
+     */
+    public Camera setAA(boolean AA) {
+        _AA = AA;
+        return this;
+    }
 
     /**
      * this function gets the view plane size and a selected pixel,
@@ -245,8 +323,8 @@ public class Camera {
      * this function gets the view plane size and a selected pixel,
      * and return the rays from the view plane which intersects the focal plane
      *
-     * @param nX - amount of rows in view plane (number of pixels)
-     * @param nY - amount of columns in view plane (number of pixels)
+     * @param nX - amount of columns in view plane (number of pixels)
+     * @param nY - amount of rows in view plane (number of pixels)
      * @param j  - X's index
      * @param i  - Y's index
      * @return - the list of rays which goes from the pixel through the focal plane
@@ -254,10 +332,11 @@ public class Camera {
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
 
         // the returned list of rays
-        List<Ray> _rays = new ArrayList<>();
+        List<Ray> rays = new ArrayList<>();
 
         // add the center ray to the list
-        _rays.add(constructRayThroughPixel(nX, nY, j, i));
+        Ray centerRay = constructRayThroughPixel(nX, nY, j, i);
+        rays.add(centerRay);
 
         // calculate the actual size of a pixel
         // pixel height is the division of the view plane height in the number of rows of pixels
@@ -265,19 +344,24 @@ public class Camera {
         // pixel width is the division of the view plane width in the number of columns of pixels
         double pixelWidth = alignZero(_width / nX);   //  Rx = w/Nx
 
+        if (_numberOfRaysInPixel != 1) {
+            rays.addAll(centerRay.randomRaysInGrid(_Vup, _Vright, _numberOfRaysInPixel, _distance, pixelWidth, pixelHeight));
+        }
+
         // if more then one ray is emitted (DOF effect)
-        if (_numberOfRays != 1) {
+        if (_numberOfRaysInAperture != 1) {
             List<Ray> temp_rays = new LinkedList<>();
             // apertureSize is the value of how many pixels it spreads on
             double apertureRadius = Math.sqrt(_apertureSize * (pixelHeight * pixelWidth)) / 2d;
-            for (Ray ray : _rays) {
+            for (Ray ray : rays) {
                 // creating list of focal rays (from the aperture on the view plane to the point on the focal plane)
-                temp_rays.addAll(ray.randomRaysInCircle(ray.getP0(), _Vup, _Vright, apertureRadius, _numberOfRays, _focalDistance));
+                temp_rays.addAll(ray.randomRaysInCircle(ray.getP0(), _Vup, _Vright, apertureRadius, _numberOfRaysInAperture, _focalDistance));
             }
             // the original rays included in the temp rays
-            _rays = temp_rays;
+            rays = temp_rays;
         }
-        return _rays;
+
+        return rays;
     }
 
 
