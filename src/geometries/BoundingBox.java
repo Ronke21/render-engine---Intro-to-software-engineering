@@ -95,27 +95,37 @@ public class BoundingBox {
     /**
      * Function which check if a ray intersects with the bounding region
      *
-     * @param ray the ray to check foe intersection
+     * @param ray the ray to check for intersection
      * @return boolean result, if it does, or not
      */
     public boolean intersectBV(Ray ray) {
         Point3D p0 = ray.getP0();
         Point3D d = ray.getDir().getHead();
+
         double dX = d.getX();
         double dY = d.getY();
         double dZ = d.getZ();
         double oX = p0.getX();
         double oY = p0.getY();
         double oZ = p0.getZ();
-        double t_Min, t_Max, t_yMin, t_yMax, t_zMin, t_zMax;
+
+        double t_Min;
+        double t_Max;
+        double t_yMin;
+        double t_yMax;
+        double t_zMin;
+        double t_zMax;
 
         // for all 3 axes:
+        //
         // calculate the intersection distance t0 and t1
         // (t_Min represent the min and t_Max represent the max)
-        // 1. when the values for t are negative, the box is behind the ray.
-        // 2. if the ray is parallel to an axis it won't intersect with the bounding volume plane for this axis.
-        // 3. we first find where the ray intersects the planes defined by each face of the cube,
-        // after that, we find the ray's first and second intersections with the planes.
+        //
+        //  1. when the values for t are negative, the box is behind the ray.
+        //  2. if the ray is parallel to an axis it won't intersect with the bounding volume plane for this axis.
+        //  3. we first find where the ray intersects the planes defined by each face of the cube,
+        //     after that, we find the ray's first and second intersections with the planes.
+
         if (dX > 0) {
             t_Max = (_xMax - oX) / dX;
             if (t_Max <= 0) {
@@ -185,10 +195,10 @@ public class BoundingBox {
         // the ray misses the box when t0 is greater than t1z and when t0z is greater than  t1
         return (!(t_Min > t_zMax)) && (!(t_zMin > t_Max));
 
-        // finding the real location of the intersection doesn't necessary for our boolean function
-        //if (t_zMin > t_Min)
+        // finding the intersection isn't necessary for our boolean function
+        //  if (t_zMin > t_Min)
         //    t_Min = t_zMin;
-        //if (t_zMax < t_Max)
+        //  if (t_zMax < t_Max)
         //    t_Max = t_zMax;
     }
 
@@ -242,6 +252,17 @@ public class BoundingBox {
         return Math.max(Math.max(getDistanceX(other), getDistanceY(other)), getDistanceZ(other));
     }
 
+    public Point3D getBoundingBoxCenter() {
+        return new Point3D(
+                (getMaxX() + getMinX()) / 2,
+                (getMaxY() + getMinY()) / 2,
+                (getMaxZ() + getMinZ()) / 2);
+    }
+
+    public double BoundingBoxDistance(BoundingBox boundingBox) {
+        return this.getBoundingBoxCenter().distance(boundingBox.getBoundingBoxCenter());
+    }
+
     /**
      * creates string which identify the values of the bounding region
      *
@@ -273,7 +294,6 @@ public class BoundingBox {
                 Util.isZero(_yMax - other._yMax) &&
                 Util.isZero(_zMax - other._zMax);
     }
-
 }
 
 

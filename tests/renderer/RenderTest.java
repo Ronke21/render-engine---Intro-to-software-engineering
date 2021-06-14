@@ -55,7 +55,9 @@ class RenderTest {
     @Test
     public void basicRenderTwoColorTestAA() {
 
-        camera.setAA(true).setNumberOfRaysInPixel(36);
+        camera
+                .setAA(true)
+                .setNumberOfRaysInPixel(36);
 
         Scene scene = new Scene("Test scene")//
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //

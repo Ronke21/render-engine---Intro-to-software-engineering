@@ -12,16 +12,18 @@ import java.util.List;
 public class Geometries extends Container {
 
     /**
-     * @member _intersectables - list of all components in the scene
+     * @member _containers - list of all components in the scene
      */
-    private List<Intersectable> _intersectables = null;
+    private List<Container> _containers = null;
 
     /**
      * constructor of class, creates the list and for now it is empty.
      * implements as a linked list that allows to delete members if necessary.
      */
     public Geometries() {
-        _intersectables = new LinkedList<>();
+        _containers = new LinkedList<>();
+        _boundingBox = new BoundingBox();
+        this.setBoundingBox();
     }
 
     /**
@@ -31,9 +33,10 @@ public class Geometries extends Container {
      *
      * @param geometries - shapes to be added to the constructed instance
      */
-    public Geometries(Intersectable... geometries) {
-        _intersectables = new LinkedList<>();
+    public Geometries(Container... geometries) {
+        _containers = new LinkedList<>();
         add(geometries);
+        this.setBoundingBox();
     }
 
     /**
@@ -41,8 +44,8 @@ public class Geometries extends Container {
      *
      * @param geometries - shapes to be added to this instance
      */
-    public void add(Intersectable... geometries) {
-        _intersectables.addAll(Arrays.asList(geometries));
+    public void add(Container... geometries) {
+        _containers.addAll(Arrays.asList(geometries));
     }
 
     /**
@@ -51,13 +54,13 @@ public class Geometries extends Container {
      * @param geometries which we want to add to the composite class
      * @return the geometries after the remove
      */
-    public Geometries remove(Intersectable... geometries) {
-        _intersectables.removeAll(Arrays.asList(geometries));
+    public Geometries remove(Container... geometries) {
+        _containers.removeAll(Arrays.asList(geometries));
         return this;
     }
 
     public void addAll(List<Geometry> geometries) {
-        _intersectables.addAll(geometries);
+        _containers.addAll(geometries);
     }
 
     /**
@@ -72,12 +75,13 @@ public class Geometries extends Container {
     //TODO: implement findIntersectBoundingRegion and boundingVolumeHierarchy
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> intersections = new LinkedList<>();
-
-        for (Intersectable geometry : _intersectables) {
-            List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance);
-            if (geoIntersections != null) {
-                if (geoIntersections.size() > 0) {
-                    intersections.addAll(geoIntersections);
+        for (Container geometry : _containers) {
+            if (geometry._boundingBox.intersectBV(ray)) {
+                List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance);
+                if (geoIntersections != null) {
+                    if (geoIntersections.size() > 0) {
+                        intersections.addAll(geoIntersections);
+                    }
                 }
             }
         }
@@ -90,7 +94,7 @@ public class Geometries extends Container {
     @Override
     public String toString() {
         return "Geometries{" +
-                "_intersectables=" + _intersectables +
+                "_intersectables=" + _containers +
                 '}';
     }
 
@@ -100,9 +104,9 @@ public class Geometries extends Container {
      */
     @Override
     public void setBoundingBox() {
-        super.setBoundingBox();                      // first, create a default bounding region if necessary
-        for (Intersectable geo : _intersectables) {  // in a recursive call set bounding region for all the
-            ((Container) geo).setBoundingBox();      // components and composites inside
+        super.setBoundingBox();                 // first, create a default bounding region if necessary
+        for (Container geo : _containers) {     // in a recursive call set bounding region for all the
+            geo.setBoundingBox();               // components and composites inside
         }
 
         double minX = Double.POSITIVE_INFINITY;
@@ -113,20 +117,19 @@ public class Geometries extends Container {
         double maxY = Double.NEGATIVE_INFINITY;
         double maxZ = Double.NEGATIVE_INFINITY;
 
-        for (Intersectable inter : _intersectables) {
-            Container geo = (Container) inter; // casting
+        for (Container inter : _containers) {
 
             // get minimal & maximal x value for the containing box
-            minX = Math.min(geo._boundingBox.getMinX(), minX);
-            maxX = Math.max(geo._boundingBox.getMaxX(), maxX);
+            minX = Math.min(inter._boundingBox.getMinX(), minX);
+            maxX = Math.max(inter._boundingBox.getMaxX(), maxX);
 
             // get minimal & maximal y value for the containing box
-            minY = Math.min(geo._boundingBox.getMinY(), minY);
-            maxY = Math.max(geo._boundingBox.getMaxY(), maxY);
+            minY = Math.min(inter._boundingBox.getMinY(), minY);
+            maxY = Math.max(inter._boundingBox.getMaxY(), maxY);
 
             // get minimal & maximal z value for the containing box
-            minZ = Math.min(geo._boundingBox.getMinZ(), minZ);
-            maxZ = Math.max(geo._boundingBox.getMaxZ(), maxZ);
+            minZ = Math.min(inter._boundingBox.getMinZ(), minZ);
+            maxZ = Math.max(inter._boundingBox.getMaxZ(), maxZ);
         }
 
         // set the minimum and maximum values in 3 axes for this bounding region of the component
@@ -134,57 +137,58 @@ public class Geometries extends Container {
     }
 
     /**
-     * method which creates hierarchy with the volumes of the components,
-     * by grouping the closest components to single component. this implemintation makes the components having
-     * only two objects as maximum.
-     *
-     * @return the new structure of the geometries inside the current instance
+     * flatten the geometries list
      */
-    public Geometries boundingVolumeHierarchy() {
-        Geometries component = disassemblyGeometries(_intersectables, new Geometries());
-        Intersectable left = null, right = null;
-        while (component._intersectables.size() > 1) {
-            double Best = Double.POSITIVE_INFINITY;
-            for (Intersectable componentI : component._intersectables) {
-                for (Intersectable componentJ : component._intersectables) {
-                    if (!((Container) componentI)._boundingBox.equals(((Container) componentJ)._boundingBox) &&
-                            ((Container) componentI)._boundingBox.getMaxDistance(((Container) componentJ)._boundingBox) < Best) {
-                        Best = ((Container) componentI)._boundingBox.getMaxDistance(((Container) componentJ)._boundingBox);
-                        left = componentI;
-                        right = componentJ;
-                    }
-                }
-            }
-            Geometries componentTag = new Geometries(left, right);
-            componentTag.setBoundingBox();
-            component.remove(left, right).add(componentTag);
-            ((Container) component).setBoundingBox();
-        }
-        this._intersectables = component._intersectables;
-        return this;
+    public void flatten() {
+        Geometries new_geometries = new Geometries(_containers.toArray(new Container[_containers.size()]));
+        _containers.clear();
+        flatten(new_geometries);
     }
 
     /**
-     * method which flatten all the geometries inside some geometries so that all components/composites will have the
-     * same depth of hierarchy tree which is 1,
-     * the function is working in a recursive way to get to all the composites in the original tree
+     * recursive func to flatten the geometries list
      *
-     * @param geometries      the geometries we're about to disassembly
-     * @param geometriesFinal the result of the disassembled geometries
-     * @return the flatten geometries, the result
+     * @param new_geometries current geometries
      */
-    private Geometries disassemblyGeometries(List<Intersectable> geometries, Geometries geometriesFinal) {
-        for (Intersectable geo : geometries) {
-            if (geo instanceof Geometries) {
-                disassemblyGeometries(((Geometries) geo)._intersectables, geometriesFinal);
-            } else {
-                if (!geometriesFinal._intersectables.contains(geo))
-                    geometriesFinal.add(geo);
-            }
+    private void flatten(Geometries new_geometries) {
+        for (Container container : new_geometries._containers) {
+            if (container instanceof Geometry)
+                _containers.add(container);
+            else
+                flatten((Geometries) container);
         }
-        return geometriesFinal;
     }
 
+    /**
+     * build bvh tree
+     */
+    public void BuildTree() {
+
+        this.flatten();
+        double distance;
+        Container bestGeometry1 = null;
+        Container bestGeometry2 = null;
+
+        while (_containers.size() > 1) {
+            double best = Double.MAX_VALUE;
+            for (Container geometry1 : _containers) {
+                for (Container geometry2 : _containers) {
+                    if (geometry1._boundingBox == null || geometry2._boundingBox == null) {
+                        System.out.println("hello bug");
+                    }
+                    distance = geometry1._boundingBox.BoundingBoxDistance(geometry2._boundingBox);
+                    if (!geometry1.equals(geometry2) && distance < best) {
+                        best = distance;
+                        bestGeometry1 = geometry1;
+                        bestGeometry2 = geometry2;
+                    }
+                }
+            }
+            _containers.add(new Geometries(bestGeometry1, bestGeometry2));
+            _containers.remove(bestGeometry1);
+            _containers.remove(bestGeometry2);
+        }
+    }
 
     /**
      * method which creates a string of all the hierarchy of the components and the composites in the tree
@@ -205,7 +209,7 @@ public class Geometries extends Container {
      */
     private String hierarchyTree(Geometries geometries, String tabs) {
         String str = "";
-        for (Intersectable geo : geometries._intersectables) {
+        for (Intersectable geo : geometries._containers) {
             if (geo instanceof Geometries) {
                 str += tabs + "Geometries: {\n";
                 str += hierarchyTree((Geometries) geo, tabs + " ");

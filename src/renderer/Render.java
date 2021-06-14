@@ -89,6 +89,7 @@ public class Render {
             this.nextCounter = this.pixels / 100;
             if (Render.this.print) {
                 System.out.printf("\r %d", this.percents);
+
             }
         }
 
@@ -217,19 +218,19 @@ public class Render {
      * Produce a rendered image file
      */
     public void writeToImage() {
-        if (imageWriter == null)
+        if (imageWriter == null) {
             throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
-
+        }
         imageWriter.writeToImage();
     }
 
     /**
      * Cast ray from camera in order to color a pixel
      *
-     * @param nX  resolution on X axis (number of pixels in row)
-     * @param nY  resolution on Y axis (number of pixels in column)
-     * @param col pixel's column number (pixel index in row)
-     * @param row pixel's row number (pixel index in column)
+     * @param nX  - resolution on X axis (number of pixels in row)
+     * @param nY  - resolution on Y axis (number of pixels in column)
+     * @param col - pixel's column number (pixel index in row)
+     * @param row - pixel's row number (pixel index in column)
      */
     private void castRay(int nX, int nY, int col, int row) {
         Ray ray = camera.constructRayThroughPixel(nX, nY, col, row);
@@ -240,10 +241,10 @@ public class Render {
     /**
      * Cast beam of rays from the pixel in the view plane to the focal point in the focal plane
      *
-     * @param nX  resolution on X axis (number of pixels in row)
-     * @param nY  resolution on Y axis (number of pixels in column)
-     * @param col pixel's column number (pixel index in row)
-     * @param row pixel's row number (pixel index in column)
+     * @param nX  - resolution on X axis (number of pixels in row)
+     * @param nY  - resolution on Y axis (number of pixels in column)
+     * @param col - pixel's column number (pixel index in row)
+     * @param row - pixel's row number (pixel index in column)
      */
     private void castBeam(int nX, int nY, int col, int row) {
         List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, col, row);

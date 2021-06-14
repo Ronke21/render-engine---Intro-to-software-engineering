@@ -5,7 +5,6 @@ import primitives.Ray;
 import java.util.List;
 
 public abstract class Container implements Intersectable {
-//******
 
     /**
      * every Intersectable composite have his bounding volume, which represented by a bounding box

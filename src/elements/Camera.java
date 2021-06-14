@@ -345,7 +345,14 @@ public class Camera {
         double pixelWidth = alignZero(_width / nX);   //  Rx = w/Nx
 
         if (_numberOfRaysInPixel != 1) {
-            rays.addAll(centerRay.randomRaysInGrid(_Vup, _Vright, _numberOfRaysInPixel, _distance, pixelWidth, pixelHeight));
+            rays.addAll(centerRay.randomRaysInGrid(
+                    _Vup,
+                    _Vright,
+                    _numberOfRaysInPixel,
+                    _distance,
+                    pixelWidth,
+                    pixelHeight)
+            );
         }
 
         // if more then one ray is emitted (DOF effect)

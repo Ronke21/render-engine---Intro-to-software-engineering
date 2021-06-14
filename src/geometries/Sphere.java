@@ -20,7 +20,6 @@ public class Sphere extends RadialGeometry {
      */
     final Point3D _center;
 
-
     /**
      * constructor.
      *
@@ -30,6 +29,7 @@ public class Sphere extends RadialGeometry {
     public Sphere(Point3D center, double radius) {
         super(radius);
         _center = center;
+        setBoundingBox();
     }
 
     /**

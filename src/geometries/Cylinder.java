@@ -32,6 +32,7 @@ public class Cylinder extends Tube {
             throw new IllegalArgumentException("height can't be negative");
         }
         _height = height;
+        setBoundingBox();
     }
 
 

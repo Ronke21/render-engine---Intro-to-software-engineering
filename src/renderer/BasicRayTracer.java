@@ -26,10 +26,11 @@ public class BasicRayTracer extends RayTracerBase {
     // TODO : understand the physical meaning of this value.
     //  0 leads to no reflections at all, but no significant difference with any other value
     private static final double INITIAL_K = 1; // 1
-    private boolean _bb;
+    private boolean _bb; // bounding box
 
     public BasicRayTracer set_bb(boolean _bb) {
         this._bb = _bb;
+        _scene.geometries.BuildTree();
         return this;
     }
 
@@ -52,9 +53,11 @@ public class BasicRayTracer extends RayTracerBase {
     public Color traceRay(Ray ray) {
 
         GeoPoint closestPoint = findClosestIntersection(ray);
+
         if (closestPoint == null) {
             return _scene.background;
         }
+
         return calcColor(closestPoint, ray);
     }
 
@@ -66,12 +69,15 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the point closest to the ray's starting point
      */
     private GeoPoint findClosestIntersection(Ray ray) {
+
         List<GeoPoint> intersections;
+
         if (!_bb) {
             intersections = _scene.geometries.findGeoIntersections(ray);
         } else {
             intersections = _scene.geometries.findIntersectBoundingRegion(ray);
         }
+
         if (intersections == null || intersections.size() == 0) {
             return null;
         } else {

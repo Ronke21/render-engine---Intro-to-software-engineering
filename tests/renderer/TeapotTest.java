@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import elements.*;
 import geometries.*;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 /**
@@ -13,14 +12,18 @@ import scene.Scene;
  *
  * @author Dan
  */
-class TeapotTest {
-    private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
+public class TeapotTest {
+    private final Camera camera = new Camera(
+            new Point3D(0, 0, -1000),
+            new Vector(0, 0, 1),
+            new Vector(0, 1, 0))
             .setDistance(1000).setViewPlaneSize(200, 200);
     private final Scene scene = new Scene("Test scene");
 
-    private static final Color color = new Color(50, 0, 200);
+    private static final Color color = new Color(200, 0, 0);
     private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
 
+    //region points
     private static Point3D[] pnts = new Point3D[] { null, //
             new Point3D(40.6266, 28.3457, -1.10804), //
             new Point3D(40.0714, 30.4443, -1.10804), //
@@ -553,12 +556,14 @@ class TeapotTest {
             new Point3D(31.1507, 30.8773, -14.0083), //
             new Point3D(34.8094, 17.1865, -35.0864) //
     };
+    //endregion
 
     /**
      * Produce a scene with a 3D model and render it into a png image
      */
     @Test
     public void teapot1() {
+        //region triangles
         scene.geometries.add( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
@@ -1553,17 +1558,19 @@ class TeapotTest {
                 new Triangle(pnts[470], pnts[469], pnts[529]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
         );
+        //endregion
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point3D(100, 0, -100)) //
                 .setkQ(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("teapot", 200, 200);
+        ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
-                .setRayTracer(new BasicRayTracer(scene))//
-                .setMultithreading(3);//.setDebugPrint();
+                .setRayTracer(new BasicRayTracer(scene)) //
+                .setMultithreading(3)
+                .setDebugPrint();
         render.renderImage();
-//        render.printGrid(50, new Color(java.awt.Color.YELLOW));
+        render.printGrid(50, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
 }

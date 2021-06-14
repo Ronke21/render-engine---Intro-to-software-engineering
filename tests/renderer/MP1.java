@@ -594,30 +594,29 @@ public class MP1 {
 
         Scene scene = new Scene("Test scene");
 
-        // need to aim the camera
         Camera camera = new Camera(
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20))
                 .setApertureSize(100)
                 .setFocalDistance(140)
-                .setNumberOfRaysInAperture(81)
+                .setNumberOfRaysInAperture(50)
                 .set_DOF(true)
+                .setAA(true)
+                .setNumberOfRaysInPixel(16)
                 .setViewPlaneSize(250, 250)
                 .setDistance(200);
 
-        int pixels = 1000;
+        int pixels = 500;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
 
         Color naturalGreen = new Color(Color.GREEN.add(Color.RED.reduce(10)).reduce(4));
-        //Color naturalGreen2 = naturalGreen.add(Color.GREEN.reduce(5));
 
         //region trees in loop
-
-        for (int treesRow = -2; treesRow < 2; treesRow += 2) {     // number of trees in a row
-            for (int treesCol = -2; treesCol < 4; treesCol += 2) {  // number of rows
+        for (int treesRow = -2; treesRow < 2; treesRow += 2) {     // trees in a row
+            for (int treesCol = -2; treesCol < 4; treesCol += 2) {  // rows
 
                 //region Tree1 points
                 // create all relevant points
@@ -701,23 +700,20 @@ public class MP1 {
                 trunk.setEmission(new Color(180, 83, 0).reduce(5));
                 scene.geometries.add(trunk);
                 //endregion
-
-                // endregion
             }
         }
+        // endregion
 
-        //region add the ground plane
-        Plane ground = new Plane(
-                new Point3D(5, 10, -10),
-                new Point3D(2, 3, -10),
-                new Point3D(7, -3, -10)
+        //region ground
+        Sphere ground = new Sphere(
+                new Point3D(0, 0, -50000), 49990
         );
 
         ground.setEmission(Color.BLUE.add(Color.GREEN.reduce(3)).reduce(10))
                 .setMaterial(new Material().setKd(0.025).setKs(0.00005).setKr(0.3));
 
         scene.geometries.add(ground);
-        //endregion
+//        endregion
 
         //region moon
         Point3D moonPoint = new Point3D(-10, -20, 80);
@@ -807,9 +803,10 @@ public class MP1 {
 
         Render render = new Render() //
                 .setCamera(camera) //
-                .setImageWriter(new ImageWriter("TreeTestNO_DOF_MP1_try", pixels, pixels)) //
-                .setRayTracer(new BasicRayTracer(scene)) //
-                .setMultithreading(3).setDebugPrint();
+                .setImageWriter(new ImageWriter("TreeTest_DOF_AA_BB_MP1_try", pixels, pixels)) //
+                .setRayTracer(new BasicRayTracer(scene).set_bb(true)) //
+                .setMultithreading(3)
+                .setDebugPrint();
         render.renderImage();
         render.writeToImage();
 
