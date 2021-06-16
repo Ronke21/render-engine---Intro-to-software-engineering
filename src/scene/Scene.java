@@ -44,7 +44,6 @@ public class Scene {
      */
     public Scene(String name) {
         _name = name;
-        geometries = new Geometries();
     }
 
 
