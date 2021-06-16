@@ -95,7 +95,7 @@ public interface Intersectable {
      * @return list of intersection points that were found
      */
     default List<GeoPoint> findGeoIntersections(Ray ray) {
-        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY, false);
     }
 
     /**
@@ -104,5 +104,5 @@ public interface Intersectable {
      *                    its distance is greater than this bound will not be returned
      * @return list of intersection points that were found and has valid distance value
      */
-    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb);
 }

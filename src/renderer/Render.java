@@ -169,8 +169,8 @@ public class Render {
          * Debug print of progress percentage - must be run from the main thread
          */
         public void print() {
-            if (Render.this.print)
-                while (this.percents < 100)
+            if (Render.this.print) {
+                while (this.percents < 100) {
                     try {
                         synchronized (this) {
                             wait();
@@ -178,6 +178,8 @@ public class Render {
                         System.out.printf("\r %02d%%", this.percents);
                     } catch (Exception e) {
                     }
+                }
+            }
         }
     }
 

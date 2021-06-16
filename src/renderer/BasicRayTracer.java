@@ -30,7 +30,6 @@ public class BasicRayTracer extends RayTracerBase {
 
     public BasicRayTracer set_bb(boolean _bb) {
         this._bb = _bb;
-        _scene.geometries.BuildTree();
         return this;
     }
 
@@ -41,6 +40,7 @@ public class BasicRayTracer extends RayTracerBase {
      */
     public BasicRayTracer(Scene scene) {
         super(scene);
+        scene.getGeometries().BuildTree();
     }
 
     /**

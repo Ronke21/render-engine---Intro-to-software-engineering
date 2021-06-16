@@ -14,17 +14,19 @@ import scene.Scene;
  */
 public class TeapotTest {
     private final Camera camera = new Camera(
-            new Point3D(0, 0, -1000),
-            new Vector(0, 0, 1),
-            new Vector(0, 1, 0))
-            .setDistance(1000).setViewPlaneSize(200, 200);
+            new Point3D(10, 150, -625),
+            new Vector(0, -0.25, 1),
+            new Vector(0, 1, 0.25))
+//            .setAA(true)
+//            .setNumberOfRaysInPixel(256)
+            .setDistance(1000).setViewPlaneSize(300, 200);
     private final Scene scene = new Scene("Test scene");
 
     private static final Color color = new Color(200, 0, 0);
     private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
 
     //region points
-    private static Point3D[] pnts = new Point3D[] { null, //
+    private static Point3D[] pnts = new Point3D[]{null, //
             new Point3D(40.6266, 28.3457, -1.10804), //
             new Point3D(40.0714, 30.4443, -1.10804), //
             new Point3D(40.7155, 31.1438, -1.10804), //
@@ -1561,16 +1563,21 @@ public class TeapotTest {
         //endregion
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point3D(100, 0, -100)) //
                 .setkQ(0.000001));
+        scene.lights.add(new PointLight(Color.WHITE.scale(1d / 3d), new Point3D(-100, 0, -100)) //
+                .setkQ(0.000001));
+        scene.lights.add(new PointLight(Color.BLUE.scale(3), new Point3D(0, 300, 0)) //
+                .setkQ(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
+        int pixels = 400;
+        ImageWriter imageWriter = new ImageWriter("teapot4_NO_AA", (int) (pixels * 1.5), pixels);
         Render render = new Render() //
                 .setCamera(camera) //
-                .setImageWriter(imageWriter) //
-                .setRayTracer(new BasicRayTracer(scene)) //
+                .setImageWriter(imageWriter)
+                .setRayTracer(new BasicRayTracer(scene).set_bb(true)) //
                 .setMultithreading(3)
                 .setDebugPrint();
         render.renderImage();
-        render.printGrid(50, new Color(java.awt.Color.YELLOW));
+//        render.printGrid(50, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }
 }

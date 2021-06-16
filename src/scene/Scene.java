@@ -94,6 +94,9 @@ public class Scene {
         return this;
     }
 
+    public Geometries getGeometries() {
+        return geometries;
+    }
 
     @Override
     public String toString() {

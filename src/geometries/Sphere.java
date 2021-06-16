@@ -63,7 +63,7 @@ public class Sphere extends RadialGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb) {
 
         // redefine all needed variables (copied from the presentation, same names)
         Point3D O = _center;

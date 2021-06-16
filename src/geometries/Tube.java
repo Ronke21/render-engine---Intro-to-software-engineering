@@ -73,7 +73,7 @@ public class Tube extends RadialGeometry {
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb) {
 
         // in the formulas from the presentation :
         // , is dotProduct

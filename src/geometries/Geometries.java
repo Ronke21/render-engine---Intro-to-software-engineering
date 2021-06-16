@@ -22,7 +22,6 @@ public class Geometries extends Container {
      */
     public Geometries() {
         _containers = new LinkedList<>();
-        _boundingBox = new BoundingBox();
         this.setBoundingBox();
     }
 
@@ -72,12 +71,20 @@ public class Geometries extends Container {
      * @return list of all intersections in a form of GeoPoint
      */
     @Override
-    //TODO: implement findIntersectBoundingRegion and boundingVolumeHierarchy
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb) {
         List<GeoPoint> intersections = new LinkedList<>();
         for (Container geometry : _containers) {
-            if (geometry._boundingBox.intersectBV(ray)) {
-                List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance);
+            if (bb) {
+                if (geometry._boundingBox.intersectBV(ray)) {
+                    List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance, true);
+                    if (geoIntersections != null) {
+                        if (geoIntersections.size() > 0) {
+                            intersections.addAll(geoIntersections);
+                        }
+                    }
+                }
+            } else {
+                List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance, false);
                 if (geoIntersections != null) {
                     if (geoIntersections.size() > 0) {
                         intersections.addAll(geoIntersections);
@@ -90,6 +97,7 @@ public class Geometries extends Container {
         }
         return null;
     }
+
 
     @Override
     public String toString() {
@@ -137,29 +145,6 @@ public class Geometries extends Container {
     }
 
     /**
-     * flatten the geometries list
-     */
-    public void flatten() {
-        Geometries new_geometries = new Geometries(_containers.toArray(new Container[_containers.size()]));
-        _containers.clear();
-        flatten(new_geometries);
-    }
-
-    /**
-     * recursive func to flatten the geometries list
-     *
-     * @param new_geometries current geometries
-     */
-    private void flatten(Geometries new_geometries) {
-        for (Container container : new_geometries._containers) {
-            if (container instanceof Geometry)
-                _containers.add(container);
-            else
-                flatten((Geometries) container);
-        }
-    }
-
-    /**
      * build bvh tree
      */
     public void BuildTree() {
@@ -191,34 +176,25 @@ public class Geometries extends Container {
     }
 
     /**
-     * method which creates a string of all the hierarchy of the components and the composites in the tree
+     * recursive func to flatten the geometries list
      *
-     * @return a string of all the hierarchy tree
+     * @param new_geometries current geometries
      */
-    public String hierarchyTree() {
-        return hierarchyTree(this, " ");
+    private void flatten(Geometries new_geometries) {
+        for (Container container : new_geometries._containers) {
+            if (container instanceof Geometry)
+                _containers.add(container);
+            else
+                flatten((Geometries) container);
+        }
     }
 
     /**
-     * method which creates a string of all the hierarchy of the components and the composites in the tree.
-     * works in a recursive way
-     *
-     * @param geometries current geometries we want to show it's objects
-     * @param tabs       number of tabs whose for express the relationship between parent and sons
-     * @return string of current 'geometries' and (in a recursive call) his sons
+     * flatten the geometries list
      */
-    private String hierarchyTree(Geometries geometries, String tabs) {
-        String str = "";
-        for (Intersectable geo : geometries._containers) {
-            if (geo instanceof Geometries) {
-                str += tabs + "Geometries: {\n";
-                str += hierarchyTree((Geometries) geo, tabs + " ");
-                str += tabs + "   }\n";
-            } else {
-                str += tabs + "   " + geo.getClass() + "\n";
-            }
-        }
-        return str;
+    public void flatten() {
+        Geometries new_geometries = new Geometries(_containers.toArray(new Container[_containers.size()]));
+        _containers.clear();
+        flatten(new_geometries);
     }
-
 }

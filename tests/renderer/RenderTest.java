@@ -39,9 +39,10 @@ class RenderTest {
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down
                 // left
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down
-        // right
+                // right
 
-        ImageWriter imageWriter = new ImageWriter("base render test", 1000, 1000);
+        int pixels = 10;
+        ImageWriter imageWriter = new ImageWriter("base render test33", pixels, pixels);
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //

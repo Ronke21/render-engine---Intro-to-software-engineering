@@ -598,16 +598,16 @@ public class MP1 {
                 new Point3D(30, 150, 20),
                 new Vector(-5, -27, -3),
                 new Vector(-1.2, -2, 20))
-                .setApertureSize(100)
-                .setFocalDistance(140)
-                .setNumberOfRaysInAperture(50)
-                .set_DOF(true)
-                .setAA(true)
-                .setNumberOfRaysInPixel(16)
+//                .setApertureSize(100)
+//                .setFocalDistance(140)
+//                .setNumberOfRaysInAperture(50)
+//                .set_DOF(true)
+//                .setAA(true)
+//                .setNumberOfRaysInPixel(16)
                 .setViewPlaneSize(250, 250)
                 .setDistance(200);
 
-        int pixels = 500;
+        int pixels = 300;
 
         scene.setBackground(Color.BLUE.add(Color.GREEN.reduce(2)).reduce(5));
         scene.setAmbientLight(new AmbientLight(Color.WHITE.reduce(5), 0.1));
@@ -803,7 +803,7 @@ public class MP1 {
 
         Render render = new Render() //
                 .setCamera(camera) //
-                .setImageWriter(new ImageWriter("TreeTest_DOF_AA_BB_MP1_try", pixels, pixels)) //
+                .setImageWriter(new ImageWriter("TreeTest_NO_DOF_NO_AA_BB_MP1_try", pixels, pixels)) //
                 .setRayTracer(new BasicRayTracer(scene).set_bb(true)) //
                 .setMultithreading(3)
                 .setDebugPrint();

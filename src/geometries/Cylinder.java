@@ -93,9 +93,9 @@ public class Cylinder extends Tube {
      * @return list of intersection points
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb) {
         // Step 1: find intersections between the ray and the tube which the cylinder is a part of
-        List<GeoPoint> intersectionsTube = super.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> intersectionsTube = super.findGeoIntersections(ray, maxDistance, bb);
 
         // Step 2: intersect is between caps
         Vector dir = _axisRay.getDir();
@@ -123,8 +123,8 @@ public class Cylinder extends Tube {
         // Step 3: intersect with each plane which belongs to the caps
         Plane bottomCap = new Plane(bottomCapCenter, dir);
         Plane upperCap = new Plane(upperCupCenter, dir);
-        List<GeoPoint> intersectionsBottomCup = bottomCap.findGeoIntersections(ray, maxDistance);
-        List<GeoPoint> intersectionsUpperCup = upperCap.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> intersectionsBottomCup = bottomCap.findGeoIntersections(ray, maxDistance, bb);
+        List<GeoPoint> intersectionsUpperCup = upperCap.findGeoIntersections(ray, maxDistance, bb);
 
         // if no intersections were found with the caps, return the ones we have already found
         if (intersectionsBottomCup == null && intersectionsUpperCup == null) {
