@@ -40,7 +40,7 @@ public class BasicRayTracer extends RayTracerBase {
      */
     public BasicRayTracer(Scene scene) {
         super(scene);
-        scene.getGeometries().BuildTree();
+//        scene.getGeometries().BuildTree();
     }
 
     /**

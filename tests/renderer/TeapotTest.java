@@ -17,8 +17,6 @@ public class TeapotTest {
             new Point3D(10, 150, -625),
             new Vector(0, -0.25, 1),
             new Vector(0, 1, 0.25))
-//            .setAA(true)
-//            .setNumberOfRaysInPixel(256)
             .setDistance(1000).setViewPlaneSize(300, 200);
     private final Scene scene = new Scene("Test scene");
 
@@ -565,7 +563,7 @@ public class TeapotTest {
      */
     @Test
     public void teapot1() {
-        //region triangles
+        //region polygons
         scene.geometries.add( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
@@ -1568,13 +1566,15 @@ public class TeapotTest {
         scene.lights.add(new PointLight(Color.BLUE.scale(3), new Point3D(0, 300, 0)) //
                 .setkQ(0.000001));
 
+//        scene.getGeometries().BuildTree();
+
         int pixels = 400;
-        ImageWriter imageWriter = new ImageWriter("teapot4_NO_AA", (int) (pixels * 1.5), pixels);
+        ImageWriter imageWriter = new ImageWriter("teapot4_NO_AA", (int)(pixels * 1.5), pixels);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter)
                 .setRayTracer(new BasicRayTracer(scene).set_bb(true)) //
-                .setMultithreading(3)
+                .setMultithreading(10)
                 .setDebugPrint();
         render.renderImage();
 //        render.printGrid(50, new Color(java.awt.Color.YELLOW));
