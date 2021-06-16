@@ -75,7 +75,7 @@ public class BasicRayTracer extends RayTracerBase {
         if (!_bb) {
             intersections = _scene.geometries.findGeoIntersections(ray);
         } else {
-            intersections = _scene.geometries.findIntersectBoundingRegion(ray);
+            intersections = _scene.geometries.findGeoIntersections(ray);
         }
 
         if (intersections == null || intersections.size() == 0) {

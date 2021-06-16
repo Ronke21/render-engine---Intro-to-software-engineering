@@ -74,22 +74,21 @@ public class Geometries extends Container {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb) {
         List<GeoPoint> intersections = new LinkedList<>();
         for (Container geometry : _containers) {
-            if (bb) {
-                if (geometry._boundingBox.intersectBV(ray)) {
-                    List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance, true);
-                    if (geoIntersections != null) {
-                        if (geoIntersections.size() > 0) {
-                            intersections.addAll(geoIntersections);
-                        }
-                    }
-                }
-            } else {
-                List<Intersectable.GeoPoint> geoIntersections = geometry.findGeoIntersections(ray, maxDistance, false);
-                if (geoIntersections != null) {
-                    if (geoIntersections.size() > 0) {
-                        intersections.addAll(geoIntersections);
-                    }
-                }
+            // declare list as null
+            List<Intersectable.GeoPoint> geoIntersections = null;
+            // if we don't want to use bounding boxes, find intersections as usual
+            if (!bb) {
+                geoIntersections = geometry.findGeoIntersections(ray, maxDistance, false);
+            }
+            // but if we do want to use it, if the ray intersects the bounding box...
+            else if (geometry._boundingBox.intersectBV(ray)) {
+                geoIntersections = geometry.findGeoIntersections(ray, maxDistance, true);
+            }
+            // else - geoIntersections will stay null as defined earlier..
+
+
+            if (geoIntersections != null && geoIntersections.size() > 0) {
+                intersections.addAll(geoIntersections);
             }
         }
         if (intersections.size() > 0) {
