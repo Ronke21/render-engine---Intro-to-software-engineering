@@ -25,4 +25,5 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
         super.setBoundingBox();
     }
+
 }

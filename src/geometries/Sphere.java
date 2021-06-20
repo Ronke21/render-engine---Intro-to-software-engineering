@@ -21,7 +21,7 @@ public class Sphere extends RadialGeometry {
     final Point3D _center;
 
     /**
-     * constructor.
+     *  Main Constructor for sphere, by entrance of center point and radius
      *
      * @param center - center of sphere
      * @param radius - radius of sphere
@@ -33,7 +33,7 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-     * getter
+     * get the center point of class sphere
      */
     public Point3D getCenter() {
         return _center;

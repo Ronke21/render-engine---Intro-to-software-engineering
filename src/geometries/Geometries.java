@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * this class represents a group of shapes in the space that represent a picture.
+ *Composite class which includes components and composite geometries
  */
 public class Geometries extends Container {
 
@@ -58,6 +59,11 @@ public class Geometries extends Container {
         return this;
     }
 
+    /**
+     * a method that receive shapes and adds to this list.
+     *
+     * @param geometries - shapes to be added to this instance
+     */
     public void addAll(List<Geometry> geometries) {
         _containers.addAll(geometries);
     }
@@ -175,7 +181,7 @@ public class Geometries extends Container {
     }
 
     /**
-     * recursive func to flatten the geometries list
+     * recursive func to flatten the geometries list (break the tree)
      *
      * @param new_geometries current geometries
      */
@@ -189,7 +195,7 @@ public class Geometries extends Container {
     }
 
     /**
-     * flatten the geometries list
+     * method to flatten the geometries list
      */
     public void flatten() {
         Geometries new_geometries = new Geometries(_containers.toArray(new Container[_containers.size()]));

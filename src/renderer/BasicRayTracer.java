@@ -15,19 +15,40 @@ import static primitives.Util.*;
  */
 public class BasicRayTracer extends RayTracerBase {
 
+
     /**
-     * Constant value defining by how much we need to move the ray's starting point
+     * how many reflections we want to calculate - The maximum value of the tree height (number of intersections) for reflection/refraction calculations for a geometry the camera sees.
+     * Stop condition for transparency:
+     * how far we consider to calculate the ray's intersections with
+     * other geometries which are behind original geometry.
+     * Stop condition for refraction:
+     * how far we consider to calculate the intersections of the rays
+     * which created by refractions in the original geometric body.
+     *
+     * USE WITH CAUTION! higher values leads to performance decreasing rapidly
      */
-    // how many reflections we want to calculate
-    // USE WITH CAUTION! higher values leads to performance decreasing rapidly
     private static final int MAX_CALC_COLOR_LEVEL = 10; // 10
-    // minimal value which is not considered at fully transparent or other effects
+
+    /**
+     * the minimum value of transparency/refraction to be considered if the calculation
+     * for reflection/refraction is necessary in the current geometry.
+     */
     private static final double MIN_CALC_COLOR_K = 0.001; // 0.001
+
     // TODO : understand the physical meaning of this value.
     //  0 leads to no reflections at all, but no significant difference with any other value
     private static final double INITIAL_K = 1; // 1
+
+    /**
+     * boolean value to determine use of bounding box improvement
+     */
     private boolean _bb; // bounding box
 
+    /**
+     * setter for bounding box flag
+     * @param _bb to set the bb factor?
+     * @return this instance
+     */
     public BasicRayTracer set_bb(boolean _bb) {
         this._bb = _bb;
         return this;

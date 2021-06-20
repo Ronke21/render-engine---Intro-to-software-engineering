@@ -11,14 +11,18 @@ import java.util.Objects;
 import static primitives.Util.*;
 
 /**
- * this class represents a plane in the space. contains a point in the plane and normal to the plane.
+ * Class Plane is 2D basic object in geometry which represented by two vectors which come from the same point and
+ *  have different directions (together reflecting the basic 2D object.)
+ *  contains a point in the plane and normal to the plane.
  */
 public class Plane extends FlatGeometry {
     /**
      * @member _q0 - random point on plane
-     * @member _normal - normal to plane on q0
      */
     final Point3D _q0;
+    /**
+     * @member _normal - normal to plane on q0
+     */
     final Vector _normal;
 
 
@@ -51,14 +55,14 @@ public class Plane extends FlatGeometry {
     }
 
     /**
-     * getter
+     * get normal to plane (field in class)
      */
     public Vector getNormal() {
         return _normal;
     }
 
     /**
-     * getter
+     * get normal of plane in point
      */
     @Override
     public Vector getNormal(Point3D point) {

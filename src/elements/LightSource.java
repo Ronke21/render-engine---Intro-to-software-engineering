@@ -4,6 +4,7 @@ import primitives.*;
 
 /**
  * this is an interface defining crucial methods for every kind of light source
+
  */
 public interface LightSource {
 

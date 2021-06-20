@@ -3,16 +3,22 @@ package elements;
 import primitives.Color;
 
 /**
- * this class represents all types of light sources in the scene e.g. spotlight, point light etc.
- *
+ * this Abstract Class represents a basic element which is defined by the intensity of colors of the lighting,
+ * Refers to the light propagation model.
+ * represents all types of light sources in the scene e.g. spotlight, point light etc.
+ * its function is to illuminate the objects with colors in different ways.
  * @member color - the color of the light source
  */
 abstract class Light {
 
+    /**
+     * the color of the light, the intensity of RGB colors
+     */
     private Color intensity = Color.WHITE;
 
     /**
-     * constructor
+     * Light constructor accepting the intensity of colors value
+     * creates the light's intensity
      *
      * @param color - the color of the light
      */
@@ -21,7 +27,7 @@ abstract class Light {
     }
 
     /**
-     * getter
+     * getter for Light intensity
      *
      * @return the color of this instance
      */

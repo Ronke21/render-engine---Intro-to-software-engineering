@@ -12,42 +12,82 @@ import static primitives.Util.isZero;
 public class Camera {
 
     /**
-     * @member _P0 - the camera location
-     * @member _Vup - Y axis vector
-     * @member _Vto - X axis vector
-     * @member _Vright - Z axis vector
-     * @member _apertureSize - determines how much the aperture will be open in our camera
-     * (smaller = more objects in focus, bigger = less objects in focus, stronger blurring)
-     * @member _focalDistance - the distance between the view plane and the focal plane
-     * (focal plane, the second imaginary plane, in which the beam rays emitted from the matching pixel in the view plane are passing through)
-     * @member _numberOfRays - the number of rays emitted from the view plane towards the focal plane
-     * @member _DOF - boolean value to set whether the camera has depth of field (bokeh) effect of not
-     * @member _width - object's actual width
-     * @member _height - object's actual height
-     * @member _distance - object's actual distance from the camera center
+     *
+     * Class Camera represent view of the geometric world through the view plane (which represent the picture),
+     * Through the view plane the camera captures the geometric world.
+     * it produces graphic views of the objects using the view plane and rays and object intersections.
+     * The rays converge according to the location of the pixel centers in the view plane.
+     * directions of the camera to the right, up and front  (compared to the original x,y,z axis),
+     * all vectors orthogonal to each other
      */
 
+    /**
+     * _P0 - the camera location
+     */
     private Point3D _P0;
+    /**
+     * _Vup - Y axis vector
+     */
     private Vector _Vup;
+    /**
+     * X axis vector
+     */
     private Vector _Vto;
+    /**
+     * Z axis vector
+     */
     private Vector _Vright;
-
-    // params for DOF effect
-    private double _apertureSize;
-    private double _focalDistance;
-    private int _numberOfRaysInAperture;
-    private boolean _DOF;
-
-    // params for AA effect
-    private int _numberOfRaysInPixel;
-    private boolean _AA;
-
+    /**
+     * object's actual width
+     */
     private double _width;
+    /**
+     * object's actual height
+     */
     private double _height;
+    /**
+     * object's actual distance from the camera center
+     */
     private double _distance;
 
+    // *************************** params for DOF effect ******************************************
     /**
-     * simple constructor
+     * the size of the aperture surface (located in the camera location), the size is relative to a single pixel, example: 1 = one pixel, and so on.
+     * the smaller the aperture the greater the width of the sharpness, (similar to blind view without glasses)
+     * (smaller = more objects in focus, bigger = less objects in focus, stronger blurring)
+     */
+    private double _apertureSize;
+    /**
+     * the distance between the camera's beginning location to the center of focal plane,
+     * forward vision becomes sharper in the distance, the more it's close to the focal plane
+     * (focal plane, the second imaginary plane, in which the beam rays emitted from the matching pixel in the view plane are passing through)
+     */
+    private double _focalDistance;
+    /**
+     * number of rays in the focal plane of the camera (per pixel),
+     * the more rays in focal plane the more quality of the blurring
+     */
+    private int _numberOfRaysInAperture;
+    /**
+     * boolean value to set whether the camera has depth of field (bokeh) effect of not
+     */
+    private boolean _DOF;
+
+
+    // ****************************************** params for AA effect ******************************************
+    /**
+     * number of rays in a single pixel for active super sampling
+     */
+    private int _numberOfRaysInPixel;
+    /**
+     * bolean value to determine anti aliasing
+     */
+    private boolean _AA;
+
+
+
+    /**
+     * simple Camera constructor which get as input location point and two orthogonal vectors represent the direction
      *
      * @param p0  - the camera location
      * @param Vto - Y axis vector
@@ -67,28 +107,9 @@ public class Camera {
         _Vright = _Vto.crossProduct(_Vup);
     }
 
-//    /**
-//     * more complex constructor for DOF
-//     *
-//     * @param p0           - the camera location
-//     * @param Vto          - Y axis vector
-//     * @param Vup          - X axis vector
-//     * @param apertureSize - the radius of the aperture
-//     * @param focalLength  - the distance between the view plane and the focal plane
-//     * @param numberOfRays - number of rays
-//     */
-//    public Camera(Point3D p0, Vector Vto, Vector Vup, double apertureSize, double focalLength, int numberOfRays, boolean dof) {
-//
-//        this(p0, Vto, Vup);
-//
-//        _apertureSize = apertureSize;
-//        _focalDistance = focalLength;
-//        _numberOfRays = numberOfRays;
-//        _DOF = dof;
-//    }
 
     /**
-     * getter
+     * get the location point of camera
      *
      * @return p0
      */
@@ -97,7 +118,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the upper vector of the camera (represent the y axis of camera, position of the view)
      *
      * @return Vup
      */
@@ -106,7 +127,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the forward vector of the camera (represent the z axis of camera, forward direction of the view)
      *
      * @return Vto
      */
@@ -115,7 +136,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the right vector of the camera (represent the x axis of camera, position of the view)
      *
      * @return Vright
      */
@@ -124,7 +145,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the aperture surface's (per pixel) size, value relative to a single pixel
      *
      * @return aperture Size
      */
@@ -133,7 +154,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the focal distance from the camera to the focal plane (the area of focus)
      *
      * @return focal distance
      */
@@ -142,7 +163,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get the number of rays in the aperture plane per single pixel
      *
      * @return number Of rays
      */
@@ -151,7 +172,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get if DOF is activated in camera
      *
      * @return whether the DOF effect is activated or not
      */
@@ -160,7 +181,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get if AA is activated in camera
      *
      * @return whether the AA effect is activated or not
      */
@@ -169,7 +190,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get width of camera
      *
      * @return the width of the view plane
      */
@@ -178,7 +199,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get height of camera
      *
      * @return the height of the view plane
      */
@@ -187,7 +208,7 @@ public class Camera {
     }
 
     /**
-     * getter
+     * get distance of camera from scene
      *
      * @return the object's actual distance from the camera center
      */

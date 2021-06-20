@@ -11,7 +11,9 @@ import static primitives.Util.Determinant;
 import static primitives.Util.*;
 
 /**
- * this class represents a Tube in the space.
+ * Class Tube represent a smooth infinite surface, curvature at every point on its face fixed.
+ * That is the cylinder which does not have a length.
+ * Represented by ray and radius, (direction, point which belong to infinite line, radius)
  */
 public class Tube extends RadialGeometry {
 
@@ -21,7 +23,7 @@ public class Tube extends RadialGeometry {
     final Ray _axisRay;
 
     /**
-     * constructor for a tube.
+     * Main Constructor for class Tube, inputs are ray and radius
      *
      * @param axisRay - ray in middle of tube
      * @param radius  - radius of tube
@@ -32,24 +34,24 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-     * getter
+     * getter to the ray (values of direction and place) which represent the tube
      */
     public Ray getAxisRay() {
         return _axisRay;
     }
 
-    /**
-     * getter
-     */
-    public double getRadius() {
-        return _radius;
-    }
 
     @Override
     public String toString() {
         return "(" + _axisRay + "," + _radius + ")";
     }
 
+    /**
+     * function that receive a point in a body and return a normal in this point to the body
+     *
+     * @param point point pointing in the direction of the normal
+     * @return normal vector to the Geometry
+     */
     @Override
     public Vector getNormal(Point3D point) {
 

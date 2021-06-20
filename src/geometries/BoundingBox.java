@@ -21,7 +21,7 @@ import primitives.Util;
  * by checking if the ray direction come with intersection in the bounding box of the geometry.
  * It means for us that the calculation of all the intersections of the same ray should be taken into account
  *
- * @member _xMin - the minimum value of X coordinate of this bounding box
+ * @member
  * @member _yMin - the minimum value of Y coordinate of this bounding box
  * @member _zMin - the minimum value of Z coordinate of this bounding box
  * @member _xMax - the maximum value of X coordinate of this bounding box
@@ -30,23 +30,31 @@ import primitives.Util;
  */
 public class BoundingBox {
 
+    /**
+     * _xMin - the minimum value of X coordinate of this bounding box
+     */
     private double _xMin = Double.POSITIVE_INFINITY;
+    /**
+     *  _yMin - the minimum value of Y coordinate of this bounding box
+     */
     private double _yMin = Double.POSITIVE_INFINITY;
+    /**
+     *  _zMin - the minimum value of Z coordinate of this bounding box
+     */
     private double _zMin = Double.POSITIVE_INFINITY;
-
+    /**
+     *   xMax - the maximum value of X coordinate of this bounding box
+     */
     private double _xMax = Double.NEGATIVE_INFINITY;
+    /**
+     * _yMax - the maximum value of Y coordinate of this bounding box
+     */
     private double _yMax = Double.NEGATIVE_INFINITY;
+    /**
+     * _zMax - the maximum value of Z coordinate of this bounding box
+     */
     private double _zMax = Double.NEGATIVE_INFINITY;
 
-    //region def ctor
-//    /**
-//     * default constructor for class BoundingBox
-//     * needs to be explicitly written since it is being overridden by any other
-//     * constructor by default
-//     */
-//    public BoundingBox() {
-//    }
-    //endregion
 
     /**
      * Setter for new values for class BoundingBox, with 6 inputs, minimum value and maximum value inputs per axis
@@ -69,28 +77,38 @@ public class BoundingBox {
 
 
     /**
-     * getters
+     * get min X value
      */
     public double getMinX() {
         return _xMin;
     }
-
+    /**
+     * get max X value
+     */
     public double getMaxX() {
         return _xMax;
     }
-
+    /**
+     * get min y value
+     */
     public double getMinY() {
         return _yMin;
     }
-
+    /**
+     * get max y value
+     */
     public double getMaxY() {
         return _yMax;
     }
-
+    /**
+     * get min z value
+     */
     public double getMinZ() {
         return _zMin;
     }
-
+    /**
+     * get max z value
+     */
     public double getMaxZ() {
         return _zMax;
     }

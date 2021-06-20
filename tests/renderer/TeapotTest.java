@@ -1566,7 +1566,7 @@ public class TeapotTest {
         scene.lights.add(new PointLight(Color.BLUE.scale(3), new Point3D(0, 300, 0)) //
                 .setkQ(0.000001));
 
-//        scene.getGeometries().BuildTree();
+        scene.getGeometries().BuildTree();
 
         int pixels = 400;
         ImageWriter imageWriter = new ImageWriter("teapot4_NO_AA", (int)(pixels * 1.5), pixels);

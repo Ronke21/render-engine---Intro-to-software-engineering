@@ -15,8 +15,17 @@ import java.text.NumberFormat;
  * @author Dan
  */
 public class Render {
+    /**
+     * camera object for sending rays to view plane
+     */
     private Camera camera;
+    /**
+     * image writer object for writing the pixels after rendering into a file
+     */
     private ImageWriter imageWriter;
+    /**
+     * tracer object from class RayTracerBase for rendering
+     */
     private RayTracerBase tracer;
     private static final String RESOURCE_ERROR = "Renderer resource not set";
     private static final String RENDER_CLASS = "Render";
@@ -24,9 +33,19 @@ public class Render {
     private static final String CAMERA_COMPONENT = "Camera";
     private static final String RAY_TRACER_COMPONENT = "Ray tracer";
 
+    /**
+     * number of threads for the rendering method
+     */
     private int threadsCount = 0;
-    private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
-    private boolean print = false; // printing progress percentage
+    /**
+     * number of spare threads for the rendering method
+     * Spare threads if trying to use all the cores
+     */
+    private static final int SPARE_THREADS = 2;
+    /**
+     * boolean value of active debugging the percentage in the process
+     */
+    private boolean print = false;
 
     /**
      * Set multi-threading <br>
@@ -185,6 +204,7 @@ public class Render {
 
     /**
      * Camera setter
+     * chaining method design pattern
      *
      * @param camera to set
      * @return renderer itself - for chaining
@@ -196,7 +216,7 @@ public class Render {
 
     /**
      * Image writer setter
-     *
+     * chaining method design pattern
      * @param imgWriter the image writer to set
      * @return renderer itself - for chaining
      */
@@ -207,7 +227,7 @@ public class Render {
 
     /**
      * Ray tracer setter
-     *
+     * chaining method design pattern
      * @param tracer to use
      * @return renderer itself - for chaining
      */

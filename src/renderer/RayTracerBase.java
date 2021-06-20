@@ -10,10 +10,13 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
 
+    /**
+     * scene to be rendered
+     */
     protected Scene _scene;
 
     /**
-     * constructor
+     * constructor for the ray tracer
      * @param scene
      */
     public RayTracerBase(Scene scene) {

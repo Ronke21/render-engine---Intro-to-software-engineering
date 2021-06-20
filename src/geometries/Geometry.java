@@ -6,7 +6,8 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * interface for all shapes in the space.
+ * interface for all shapes in the space,
+ * objects with material and emission fields, and getNormal method (and has the possibility to be intersected)
  */
 public abstract class Geometry extends Container{
 
@@ -17,7 +18,7 @@ public abstract class Geometry extends Container{
     private Material material = new Material();
 
     /**
-     * getter
+     * getself color of the shape
      *
      * @return emission of geometry
      */
@@ -34,7 +35,7 @@ public abstract class Geometry extends Container{
     public abstract Vector getNormal(Point3D point);
 
     /**
-     * getter
+     * get material type of shape
      *
      * @return the material of the geometry
      */

@@ -26,19 +26,28 @@ public class Scene {
 
     /**
      * @member _name - the point the vector points to from (0,0,0)
-     * @member background -  color of background in photo
-     * @member ambientLight -  the surrounding light in the room
-     * @member geometries - the shapes in scene
      */
     public final String _name;
+    /**
+     * @member background -  color of background in photo
+     */
     public Color background = Color.BLACK;
+    /**
+     * @member ambientLight -  the surrounding light in the room
+     */
     public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 1.d);
+    /**
+     * @member geometries - the shapes in scene
+     */
     public Geometries geometries = null;
+    /**
+     * @member lights - the lights in scene
+     */
     public List<LightSource> lights = new LinkedList<LightSource>();
 
 
     /**
-     * constructor
+     * constructor for scene
      *
      * @param name - name of scene
      */

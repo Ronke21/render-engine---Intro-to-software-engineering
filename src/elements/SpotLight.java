@@ -7,6 +7,8 @@ import primitives.Vector;
 /**
  * class represents a light source in a shape  of spotlight
  * in order to get the same light intensity, we need to increase the initial intensity of the light source
+ * class Spot Light defined by position, direction and light intensity.
+ * it's a kind of point light so we choose to extend it from pointLight.
  */
 public class SpotLight extends PointLight {
     /**
@@ -29,7 +31,7 @@ public class SpotLight extends PointLight {
 
     /**
      * setter - chaining method design pattern
-     * <p>
+     *
      * uses Math.max to make sure we get a valid value.
      * a value lower than 1 is not valid since it will increase the intensity instead of decreasing it!
      *

@@ -12,7 +12,7 @@ public abstract class RadialGeometry extends Geometry{
     final double _radius;
 
     /**
-     * constructor.
+     * constructor to set radius
      *
      * @param radius - radius of shape
      */
@@ -24,7 +24,7 @@ public abstract class RadialGeometry extends Geometry{
     }
 
     /**
-     * getter
+     * getter to radius of geometry
      */
     public double getRadius() {
         return _radius;

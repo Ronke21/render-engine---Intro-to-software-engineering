@@ -5,14 +5,23 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * class represents a light source with a known  direction, no position! (e.g. the sun)
- */
+ *
+ * This class represents a light source with a known  direction, no position! (e.g. the sun)
+ * Directional Light defined by the intensity of light emitted from an undefined, and vector direction.
+ * Because the energy propagation is uniform in its direction,
+ * It will always go from surface to surface in the same way that energy is stored, no attention to distance
+ * and the whole scene receives the intensity of light in the same way.
+ *
+ * */
 public class DirectionalLight extends Light implements LightSource {
 
+    /**
+     * The direction of the directional light
+     */
     private Vector direction;
 
     /**
-     * constructor
+     * Constructor of Directional Light defined by the direction and intensity of light
      *
      * @param color     - the color of the light
      * @param direction - the direction of the light beam
@@ -39,7 +48,6 @@ public class DirectionalLight extends Light implements LightSource {
      * @param p - the ray's destination point
      * @return the ray - the normalized(p - pL)
      */
-    //todo : make sure we understood correctly (since distance is infinite)
     @Override
     public Vector getL(Point3D p) {
         return direction.normalized();

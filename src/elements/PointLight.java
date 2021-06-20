@@ -6,12 +6,35 @@ import primitives.Vector;
 
 /**
  * class represents a light source with a known position, emits light to all directions (e.g. light bulb)
+ * Point light is defined by the location of the lighting, and the intensity of light, (and attenuation coefficients).
+ * It transmits energy in all directions on an equal level.
+ * The attenuation constants give better control over the lighting model to the extent that the distance affects the intensity.
  */
 public class PointLight extends Light implements LightSource {
 
+    /**
+     * location of the light source
+     */
     protected Point3D position;
+
+    /**
+     * kA - fixed attenuation regardless of distance,
+     */
+
+
+    /**
+     * kC - fixed attenuation regardless of distance,
+     */
     protected double kC = 1;
+
+    /**
+     * kL - fixed attenuation dependent on distance,
+     */
     protected double kL = 0;
+
+    /**
+     * kQ - fixed attenuation depending on square distance
+     */
     protected double kQ = 0;
 
     /**

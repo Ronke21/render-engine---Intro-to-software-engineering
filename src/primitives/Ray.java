@@ -16,11 +16,15 @@ import static primitives.Util.*;
 public class Ray {
     /**
      * @member _dir - the point the Ray points to from p0
-     * @member _p0 - starting point of Ray
-     * DELTA - Constant value defining by how much we need to move the ray's starting point
      */
     Point3D _p0;
+    /**
+     * @member _p0 - starting point of Ray
+     */
     final Vector _dir;
+    /**
+     * DELTA - Constant value defining by how much we need to move the ray's starting point
+     */
     private static final double DELTA = 0.1;
 
     /**
@@ -60,14 +64,14 @@ public class Ray {
     }
 
     /**
-     * getter
+     * get starting point
      */
     public Point3D getP0() {
         return _p0;
     }
 
     /**
-     * getter
+     * get direction of ray
      */
     public Vector getDir() {
         return _dir;

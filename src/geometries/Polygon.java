@@ -118,6 +118,8 @@ public class Polygon extends FlatGeometry {
 
     /**
      * @param ray ray that cross the geometry
+     * @param maxDistance - is the maximum distance to find intersections in
+     * @param bb -
      * @return list of intersection points that were found
      */
     @Override

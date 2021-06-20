@@ -7,11 +7,15 @@ package primitives;
 public class Point3D {
     /**
      * @member _x - the coordinate on x pivot
-     * @member _y - the coordinate on y pivot
-     * @member _z - the coordinate on z pivot
      */
     final Coordinate _x;
+    /**
+     * @member _y - the coordinate on y pivot
+     */
     final Coordinate _y;
+    /**
+     * @member _z - the coordinate on z pivot
+     */
     final Coordinate _z;
 
     // (0,0,0)
@@ -54,10 +58,6 @@ public class Point3D {
         return _x.equals(point3D._x) && _y.equals(point3D._y) && _z.equals(point3D._z);
     }
 
-//    @Override
-//    public String toString() {
-//        return "(" + _x + "," + _y + "," + _z + ")";
-//    }
 
     @Override
     public String toString() {

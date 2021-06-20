@@ -18,8 +18,14 @@ import java.io.IOException;
 // based on the guide in :
 // https://www.w3schools.com/xml/dom_nodes.asp
 
+/**
+ * this class is used to receive a XML file containing a scene details, and get them from the file to a scene instance
+ */
 public class XMLtoScene {
 
+    /**
+     * the scene to be filled from the XML file
+     */
     static Scene scene;
 
     /**
