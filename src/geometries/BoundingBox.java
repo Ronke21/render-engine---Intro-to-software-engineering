@@ -4,8 +4,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
 
-// TODO:
-//  read all code, understand it and also the documentation
 
 
 /**

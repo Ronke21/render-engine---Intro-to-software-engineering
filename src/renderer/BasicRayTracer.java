@@ -35,8 +35,11 @@ public class BasicRayTracer extends RayTracerBase {
      */
     private static final double MIN_CALC_COLOR_K = 0.001; // 0.001
 
-    // TODO : understand the physical meaning of this value.
-    //  0 leads to no reflections at all, but no significant difference with any other value
+
+    //
+    /**
+     * 0 leads to no reflections at all, but no significant difference with any other value
+     */
     private static final double INITIAL_K = 1; // 1
 
     /**
@@ -126,7 +129,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @param intersection - closest intersection point on the object
      * @param ray          - ray to the point
      * @param level        - recursion iterations upper limit
-     * @param k            - TODO lines 26 - 27
+     * @param k            - initial value
      * @return the color in the point with all the effects
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
@@ -150,7 +153,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @param geoPoint - the tested point
      * @param ray      - the ray going through the point
      * @param level    - recursion iterations upper limit
-     * @param K        - TODO lines 26 - 27
+     * @param K        - initiation value
      * @return the Color of the returned light after calculating all the required effects
      */
     private Color calcGlobalEffects(GeoPoint geoPoint, Ray ray, int level, double K) {
