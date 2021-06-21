@@ -18,7 +18,9 @@ public class Point3D {
      */
     final Coordinate _z;
 
-    // (0,0,0)
+    /**
+     * (0,0,0)
+     */
     public final static Point3D ZERO = new Point3D(0d, 0d, 0d);
 
     /**

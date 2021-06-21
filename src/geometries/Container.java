@@ -4,6 +4,10 @@ import primitives.Ray;
 
 import java.util.List;
 
+/**
+ * class to contain the proper methods for setting a bounding box for both geometry and geometries
+ *
+ */
 public abstract class Container implements Intersectable {
 
     /**

@@ -56,6 +56,7 @@ public class Plane extends FlatGeometry {
 
     /**
      * get normal to plane (field in class)
+     * @return the normal
      */
     public Vector getNormal() {
         return _normal;
@@ -63,6 +64,7 @@ public class Plane extends FlatGeometry {
 
     /**
      * get normal of plane in point
+     * @return the normal
      */
     @Override
     public Vector getNormal(Point3D point) {

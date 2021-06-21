@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * test mp1
+ */
 public class MP1 {
 //    /**
 //     * Produce a picture of a sphere lighted by a spot light
@@ -589,6 +592,10 @@ public class MP1 {
 //        render.writeToImage();
 //    }
 
+    /**
+     * test for mp1
+     * @throws IOException if fails
+     */
     @Test
     public void TreeTestMP1_try() throws IOException {
 

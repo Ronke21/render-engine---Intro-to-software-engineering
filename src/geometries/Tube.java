@@ -35,6 +35,7 @@ public class Tube extends RadialGeometry {
 
     /**
      * getter to the ray (values of direction and place) which represent the tube
+     * @return axis ray
      */
     public Ray getAxisRay() {
         return _axisRay;

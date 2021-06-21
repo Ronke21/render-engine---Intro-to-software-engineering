@@ -8,25 +8,25 @@ package primitives;
 public class Material {
 
     /**
-     * @member Kd - diffuse component, represents the scattering of light rays to all directions from the surface
+     *  Kd - diffuse component, represents the scattering of light rays to all directions from the surface
      */
     public double Kd = 0.0;
     /**
-     * @member Ks - specular component, represents the reflectance of the light source over the surface
+     *  Ks - specular component, represents the reflectance of the light source over the surface
      */
     public double Ks = 0.0;
     /**
-     * @member Shininess - how shiny the material is
+     *  Shininess - how shiny the material is
      */
     public int Shininess = 0;
     /**
-     * @member Kt - transparency component
+     *  Kt - transparency component
      * 0.0 is opaque (=atum)
      * 1.0 is clear(=shakuf)
      */
     public double Kt = 0.0;
     /**
-     * @member Kr - reflection component
+     *  Kr - reflection component
      * 0.0 is matte
      * 1.0 is very reflexive
      */

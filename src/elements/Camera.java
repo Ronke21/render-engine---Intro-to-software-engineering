@@ -9,17 +9,18 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
+/**
+ *
+ * Class Camera represent view of the geometric world through the view plane (which represent the picture),
+ * Through the view plane the camera captures the geometric world.
+ * it produces graphic views of the objects using the view plane and rays and object intersections.
+ * The rays converge according to the location of the pixel centers in the view plane.
+ * directions of the camera to the right, up and front  (compared to the original x,y,z axis),
+ * all vectors orthogonal to each other
+ */
 public class Camera {
 
-    /**
-     *
-     * Class Camera represent view of the geometric world through the view plane (which represent the picture),
-     * Through the view plane the camera captures the geometric world.
-     * it produces graphic views of the objects using the view plane and rays and object intersections.
-     * The rays converge according to the location of the pixel centers in the view plane.
-     * directions of the camera to the right, up and front  (compared to the original x,y,z axis),
-     * all vectors orthogonal to each other
-     */
+
 
     /**
      * _P0 - the camera location
@@ -428,7 +429,7 @@ public class Camera {
      *
      * @param axis  - turning axis
      * @param theta - angle to turn the camera
-     * @return
+     * @return this instance
      */
     public Camera turnCamera(Vector axis, double theta) {
         if (theta == 0) return this;

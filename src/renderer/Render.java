@@ -358,6 +358,10 @@ public class Render {
         }
     }
 
+    /**
+     * get image writer object
+     * @return image writer object
+     */
     public ImageWriter getImageWriter() {
         return imageWriter;
     }

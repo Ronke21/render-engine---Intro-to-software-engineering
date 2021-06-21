@@ -46,7 +46,8 @@ public abstract class Geometry extends Container{
     /**
      * setter of emission light, chaining method design pattern
      *
-     * @param emission
+     * @param emission color of shape
+     * @return this instance
      */
     public Geometry setEmission(Color emission) {
         this.emission = emission;
@@ -56,7 +57,8 @@ public abstract class Geometry extends Container{
     /**
      * setter of material, chaining method design pattern
      *
-     * @param material
+     * @param material type of material
+     * @return this instance
      */
     public Geometry setMaterial(Material material) {
         this.material = material;

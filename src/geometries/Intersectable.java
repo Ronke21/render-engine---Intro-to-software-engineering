@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Aמ Interface for Composite Design Pattern The Composite Class - Geometries The
+ * An Interface for Composite Design Pattern The Composite Class - Geometries The
  * Basic Classes - all the specific geometries
  */
 public interface Intersectable {
@@ -18,16 +18,16 @@ public interface Intersectable {
      * shape which the light is bouncing from
      */
 
-    /* Helper class representing a point on a geometry surface
+    /** Helper class representing a point on a geometry surface
      * @author Dan
      */
     public static class GeoPoint {
-        /* the body of the point */
+        /** the body of the point */
         public Geometry geometry;
-        /* the point itself */
+        /** the point itself */
         public Point3D point;
 
-        /* Constructor to initialize both fields of this helper class
+        /** Constructor to initialize both fields of this helper class
          *
          * @param geo geometry (basic)
          * @param p   point on the surface of the geometry
@@ -54,18 +54,18 @@ public interface Intersectable {
             return "" + geometry + ": " + point;
         }
 
-        /* Ray direction from point of view to the point*/
+        /** Ray direction from point of view to the point*/
         public Vector v;
-        /* Normal vector to the geometry at the point*/
+        /** Normal vector to the geometry at the point*/
         public Vector n;
-        /* n*v - dotProduct*/
+        /** n*v - dotProduct*/
         public double nv;
-        /* Point color (IP) being calculated (including intermediate results)*/
+        /** Point color (IP) being calculated (including intermediate results)*/
         public Color c;
-        /* Geometry's material */
+        /** Geometry's material */
         public Material m;
 
-        /* Initialize geo point cache data according to the direction of the ray
+        /** Initialize geo point cache data according to the direction of the ray
          * that produced the point.
          * GeoPoint now will include all the info for any functions using it thus avoiding
          * re-calculations
@@ -102,6 +102,7 @@ public interface Intersectable {
      * @param ray         - ray that cross the geometry
      * @param maxDistance - the upper bound of distance, any point which
      *                    its distance is greater than this bound will not be returned
+     * @param bb boolean for bounding box
      * @return list of intersection points that were found and has valid distance value
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean bb);

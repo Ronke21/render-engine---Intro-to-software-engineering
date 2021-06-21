@@ -17,7 +17,7 @@ public abstract class RayTracerBase {
 
     /**
      * constructor for the ray tracer
-     * @param scene
+     * @param scene to be intersected
      */
     public RayTracerBase(Scene scene) {
         _scene = scene;
@@ -25,7 +25,7 @@ public abstract class RayTracerBase {
 
     /**
      * abstract function to determine the color of a pixel
-     * @param ray
+     * @param ray - ray to intersect
      * @return the color of the pixel intersects the given ray
      */
     public abstract Color traceRay(Ray ray);

@@ -153,6 +153,11 @@ public class XMLtoScene {
         return new Color(R, G, B);
     }
 
+    /**
+     * reads the xml file into scene
+     * @param file - path of xml
+     * @return the scene
+     */
     public static Scene ReadScene(String file) {
 
         //region Read file safely

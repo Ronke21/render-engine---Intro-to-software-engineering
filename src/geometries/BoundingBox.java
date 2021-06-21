@@ -20,13 +20,6 @@ import primitives.Util;
  * class represents axis-aligned bounding box, it is used to check if ray is in the area of a geometry
  * by checking if the ray direction come with intersection in the bounding box of the geometry.
  * It means for us that the calculation of all the intersections of the same ray should be taken into account
- *
- * @member
- * @member _yMin - the minimum value of Y coordinate of this bounding box
- * @member _zMin - the minimum value of Z coordinate of this bounding box
- * @member _xMax - the maximum value of X coordinate of this bounding box
- * @member _yMax - the maximum value of Y coordinate of this bounding box
- * @member _zMax - the maximum value of Z coordinate of this bounding box
  */
 public class BoundingBox {
 
@@ -78,36 +71,42 @@ public class BoundingBox {
 
     /**
      * get min X value
+     * @return min x
      */
     public double getMinX() {
         return _xMin;
     }
     /**
      * get max X value
+     * @return max x
      */
     public double getMaxX() {
         return _xMax;
     }
     /**
      * get min y value
+     * @return min y
      */
     public double getMinY() {
         return _yMin;
     }
     /**
      * get max y value
+     * @return  max y
      */
     public double getMaxY() {
         return _yMax;
     }
     /**
      * get min z value
+     * @return min z
      */
     public double getMinZ() {
         return _zMin;
     }
     /**
      * get max z value
+     * @return  max z
      */
     public double getMaxZ() {
         return _zMax;

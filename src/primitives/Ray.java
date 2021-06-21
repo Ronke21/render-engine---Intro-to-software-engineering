@@ -65,6 +65,7 @@ public class Ray {
 
     /**
      * get starting point
+     * @return starting point3d
      */
     public Point3D getP0() {
         return _p0;
@@ -72,6 +73,7 @@ public class Ray {
 
     /**
      * get direction of ray
+     * @return direction
      */
     public Vector getDir() {
         return _dir;

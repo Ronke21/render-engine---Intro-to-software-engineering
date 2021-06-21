@@ -34,6 +34,7 @@ public class Sphere extends RadialGeometry {
 
     /**
      * get the center point of class sphere
+     * @return the center point
      */
     public Point3D getCenter() {
         return _center;

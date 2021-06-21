@@ -220,7 +220,10 @@ public class Vector {
         return vec;
     }
 
-    //getter
+    /**
+     * get start of ray
+     * @return ray's head
+     */
     public Point3D getHead() {
         return _head;
     }

@@ -23,6 +23,7 @@ public class SpotLight extends PointLight {
      *
      * @param color    - the color of the light source
      * @param position - the point which the light is being emitted from
+     * @param direction direction of light
      */
     public SpotLight(Color color, Point3D position, Vector direction) {
         super(color, position);

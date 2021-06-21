@@ -87,6 +87,7 @@ public class Polygon extends FlatGeometry {
 
     /**
      * getter
+     * @return the vertices list
      */
     public List<Point3D> getVertices() {
         return vertices;
@@ -94,6 +95,7 @@ public class Polygon extends FlatGeometry {
 
     /**
      * getter
+     * @return the plane of polygon
      */
     public Plane getPlane() {
         return plane;
