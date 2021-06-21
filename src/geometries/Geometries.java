@@ -13,7 +13,7 @@ import java.util.List;
 public class Geometries extends Container {
 
     /**
-     * @member _containers - list of all components in the scene
+     *  _containers - list of all components in the scene
      */
     private List<Container> _containers = null;
 

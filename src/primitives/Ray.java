@@ -15,11 +15,11 @@ import static primitives.Util.*;
  */
 public class Ray {
     /**
-     * @member _dir - the point the Ray points to from p0
+     *  _dir - the point the Ray points to from p0
      */
     Point3D _p0;
     /**
-     * @member _p0 - starting point of Ray
+     *  _p0 - starting point of Ray
      */
     final Vector _dir;
     /**

@@ -18,7 +18,7 @@ import static primitives.Util.*;
 public class Tube extends RadialGeometry {
 
     /**
-     * @member _axisRay - direction ray of tube
+     *  _axisRay - direction ray of tube
      */
     final Ray _axisRay;
 

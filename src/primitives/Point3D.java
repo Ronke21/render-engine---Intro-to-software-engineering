@@ -6,15 +6,15 @@ package primitives;
  */
 public class Point3D {
     /**
-     * @member _x - the coordinate on x pivot
+     *  _x - the coordinate on x pivot
      */
     final Coordinate _x;
     /**
-     * @member _y - the coordinate on y pivot
+     *  _y - the coordinate on y pivot
      */
     final Coordinate _y;
     /**
-     * @member _z - the coordinate on z pivot
+     *  _z - the coordinate on z pivot
      */
     final Coordinate _z;
 

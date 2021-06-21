@@ -18,13 +18,25 @@ public class TeapotTest {
             new Vector(0, -0.25, 1),
             new Vector(0, 1, 0.25))
             .setDistance(1000).setViewPlaneSize(300, 200);
+    /**
+     * scene
+     */
     private final Scene scene = new Scene("Test scene");
 
+    /**
+     * color
+     */
     private static final Color color = new Color(200, 0, 0);
-    private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
+    /**
+     * material
+     */
+       private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
 
-    //region points
-    private static Point3D[] pnts = new Point3D[]{null, //
+    /**
+     * region points
+     *
+     */
+    private static final Point3D[] pnts = new Point3D[]{null, //
             new Point3D(40.6266, 28.3457, -1.10804), //
             new Point3D(40.0714, 30.4443, -1.10804), //
             new Point3D(40.7155, 31.1438, -1.10804), //

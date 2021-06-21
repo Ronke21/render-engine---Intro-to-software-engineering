@@ -188,6 +188,7 @@ public class BasicRayTracer extends RayTracerBase {
      *
      * @param point - the point on the object
      * @param ray   - ray to the point
+     * @param k  = recursion level
      * @return the color in the point with local effects
      */
     private Color calcLocalEffects(GeoPoint point, Ray ray, double k) {

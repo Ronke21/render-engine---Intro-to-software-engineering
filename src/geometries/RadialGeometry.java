@@ -7,7 +7,7 @@ package geometries;
 public abstract class RadialGeometry extends Geometry{
 
     /**
-     * @member _radius - the radius of the shape
+     *  _radius - the radius of the shape
      */
     final double _radius;
 

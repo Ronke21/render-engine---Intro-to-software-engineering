@@ -16,7 +16,7 @@ import java.util.List;
 public class Sphere extends RadialGeometry {
 
     /**
-     * @member _center - the center point of the sphere
+     *  _center - the center point of the sphere
      */
     final Point3D _center;
 

@@ -15,6 +15,9 @@ public abstract class Geometry extends Container{
      * emission light
      */
     protected Color emission = Color.BLACK;
+    /**
+     * material type
+     */
     private Material material = new Material();
 
     /**

@@ -17,11 +17,11 @@ import static primitives.Util.*;
  */
 public class Plane extends FlatGeometry {
     /**
-     * @member _q0 - random point on plane
+     *  _q0 - random point on plane
      */
     final Point3D _q0;
     /**
-     * @member _normal - normal to plane on q0
+     *  _normal - normal to plane on q0
      */
     final Vector _normal;
 

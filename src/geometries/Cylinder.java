@@ -15,7 +15,7 @@ import static primitives.Util.alignZero;
  */
 public class Cylinder extends Tube {
     /**
-     * @member _height - the length of the cylinder from base to base
+     *  _height - the length of the cylinder from base to base
      */
     final double _height;
 

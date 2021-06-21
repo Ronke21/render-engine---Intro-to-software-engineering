@@ -7,7 +7,6 @@ import primitives.Color;
  * Refers to the light propagation model.
  * represents all types of light sources in the scene e.g. spotlight, point light etc.
  * its function is to illuminate the objects with colors in different ways.
- * @member color - the color of the light source
  */
 abstract class Light {
 

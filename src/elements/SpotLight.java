@@ -12,10 +12,13 @@ import primitives.Vector;
  */
 public class SpotLight extends PointLight {
     /**
-     * @member direction - the direction of the light
-     * @member focus - the narrowing factor, the beam gets narrower and weaker as it gets bigger.
+     *  direction - the direction of the light
+     *  focus - the narrowing factor, the beam gets narrower and weaker as it gets bigger.
      */
     private final Vector _direction;
+    /**
+     * focus size
+     */
     private double _focus = 1;
 
     /**

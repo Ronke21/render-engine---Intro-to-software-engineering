@@ -14,7 +14,7 @@ import primitives.Util.*;
  */
 public class Vector {
     /**
-     * @member _head - the point the vector points to from (0,0,0)
+     *  _head - the point the vector points to from (0,0,0)
      */
     Point3D _head;
 
