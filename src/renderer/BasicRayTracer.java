@@ -24,7 +24,7 @@ public class BasicRayTracer extends RayTracerBase {
      * Stop condition for refraction:
      * how far we consider to calculate the intersections of the rays
      * which created by refractions in the original geometric body.
-     *
+     * <p>
      * USE WITH CAUTION! higher values leads to performance decreasing rapidly
      */
     private static final int MAX_CALC_COLOR_LEVEL = 10; // 10
@@ -49,6 +49,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * setter for bounding box flag
+     *
      * @param _bb to set the bb factor?
      * @return this instance
      */
@@ -99,7 +100,7 @@ public class BasicRayTracer extends RayTracerBase {
         if (!_bb) {
             intersections = _scene.geometries.findGeoIntersections(ray);
         } else {
-            intersections = _scene.geometries.findGeoIntersections(ray);
+            intersections = _scene.geometries.findIntersectBoundingRegion(ray);
         }
 
         if (intersections == null || intersections.size() == 0) {
@@ -188,7 +189,7 @@ public class BasicRayTracer extends RayTracerBase {
      *
      * @param point - the point on the object
      * @param ray   - ray to the point
-     * @param k  = recursion level
+     * @param k     = recursion level
      * @return the color in the point with local effects
      */
     private Color calcLocalEffects(GeoPoint point, Ray ray, double k) {

@@ -8,12 +8,12 @@ import java.util.List;
 
 /**
  * this class represents a group of shapes in the space that represent a picture.
- *Composite class which includes components and composite geometries
+ * Composite class which includes components and composite geometries
  */
 public class Geometries extends Container {
 
     /**
-     *  _containers - list of all components in the scene
+     * _containers - list of all components in the scene
      */
     private List<Container> _containers = null;
 
@@ -150,47 +150,42 @@ public class Geometries extends Container {
     }
 
     /**
-     * build bvh tree
+     * automated build bounding volume hierarchy tree
      */
     public void BuildTree() {
 
+        // flatten the list of Geometries
         this.flatten();
+
+        // define reusable variables (improved performance)
         double distance;
         Container bestGeometry1 = null;
         Container bestGeometry2 = null;
 
+        // while any container contains more then one geometry
         while (_containers.size() > 1) {
             double best = Double.MAX_VALUE;
+            // loop through the containers
             for (Container geometry1 : _containers) {
                 for (Container geometry2 : _containers) {
-                    if (geometry1._boundingBox == null || geometry2._boundingBox == null) {
-                        System.out.println("hello bug");
-                    }
+                    // measure the distance between every couple of bounding boxes
                     distance = geometry1._boundingBox.BoundingBoxDistance(geometry2._boundingBox);
+                    // if the geometries are not the same geometry, and the distance is the lowest possible
                     if (!geometry1.equals(geometry2) && distance < best) {
+                        // define the best distance as the minimal one we have found
                         best = distance;
+                        // define the best candidates to be together in a container
                         bestGeometry1 = geometry1;
                         bestGeometry2 = geometry2;
                     }
                 }
             }
+            // after we have determined the best geometries to couple in a container,
+            // create new container which contains the geometries
             _containers.add(new Geometries(bestGeometry1, bestGeometry2));
+            // and remove the same ones from the original tree
             _containers.remove(bestGeometry1);
             _containers.remove(bestGeometry2);
-        }
-    }
-
-    /**
-     * recursive func to flatten the geometries list (break the tree)
-     *
-     * @param new_geometries current geometries
-     */
-    private void flatten(Geometries new_geometries) {
-        for (Container container : new_geometries._containers) {
-            if (container instanceof Geometry)
-                _containers.add(container);
-            else
-                flatten((Geometries) container);
         }
     }
 
@@ -198,8 +193,35 @@ public class Geometries extends Container {
      * method to flatten the geometries list
      */
     public void flatten() {
+        // copy the containers to a new temporary list
         Geometries new_geometries = new Geometries(_containers.toArray(new Container[_containers.size()]));
+        // clear the original list of containers
         _containers.clear();
+        // call the second function which will make sure we only
+        // have containers with simple instances of geometry
         flatten(new_geometries);
+    }
+
+    /**
+     * recursive func to flatten the geometries list (break the tree)
+     * receives a Geometries instance, flattens it and adds the shapes to this current instance
+     *
+     * @param new_geometries geometries
+     */
+    private void flatten(Geometries new_geometries) {
+        // loop through the temporary list
+        for (Container container : new_geometries._containers) {
+            // if the container contains only a simple geometry
+            if (container instanceof Geometry) {
+                // add it to the original list
+                _containers.add(container);
+            }
+            // else, this is instance of Geometries
+            // which needs to get flattened as well
+            else {
+                // so send it recursively to this function
+                flatten((Geometries) container);
+            }
+        }
     }
 }
